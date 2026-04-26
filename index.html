@@ -36,12 +36,30 @@
         </p>
 
         <div class="counter">
-            تم قراءة هذه الصفحة <span id="view-count">...</span> مرة
+            تم قراءة هذه الصفحة <span id="view-count">0</span> مرة
         </div>
     </div>
 
     <script>
-        // ضع هنا كود الـ Config الخاص بـ Firebase الذي استخدمناه سابقاً
+        // 1. ضع بيانات الـ Firebase الخاصة بك هنا (التي تبدأ بـ const firebaseConfig)
+        const firebaseConfig = {
+            // الصق الكود الخاص بك هنا
+        };
+
+        // 2. تفعيل Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const viewCountRef = database.ref('viewCount');
+
+        // 3. تحديث العداد
+        viewCountRef.transaction((currentValue) => {
+            return (currentValue || 0) + 1;
+        });
+
+        // 4. عرض العداد في الصفحة
+        viewCountRef.on('value', (snapshot) => {
+            document.getElementById('view-count').innerText = snapshot.val();
+        });
     </script>
 
 </body>
