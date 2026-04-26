@@ -1,0 +1,38 @@
+/* تنسيق الصفحة الدعوية */
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh; 
+    margin: 0; 
+}
+
+.card { 
+    background: white; 
+    padding: 40px; 
+    border-radius: 25px; 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+    max-width: 450px; 
+    width: 90%;
+    text-align: center; 
+    border-top: 10px solid #27ae60; 
+    transition: transform 0.3s ease;
+}
+
+h1 { color: #2c3e50; font-size: 28px; margin-bottom: 20px; }
+
+p { color: #34495e; line-height: 2; font-size: 19px; }
+
+.counter { 
+    margin-top: 30px; 
+    font-size: 15px; 
+    color: #7f8c8d; 
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+#view-count { font-weight: bold; color: #27ae60; }
