@@ -3,32 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> مباركة</title>
+    <title>مباركة - فضل الصيام</title>
     
+    <meta property="og:title" content="فضل الصيام وذكره 🌙">
+    <meta property="og:description" content="صفحة دعوية مباركة توضح فضل الصيام وأجره العظيم.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://opal-two-58.vercel.app/fasting.html">
+    <meta property="og:image" content="https://opal-two-58.vercel.app/thumb.jpg"> 
+
+    <link rel="stylesheet" href="style.css">
+
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 </head>
-<link rel="stylesheet" href="style.css">
-
-<meta property="og:title" content="فضل الصيام وذكره 🌙">
-<meta property="og:description" content="صفحة دعوية مباركة توضح فضل الصيام وأجره العظيم.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://opal-two-58.vercel.app/fasting.html">
-<meta property="og:image" content="https://images.unsplash.com/photo-1584281722571-06940866164a?q=80&w=800"> 
-
 
 <body>
-
     <div class="card">
         <h1>أهلاً بك</h1>
-        <p> أبرز فضائل الصيام في الإسلام:
-تكفير الذنوب: "من صام رمضان إيمانًا واحتسابًا، غُفِرَ له ما تقدم من ذنبه".
-الوقاية من النار: الصيام جنة يستجن بها العبد من النار.
-باب الريان: يُنادَى بأهل الصيام من باب خاص في الجنة لا يدخله غيرهم.
-عظيم الأجر: الصوم لا عدل له، والجزاء عليه من الله مباشرة بغير حساب.
-خلوف فم الصائم: أطيب عند الله من ريح المسك.
-شفاعة الصيام: يشفع الصيام والقرآن للعبد يوم القيامة.
-تحقيق التقوى: قال تعالى: {كُتِبَ عَلَيْكُمُ الصِّيَامُ كَمَا كُتِبَ عَلَى الَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ} </p>
+        <p> أبرز فضائل الصيام في الإسلام: <br>
+            • تكفير الذنوب: "من صام رمضان إيمانًا واحتسابًا، غُفِرَ له ما تقدم من ذنبه".<br>
+            • الوقاية من النار: الصيام جنة يستجن بها العبد من النار.<br>
+            • باب الريان: يُنادَى بأهل الصيام من باب خاص في الجنة لا يدخله غيرهم.<br>
+            • عظيم الأجر: الصوم لا عدل له، والجزاء عليه من الله مباشرة بغير حساب.<br>
+            • خلوف فم الصائم: أطيب عند الله من ريح المسك.<br>
+            • شفاعة الصيام: يشفع الصيام والقرآن للعبد يوم القيامة.<br>
+            • تحقيق التقوى: قال تعالى: {كُتِبَ عَلَيْكُمُ الصِّيَامُ كَمَا كُتِبَ عَلَى الَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ}
+        </p>
         <div class="counter">تمت قراءة هذه الصفحة <span id="view-count">...</span> مرة</div>
     </div>
 
@@ -43,11 +43,9 @@
             appId: "1:481503479391:web:cb3d14a521f0626337fdea"
         };
 
-        // بدء تشغيل Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // تحديث عداد المشاهدات
         const pagePath = 'post_01'; 
         const viewsRef = db.ref('views/' + pagePath);
 
@@ -55,7 +53,6 @@
             return (currentValue || 0) + 1;
         });
 
-        // عرض العداد في الصفحة
         viewsRef.on('value', (snapshot) => {
             document.getElementById('view-count').innerText = snapshot.val() || 0;
         });
