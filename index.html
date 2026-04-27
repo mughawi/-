@@ -3,64 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مباركة - فضل الصيام</title>
-
-    <meta property="og:title" content="فضل الصيام وذكره 🌙">
-    <meta property="og:description" content="صفحة دعوية مباركة توضح فضل الصيام وأجره العظيم.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://opal-two-58.vercel.app/index.html">
-    <meta property="og:image" content="https://opal-two-58.vercel.app/images/ramadan.jpg">
-
-    <link rel="stylesheet" href="style.css">
-
+    <title> مباركة</title>
+    
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 </head>
-
+<link rel="stylesheet" href="style.css">
 <body>
 
     <div class="card">
-        <img src="images/ramadan.jpg" alt="فضل الصيام" style="width: 100%; border-radius: 15px; margin-bottom: 20px;">
-        
         <h1>أهلاً بك</h1>
-        
-        <p>
-            أبرز فضائل الصيام في الإسلام: <br>
-            <strong>تكفير الذنوب:</strong> "من صام رمضان إيماناً واحتساباً، غُفِر له ما تقدم من ذنبه". <br>
-            <strong>الوقاية من النار:</strong> الصيام جُنّة يستجن بها العبد من النار. <br>
-            <strong>باب الريان:</strong> يُنادى بأهل الصيام من باب خاص في الجنة لا يدخله غيرهم. <br>
-            <strong>عظيم الأجر:</strong> الصوم لا عدل له، والجزاء عليه من الله مباشرة بغير حساب. <br>
-            <strong>خلوف فم الصائم:</strong> أطيب عند الله من ريح المسك. <br>
-            <strong>شفاعة الصيام:</strong> يشفع الصيام والقرآن للعبد يوم القيامة. <br>
-            <strong>تحقيق التقوى:</strong> قال تعالى: {كُتِبَ عَلَيْكُمُ الصِّيَامُ كَمَا كُتِبَ عَلَى الَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ}.
-        </p>
-
-        <div class="counter">
-            تم قراءة هذه الصفحة <span id="view-count">0</span> مرة
-        </div>
+        <p>هنا سيتم وضع نص المحتوى الدعوي الذي تريده (مثلاً: فضل صيام عرفة أو أذكار معينة).</p>
+        <div class="counter">تمت قراءة هذه الصفحة <span id="view-count">...</span> مرة</div>
     </div>
 
     <script>
-        // 1. ضع بيانات الـ Firebase الخاصة بك هنا (التي تبدأ بـ const firebaseConfig)
         const firebaseConfig = {
-            // الصق الكود الخاص بك هنا
+            apiKey: "AIzaSyBnU74Im6--bbGVtxasiUxtL5RyK0VtgzY",
+            authDomain: "da3wa-tracker.firebaseapp.com",
+            databaseURL: "https://da3wa-tracker-default-rtdb.firebaseio.com",
+            projectId: "da3wa-tracker",
+            storageBucket: "da3wa-tracker.firebasestorage.app",
+            messagingSenderId: "481503479391",
+            appId: "1:481503479391:web:cb3d14a521f0626337fdea"
         };
 
-        // 2. تفعيل Firebase
+        // بدء تشغيل Firebase
         firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const viewCountRef = database.ref('viewCount');
+        const db = firebase.database();
 
-        // 3. تحديث العداد
-        viewCountRef.transaction((currentValue) => {
+        // تحديث عداد المشاهدات
+        const pagePath = 'post_01'; 
+        const viewsRef = db.ref('views/' + pagePath);
+
+        viewsRef.transaction((currentValue) => {
             return (currentValue || 0) + 1;
         });
 
-        // 4. عرض العداد في الصفحة
-        viewCountRef.on('value', (snapshot) => {
-            document.getElementById('view-count').innerText = snapshot.val();
+        // عرض العداد في الصفحة
+        viewsRef.on('value', (snapshot) => {
+            document.getElementById('view-count').innerText = snapshot.val() || 0;
         });
     </script>
-
 </body>
 </html>
