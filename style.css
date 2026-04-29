@@ -1,54 +1,85 @@
-/* تنسيق الصفحة الدعوية */
+/* 1. تصفير المسافات وصمام أمان العرض */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* يمنع الـ Padding من زيادة عرض البطاقة */
+}
+
+/* 2. تنسيق الجسم الخلفية */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-family: 'Tajawal', sans-serif;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden; /* يمنع التموج الأفقي نهائياً */
+}
+
+/* 3. تنسيق الحاوية الكبرى (الأب) */
+main {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
     min-height: 100vh;
-    margin: 0;
+    padding: 40px 10px; /* مسافة من الأعلى والأسفل */
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
-
+/* 4. تنسيق البطاقة (الابن) */
 .card {
     background: white;
-    padding: 40px;
-    border-radius: 25px;
+    padding: 35px 25px; /* مسافات داخلية متوازنة */
+    border-radius: 30px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     max-width: 450px;
-    width: 90%;
+    width: 95%; /* لضمان عدم خروجها عن شاشات الجوال الصغيرة */
     text-align: center;
     border-top: 10px solid #27ae60;
     transition: transform 0.3s ease;
+    margin-bottom: 20px;/* مسافة في حال أضفت بطاقة أخرى */
+}
+
+/* تأثير بسيط عند لمس البطاقة (اختياري) */
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* 5. تنسيق العناصر داخل البطاقة */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 h1 {
     color: #2c3e50;
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: 26px;
+    margin-bottom: 15px;
 }
 
 p {
     color: #34495e;
-    line-height: 2;
-    font-size: 19px;
+    line-height: 1.8;
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-align: justify; /* لجعل النص مرتباً من الجانبين */
+    direction: rtl;
 }
 
+/* 6. تنسيق العداد */
 .counter {
-    margin-top: 30px;
-    font-size: 15px;
+    margin-top: 20px;
+    font-size: 14px;
     color: #7f8c8d;
     background: #f9f9f9;
-    padding: 10px;
+    padding: 8px 20px;
     border-radius: 50px;
     display: inline-block;
+    border: 1px solid #eee;
 }
 
 #view-count {

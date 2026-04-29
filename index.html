@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,17 +12,18 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 </head>
 <link rel="stylesheet" href="style.css">
+
 <body>
-
-    <div class="card">
-        <img src="images/IMG_0823.jpeg" alt="فضل الصيام" style="width: 100%; border-radius: 15px; margin-bottom: 20px;">
-
-        <h1>أهلاً بك</h1>
-        <hr />
-        <p>هنا سيتم وضع نص المحتوى الدعوي الذي تريده (مثلاً: فضل صيام عرفة أو أذكار معينة).</p>
-        <div class="counter">تمت قراءة هذه الصفحة <span id="view-count">...</span> مرة</div>
-    </div>
-
+    <main>
+        <div class="card">
+            <img src="images/IMG_0823.jpeg" alt="فضل الصيام" class="card-img">
+            
+            <h1>أهلاً بك</h1>
+            <hr />
+            <p>هنا سيتم وضع نص المحتوى الدعوي الذي تريده (مثلاً: فضل صيام عرفة أو أذكار معينة).</p>
+            <div class="counter">تمت قراءة هذه الصفحة <span id="view-count">...</span> مرة</div>
+        </div>
+    </main>
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyBnU74Im6--bbGVtxasiUxtL5RyK0VtgzY",
@@ -32,23 +34,24 @@
             messagingSenderId: "481503479391",
             appId: "1:481503479391:web:cb3d14a521f0626337fdea"
         };
-
+        
         // بدء تشغيل Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-
+        
         // تحديث عداد المشاهدات
-        const pagePath = 'post_01'; 
+        const pagePath = 'post_01';
         const viewsRef = db.ref('views/' + pagePath);
-
+        
         viewsRef.transaction((currentValue) => {
             return (currentValue || 0) + 1;
         });
-
+        
         // عرض العداد في الصفحة
         viewsRef.on('value', (snapshot) => {
             document.getElementById('view-count').innerText = snapshot.val() || 0;
         });
     </script>
 </body>
+
 </html>
