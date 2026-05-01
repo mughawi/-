@@ -90,6 +90,8 @@ p {
 #text-container {
     white-space: pre-wrap; 
     word-wrap: break-word;
+    font-size: 1.2rem;
     line-height: 1.6; /* لإضافة مسافة مريحة بين الأسطر */
     text-align: right; /* لضمان بقاء النص جهة اليمين */
+    margin-bottom: 20px;
 }
