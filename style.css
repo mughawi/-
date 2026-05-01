@@ -86,3 +86,10 @@ p {
     font-weight: bold;
     color: #27ae60;
 }
+/* هذا الكود يخبر المتصفح أن يحترم الأسطر والمسافات كما هي في ملف النص */
+#text-container {
+    white-space: pre-wrap; 
+    word-wrap: break-word;
+    line-height: 1.6; /* لإضافة مسافة مريحة بين الأسطر */
+    text-align: right; /* لضمان بقاء النص جهة اليمين */
+}

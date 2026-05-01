@@ -36,6 +36,7 @@
 " class="card-img">
             
             <h1>بصمتك في رحيل الأيام</h1>
+            <div id="text-container">جاري جلب الكلام...</div>
             <p>تمر بنا الساعات والأيام كلمح البصر، وكل يوم يرحل هو جزء من عمرنا لن يعود. لكن الجمال الحقيقي ليس في طول العمر، بل في أثر الطيب الذي نتركه خلفنا. اجعل لكل يوم تقضيه قيمة، بكلمة طيبة، أو بعمل صالح، أو بعلم تنشره. تذكر دائماً أنك لا تعيش لتمضي فحسب، بل لتبني أثراً يبقى نابضاً بالحياة حتى بعد رحيلك.</p>
             
             <div class="counter">تمت قراءة هذه الصفحة <span id="view-count">...</span> مرة</div>
@@ -69,6 +70,19 @@
             document.getElementById('view-count').innerText = snapshot.val() || 0;
         });
     </script>
+    <script>
+  // نطلب من المتصفح جلب ملف النص من مجلد data
+  fetch('data/content.txt')
+    .then(response => response.text()) // تحويل الملف إلى نص
+    .then(data => {
+      // وضع النص داخل الـ div الذي أنشأته في الخطوة السابقة
+      document.getElementById('text-container').innerText = data;
+    })
+    .catch(error => {
+      console.log('هناك خطأ في جلب النص:', error);
+    });
+</script>
+
 </body>
 
 </html>
