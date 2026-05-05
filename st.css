@@ -76,7 +76,7 @@ h1 {
 
 #view-count {
     font-weight: bold;
-    color: #f8b500;
+    color: blue;
 }
 /* هذا الكود يخبر المتصفح أن يحترم الأسطر والمسافات كما هي في ملف النص */
 #text-container {
