@@ -88,3 +88,10 @@ h1 {
     margin-bottom: 20px;
     color: wheat;
 }
+/* للجوال فقط */
+@media (max-width: 600px) {
+    lottie-player {
+        width: 200px !important;
+        /* تصغير الحجم قليلاً في الجوال */
+    }
+}
