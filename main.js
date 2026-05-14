@@ -8,19 +8,21 @@ const pageName = window.location.pathname.split("/").pop().replace(".html", "") 
 
 // 1. جلب "نص الموضوع" (يعمل دائماً لتستطيع رؤية تعديلاتك)
 fetch(`data/${pageName}.txt`)
-    .then(response => {
-        if (!response.ok) throw new Error('الملف غير موجود');
-        return response.text();
-    })
+    .then(response => response.text())
     .then(data => {
-        const textContainer = document.getElementById('text-container');
-        if (textContainer) {
-            textContainer.innerText = data;
-        }
+        const parts = data.split('*'); // التقسيم عند النجمة
+        
+        parts.forEach((content, index) => {
+            // إذا كان index هو 0 يبحث عن text-container، وإذا كان 1 يبحث عن text-container-2 وهكذا
+            let id = index === 0 ? 'text-container' : `text-container-${index + 1}`;
+            let element = document.getElementById(id);
+            
+            if (element && content.trim() !== "") {
+                element.innerText = content.trim();
+            }
+        });
     })
-    .catch(error => {
-        console.log('وضع التجربة: جاري عرض النص الافتراضي أو هناك خطأ في الملف.');
-    });
+    .catch(error => console.log('خطأ في جلب الملف'));
 
 // 2. كود الإحصائيات والعداد (يعمل فقط إذا كان الاختيار أعلاه true)
 if (enableTracking) {
