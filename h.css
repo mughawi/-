@@ -116,6 +116,7 @@ lottie-player {
     color: white;
     text-align: center;
     overflow: hidden;
+    margin-bottom: 30%;
 }
 
 .card-title {
