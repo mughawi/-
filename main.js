@@ -70,33 +70,3 @@ if (enableTracking) {
     }
     console.log("إحصائيات جوجل وعداد Firebase مجمّدان حالياً.");
 }
-// =======================================================
-// 3. كود التحديث التلقائي لروابط معاينة الصور في الـ Meta
-// =======================================================
-function updateOGImage() {
-    // 1. جلب النص الحالي المكتوب في بطاقة العنوان (ديف العبارة الأساسية)
-    const cardTitleElement = document.querySelector('.card-title');
-    
-    if (cardTitleElement) {
-        const currentCardText = cardTitleElement.innerText;
-        
-        // 2. تحويل النص إلى صيغة ويب آمنة للروابط (تتعامل مع المسافات واللغة العربية)
-        const cleanText = encodeURIComponent(currentCardText);
-        
-        // 3. رابط التوليد التلقائي لـ Vercel بالاعتماد على العبارة الحالية
-        const dynamicVercelUrl = `https://og-image.vercel.app/${cleanText}.png?theme=dark&md=1&fontSize=100px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fvercel-triangle-white.svg`;
-        
-        // 4. تحديث أوسمة الـ meta في الـ HTML بالروابط الجديدة ديناميكياً
-        const ogImageTag = document.getElementById('og-image');
-        const twitterImageTag = document.getElementById('twitter-image');
-        
-        if (ogImageTag && twitterImageTag) {
-            ogImageTag.setAttribute('content', dynamicVercelUrl);
-            twitterImageTag.setAttribute('content', dynamicVercelUrl);
-            console.log("تم تحديث روابط معاينة الصور بنجاح للنص: " + currentCardText);
-        }
-    }
-}
-
-// تشغيل الدالة تلقائياً بعد ثانية واحدة لضمان جلب النص من ملف الـ txt أولاً
-setTimeout(updateOGImage, 1000);
