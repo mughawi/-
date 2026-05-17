@@ -88,6 +88,15 @@ h1 {
     margin-bottom: 20px;
     color: wheat;
 }
+#text-container-2 {
+    white-space: pre-wrap; 
+    word-wrap: break-word;
+    font-size: 1.3rem;
+    line-height: 1.6; /* لإضافة مسافة مريحة بين الأسطر */
+    text-align: right; /* لضمان بقاء النص جهة اليمين */
+    margin-bottom: 20px;
+    color: wheat;
+}
 lottie-player {
     width: 280px; 
     max-width: 90%; 
