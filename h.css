@@ -95,5 +95,31 @@ lottie-player {
     margin: 0 auto;
     display: block;
     margin-bottom: 30px;
+}
+.card-container {
+    /* المقاسات التي أخذناها من التطبيق */
+    width: 100%;
+    height: 300px;
+    
+    /* لمسة الجمال: زوايا ناعمة وظلال */
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ba2424, #2d3436);
+    /* التدرج اللوني الذي أعجبك */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    
+    /* ترتيب المحتوى داخلياً */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
 
+.card-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
