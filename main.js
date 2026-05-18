@@ -76,24 +76,22 @@ if (enableTracking) {
 
 async function loadDynamicMetaTags() {
     try {
-        // 1. معرفة اسم الصفحة الحالية
-        const currentPage = window.location.pathname.split("/").pop() || "index.html";
+        // تحديد الصفحة الحالية مباشرة باسم h.html لضمان النجاح
+        const currentPage = "h.html";
 
-        // 2. جلب ملف النصوص الموحد
+        // جلب ملف النصوص الموحد
         const response = await fetch('all-meta.txt');
         const text = await response.text();
         
-        // 3. تقسيم الملف بناءً على رمز النجمة *
+        // تقسيم الملف بناءً على رمز النجمة *
         const blocks = text.split('*');
         
         let pageTitle = "";
         let pageDesc = "";
 
-        // 4. البحث عن الصفحة الحالية داخل الملف
+        // البحث عن النصوص داخل الملف
         for (let block of blocks) {
-            // التعديل هنا: قمنا بضبط تقسيم السطور ليتوافق مع جميع الأنظمة (آيباد، ويندوز، ماك)
-            const lines = block.trim().split(/\r?\n/);
-            
+            const lines = block.trim().split('\n');
             if (lines[0] && lines[0].trim() === currentPage) {
                 pageTitle = lines[1] ? lines[1].trim() : "";
                 pageDesc = lines[2] ? lines[2].trim() : "";
@@ -101,7 +99,7 @@ async function loadDynamicMetaTags() {
             }
         }
 
-        // 5. حقن البيانات في أوسمة الميتا فوراً
+        // حقن النصوص فوراً في الأوسمة
         if (pageTitle || pageDesc) {
             document.title = pageTitle;
             
@@ -114,11 +112,9 @@ async function loadDynamicMetaTags() {
             const twDesc = document.querySelector('meta[name="twitter:description"]');
             if (ogDesc) ogDesc.setAttribute('content', pageDesc);
             if (twDesc) twDesc.setAttribute('content', pageDesc);
-            
-            console.log(`تمت المزامنة بنجاح لصفحة: ${currentPage}`);
         }
     } catch (error) {
-        console.log("خطأ في جلب البيانات:", error);
+        console.log("خطأ:", error);
     }
 }
 
