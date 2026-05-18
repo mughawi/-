@@ -74,49 +74,46 @@ if (enableTracking) {
 
 //7777777777777777
 
-async function loadDynamicMetaTags() {
+async function loadMetaFromCurrentPageFile() {
     try {
-        // تحديد الصفحة الحالية مباشرة باسم h.html لضمان النجاح
-        const currentPage = "h.html";
-
-        // جلب ملف النصوص الموحد
-        const response = await fetch('all-meta.txt');
+        // 1. معرفة اسم الصفحة الحالية تلقائياً (مثلاً h أو h2)
+        const path = window.location.pathname;
+        const pageName = path.substring(path.lastIndexOf('/') + 1).replace('.html', '') || 'index';
+        
+        // 2. فتح الملف النصي الخاص بهذه الصفحة تلقائياً (مثلاً h.txt أو h2.txt)
+        const response = await fetch(`${pageName}.txt`);
+        if (!response.ok) return; // إذا لم يجد ملف نصي يتوقف لحماية الموقع
+        
         const text = await response.text();
         
-        // تقسيم الملف بناءً على رمز النجمة *
-        const blocks = text.split('*');
+        // 3. تقسيم الملف إلى أسطر
+        const lines = text.split('\n');
         
-        let pageTitle = "";
-        let pageDesc = "";
+        // أخذ السطر الأول كعنوان، والسطر الثاني كوصف للمعاينة
+        const fileTitle = lines[0] ? lines[0].trim() : "";
+        const fileDesc = lines[1] ? lines[1].trim() : "";
 
-        // البحث عن النصوص داخل الملف
-        for (let block of blocks) {
-            const lines = block.trim().split('\n');
-            if (lines[0] && lines[0].trim() === currentPage) {
-                pageTitle = lines[1] ? lines[1].trim() : "";
-                pageDesc = lines[2] ? lines[2].trim() : "";
-                break;
-            }
-        }
-
-        // حقن النصوص فوراً في الأوسمة
-        if (pageTitle || pageDesc) {
-            document.title = pageTitle;
-            
+        // 4. حقن العنوان والوصف في أوسمة الميتا فوراً
+        if (fileTitle) {
+            document.title = fileTitle;
             const ogTitle = document.querySelector('meta[property="og:title"]');
             const twTitle = document.querySelector('meta[name="twitter:title"]');
-            if (ogTitle) ogTitle.setAttribute('content', pageTitle);
-            if (twTitle) twTitle.setAttribute('content', pageTitle);
+            if (ogTitle) ogTitle.setAttribute('content', fileTitle);
+            if (twTitle) twTitle.setAttribute('content', fileTitle);
+        }
 
+        if (fileDesc) {
             const ogDesc = document.querySelector('meta[property="og:description"]');
             const twDesc = document.querySelector('meta[name="twitter:description"]');
-            if (ogDesc) ogDesc.setAttribute('content', pageDesc);
-            if (twDesc) twDesc.setAttribute('content', pageDesc);
+            if (ogDesc) ogDesc.setAttribute('content', fileDesc);
+            if (twDesc) twDesc.setAttribute('content', fileDesc);
         }
+        
+        console.log(`تم تحديث معاينة الميتا تلقائياً من ملف: ${pageName}.txt`);
     } catch (error) {
-        console.log("خطأ:", error);
+        console.log("خطأ في جلب الميتا التلقائية:", error);
     }
 }
 
-// تشغيل الدالة فوراً
-loadDynamicMetaTags();
+// تشغيل الدالة فوراً عند تحميل الصفحة
+loadMetaFromCurrentPageFile();
