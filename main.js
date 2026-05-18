@@ -76,14 +76,14 @@ if (enableTracking) {
 
 async function loadDynamicMetaTags() {
     try {
-        // 1. معرفة اسم الصفحة الحالية
+        // 1. معرفة اسم الصفحة الحالية التي فتحها المستخدم تلقائياً
         const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
         // 2. جلب ملف النصوص الموحد
         const response = await fetch('all-meta.txt');
         const text = await response.text();
         
-        // 3. تقسيم الملف بناءً على رمز النجمة *
+        // 3. تقسيم الملف بناءً على رمز النجمة * لمعرفة بيانات كل صفحة
         const blocks = text.split('*');
         
         let pageTitle = "";
@@ -91,9 +91,7 @@ async function loadDynamicMetaTags() {
 
         // 4. البحث عن الصفحة الحالية داخل الملف
         for (let block of blocks) {
-            // التعديل هنا: قمنا بضبط تقسيم السطور ليتوافق مع جميع الأنظمة (آيباد، ويندوز، ماك)
-            const lines = block.trim().split(/\r?\n/);
-            
+            const lines = block.trim().split('\n');
             if (lines[0] && lines[0].trim() === currentPage) {
                 pageTitle = lines[1] ? lines[1].trim() : "";
                 pageDesc = lines[2] ? lines[2].trim() : "";
@@ -101,7 +99,7 @@ async function loadDynamicMetaTags() {
             }
         }
 
-        // 5. حقن البيانات في أوسمة الميتا فوراً
+        // 5. إذا عثرنا على البيانات، نحقنها فوراً في أوسمة الميتا
         if (pageTitle || pageDesc) {
             document.title = pageTitle;
             
@@ -115,12 +113,12 @@ async function loadDynamicMetaTags() {
             if (ogDesc) ogDesc.setAttribute('content', pageDesc);
             if (twDesc) twDesc.setAttribute('content', pageDesc);
             
-            console.log(`تمت المزامنة بنجاح لصفحة: ${currentPage}`);
+            console.log(`تم تحديث معاينة الصفحة [${currentPage}] بنجاح!`);
         }
     } catch (error) {
-        console.log("خطأ في جلب البيانات:", error);
+        console.log("خطأ في جلب بيانات المعاينة الموحدة:", error);
     }
 }
 
-// تشغيل الدالة فوراً
+// تشغيل الدالة فوراً عند التحميل
 loadDynamicMetaTags();
