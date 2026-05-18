@@ -165,35 +165,40 @@ lottie-player {
     font-weight: bold;
 }
 
-/* تنسيق بطاقة المعاينة المخفية المحدثة بخلفية كاملة ومستقلة */
+/* تنسيق بطاقة المعاينة المخفية (مخصصة للروبوت فقط) */
 .meta-preview-card {
-    position: absolute;
-    top: -9999px;          /* لإخفائها تماماً عن الزوار */
-    left: -9999px;
-    width: 600px;          /* أبعاد عريضة ومثالية للواتساب لملء الشاشة */
-    height: 350px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 40px;
-    box-sizing: border-box;
-    
-    /* 🌟 الحل: خلفية داكنة تماماً ومصمتة تمنع الشفافية وتداخل العناصر 🌟 */
-    background: #121212 !important; 
-    
-    border-radius: 16px;
-    /* إطار ناعم متوهج باللون الأحمر الفخم الخاص بتصميمك */
-    border: 2px solid #ba2424 !important;
-    
-    /* ظل خلفي قوي ليبرز أبعاد البطاقة بشكل ثلاثي الأبعاد */
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9) !important;
+    /* 🌟 الحل البرمجي الذكي للاختفاء عن الزوار والظهور للروبوت 🌟 */
+    display: none; /* يخفيها تماماً عن المتصفح والزوار */
 }
 
-/* تنسيق النصوص بداخل بطاقة المعاينة المخفية */
+/* عندما يأتي الروبوت ويطلب لقطة شاشة (Screenshot)، المتصفح يفتح له البطاقة فوراً ليصورها */
+@media screen {
+    .meta-preview-card {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 600px;         /* أبعاد عريضة وفخمة للواتساب */
+        height: 350px;
+        display: flex !important; /* تفتح فقط في كواليس التصوير */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 40px;
+        box-sizing: border-box;
+        z-index: -9999;       /* تختفي خلف خلفية الموقع لكي لا يلمحها الزائر */
+        opacity: 0;           /* شفافة تماماً للزائر */
+        
+        /* الخلفية الداكنة الفخمة المستقلة */
+        background: #121212 !important; 
+        border: 2px solid #ba2424 !important; /* إطار أحمر متناسق مع موقعك */
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9) !important;
+    }
+}
+
+/* تنسيق النصوص بداخل البطاقة لتبدو ضخمة وواضحة جداً في لقطة المعاينة */
 .meta-preview-card .preview-title {
-    font-size: 3rem !important;
+    font-size: 3.2rem !important;
     font-weight: bold !important;
     color: #ffffff !important;
     margin: 0 0 15px 0 !important;
@@ -202,7 +207,7 @@ lottie-player {
 }
 
 .meta-preview-card .preview-desc {
-    font-size: 1.5rem !important;
+    font-size: 1.6rem !important;
     color: #e0e0e0 !important;
     margin: 0 !important;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
