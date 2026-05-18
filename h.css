@@ -164,3 +164,42 @@ lottie-player {
     margin-bottom: 10px;
     font-weight: bold;
 }
+
+/* تنسيق بطاقة المعاينة المخفية (للروبوت فقط) */
+.meta-preview-card {
+    position: absolute;
+    top: -9999px;          /* يرمي البطاقة خارج الشاشة تماماً لكي لا يراها الزائر */
+    left: -9999px;
+    width: 500px;          /* أبعاد مربعة ومثالية جداً للواتساب */
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    box-sizing: border-box;
+    
+    /* خلفية فخمة جداً مأخوذة من إبداعك الأول مع تأثير زجاجي مضيء */
+    background: linear-gradient(135deg, #1e1e1e 0%, #111111 100%);
+    border-radius: 32px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    /* توهج أحمر داكن قوي يظهر بوضوح في المعاينة */
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(186, 36, 36, 0.4);
+}
+
+/* تنسيق النصوص بداخل بطاقة المعاينة لتبدو ضخمة وواضحة في الجوال */
+.meta-preview-card .preview-title {
+    font-size: 3.5rem; /* خط كبير وواضح في لقطة الشاشة */
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.meta-preview-card .preview-desc {
+    font-size: 1.6rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
