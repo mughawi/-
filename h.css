@@ -10,16 +10,20 @@
 
 .main-header {
     width: 100%;
+    
+    /* 🌟 ميزان الأبعاد الجديد للمعاينة 🌟 */
+    height: 320px;          /* نفس ارتفاع البطاقة الفخم السابق ليملأ شاشة المعاينة */
+    
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: center; /* يضمن بقاء النصوص في السنتر العمودي تماماً */
     align-items: center;
     text-align: center;
-    padding: 50px 20px;
+    padding: 20px;
     box-sizing: border-box;
     margin-bottom: 35px;
 
-    /* التأثير الزجاجي الشفاف المضبب */
+    /* التأثير الزجاجي الشفاف المضبب كما هو */
     background: rgba(255, 255, 255, 0.03); 
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
