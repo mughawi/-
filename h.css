@@ -165,13 +165,13 @@ lottie-player {
     font-weight: bold;
 }
 
-/* تنسيق بطاقة المعاينة المخفية (للروبوت فقط) */
+/* تنسيق بطاقة المعاينة المخفية المحدثة بخلفية كاملة ومستقلة */
 .meta-preview-card {
     position: absolute;
-    top: -9999px;          /* يرمي البطاقة خارج الشاشة تماماً لكي لا يراها الزائر */
+    top: -9999px;          /* لإخفائها تماماً عن الزوار */
     left: -9999px;
-    width: 500px;          /* أبعاد مربعة ومثالية جداً للواتساب */
-    height: 400px;
+    width: 600px;          /* أبعاد عريضة ومثالية للواتساب لملء الشاشة */
+    height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -180,26 +180,31 @@ lottie-player {
     padding: 40px;
     box-sizing: border-box;
     
-    /* خلفية فخمة جداً مأخوذة من إبداعك الأول مع تأثير زجاجي مضيء */
-    background: linear-gradient(135deg, #1e1e1e 0%, #111111 100%);
-    border-radius: 32px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    /* توهج أحمر داكن قوي يظهر بوضوح في المعاينة */
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(186, 36, 36, 0.4);
+    /* 🌟 الحل: خلفية داكنة تماماً ومصمتة تمنع الشفافية وتداخل العناصر 🌟 */
+    background: #121212 !important; 
+    
+    border-radius: 16px;
+    /* إطار ناعم متوهج باللون الأحمر الفخم الخاص بتصميمك */
+    border: 2px solid #ba2424 !important;
+    
+    /* ظل خلفي قوي ليبرز أبعاد البطاقة بشكل ثلاثي الأبعاد */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9) !important;
 }
 
-/* تنسيق النصوص بداخل بطاقة المعاينة لتبدو ضخمة وواضحة في الجوال */
+/* تنسيق النصوص بداخل بطاقة المعاينة المخفية */
 .meta-preview-card .preview-title {
-    font-size: 3.5rem; /* خط كبير وواضح في لقطة الشاشة */
-    font-weight: bold;
-    color: #ffffff;
-    margin-bottom: 20px;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    font-size: 3rem !important;
+    font-weight: bold !important;
+    color: #ffffff !important;
+    margin: 0 0 15px 0 !important;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8) !important;
+    font-family: 'Tajawal', sans-serif !important;
 }
 
 .meta-preview-card .preview-desc {
-    font-size: 1.6rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    font-size: 1.5rem !important;
+    color: #e0e0e0 !important;
+    margin: 0 !important;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+    font-family: 'Tajawal', sans-serif !important;
 }
