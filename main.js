@@ -73,3 +73,21 @@ if (enableTracking) {
 
 
 //7777777777777777
+let lastScrollTop = 0;
+const footer = document.querySelector('.main-footer');
+
+window.addEventListener('scroll', function() {
+    let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // إذا كان التمرير للأعلى (الرقم الحالي أصغر من الرقم السابق) والمستخدم ليس في قمة الصفحة
+    if (currentScroll < lastScrollTop && currentScroll > 10) {
+        // أظهر الفوتر فوراً
+        footer.classList.add('footer-visible');
+    } else {
+        // في حال التمرير للأسفل أو الوصول لقمة الصفحة، اخفِ الفوتر
+        footer.classList.remove('footer-visible');
+    }
+    
+    // تحديث قيم التمرير لتأمين الحسابات
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+});

@@ -224,5 +224,12 @@ backdrop-filter: blur(12px);
     text-align: center;
     padding: 12px 0;
     font-size: 1.1rem;
-    z-index: 1000;           /* لضمان بقائه فوق الخلفية المتحركة */
+    z-index: 1000;   /* لضمان بقائه فوق الخلفية المتحركة */
+    /* --- أضف هذه الأسطر فقط داخل الـ .main-footer الحالي --- */
+transition: transform 0.3s ease-in-out; /* تجعل صعود وهبوط الفوتر ناعماً */
+transform: translateY(100%);            /* تجعل الفوتر يبدأ وهو مخفي تحت الشاشة تلقائياً */
+}
+/* --- أضف هذا الكلاس الجديد كاملاً في أسفل الملف --- */
+.footer-visible {
+    transform: translateY(0);
 }
