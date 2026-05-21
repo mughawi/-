@@ -72,7 +72,7 @@ if (enableTracking) {
 }
 
 
-//7777777777777777
+//خااااص بالفوتر
 let lastScrollTop = 0;
 let isScrolling; // مؤقت لمراقبة توقف التمرير
 const footer = document.querySelector('.main-footer');
