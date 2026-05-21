@@ -2,8 +2,10 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* يمنع الـ Padding من زيادة عرض البطاقة */
+    box-sizing: border-box;
+    /* يمنع الـ Padding من زيادة عرض البطاقة */
 }
+
 /* =================================================== */
 /* كود الهيدر الإبداعي الكامل بالتأثير الزجاجي والتوهج */
 /* =================================================== */
@@ -12,23 +14,27 @@
     width: 100%;
     
     /* 🌟 ميزان الأبعاد الجديد للمعاينة 🌟 */
-    height: 320px;          /* نفس ارتفاع البطاقة الفخم السابق ليملأ شاشة المعاينة */
-    
+    height: 100px;
+    /* نفس ارتفاع البطاقة الفخم السابق ليملأ شاشة المعاينة */
+    position: sticky;
+    top: 0;
+    z-index: 1000px;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* يضمن بقاء النصوص في السنتر العمودي تماماً */
+    justify-content: center;
+    /* يضمن بقاء النصوص في السنتر العمودي تماماً */
     align-items: center;
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
     margin-bottom: 35px;
-
+    
     /* التأثير الزجاجي الشفاف المضبب كما هو */
-    background: rgba(255, 255, 255, 0.03); 
+    background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     
-    /* انحناء زوايا فخم وموزون */
+    /* انحناء زوايا فخم وموزون 
     border-radius: 24px;
     
     /* حافة مضيئة تعزل لوح الزجاج برقة */
@@ -47,7 +53,8 @@
     font-weight: bold;
     color: #ffffff;
     margin: 0 0 12px 0;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* ظل النص ليبرز فوق الزجاج */
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    /* ظل النص ليبرز فوق الزجاج */
 }
 
 /* تنسيق الوصف الصغير بداخل الهيدر */
@@ -64,6 +71,7 @@
         opacity: 0;
         transform: translateY(-20px);
     }
+    
     to {
         opacity: 1;
         transform: translateY(0);
@@ -75,7 +83,8 @@ body {
     background: linear-gradient(135deg, #312c00 0.000%, #312c00 14.286%, #332e1e calc(14.286% + 1px), #332e1e 28.571%, #323149 calc(28.571% + 1px), #323149 42.857%, #2c3377 calc(42.857% + 1px), #2c3377 57.143%, #2436a2 calc(57.143% + 1px), #2436a2 71.429%, #1a39c0 calc(71.429% + 1px), #1a39c0 85.714%, #113ccc calc(85.714% + 1px) 100.000%);
     min-height: 100vh;
     width: 100%;
-    overflow-x: hidden; /* يمنع التموج الأفقي نهائياً */
+    overflow-x: hidden;
+    /* يمنع التموج الأفقي نهائياً */
 }
 
 /* 3. تنسيق الحاوية الكبرى (الأب) */
@@ -86,21 +95,25 @@ main {
     align-items: center;
     width: 100%;
     min-height: 100vh;
-    padding: 40px 10px; /* مسافة من الأعلى والأسفل */
+    padding: 40px 10px;
+    /* مسافة من الأعلى والأسفل */
 }
 
 /* 4. تنسيق البطاقة (الابن) */
 .card {
     background: #312c00;
-    padding: 35px 25px; /* مسافات داخلية متوازنة */
+    padding: 35px 25px;
+    /* مسافات داخلية متوازنة */
     border-radius: 30px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     max-width: 450px;
-    width: 95%; /* لضمان عدم خروجها عن شاشات الجوال الصغيرة */
+    width: 95%;
+    /* لضمان عدم خروجها عن شاشات الجوال الصغيرة */
     text-align: center;
     border-top: 10px solid wheat;
     transition: transform 0.3s ease;
-    margin-bottom: 20px;/* مسافة في حال أضفت بطاقة أخرى */
+    margin-bottom: 20px;
+    /* مسافة في حال أضفت بطاقة أخرى */
 }
 
 /* تأثير بسيط عند لمس البطاقة (اختياري) */
@@ -131,30 +144,85 @@ h1 {
     font-weight: bold;
     color: blue;
 }
+
 /* هذا الكود يخبر المتصفح أن يحترم الأسطر والمسافات كما هي في ملف النص */
 #text-container {
-    white-space: pre-wrap; 
+    white-space: pre-wrap;
     word-wrap: break-word;
     font-size: 1.3rem;
-    line-height: 1.6; /* لإضافة مسافة مريحة بين الأسطر */
-    text-align: right; /* لضمان بقاء النص جهة اليمين */
+    line-height: 1.6;
+    /* لإضافة مسافة مريحة بين الأسطر */
+    text-align: right;
+    /* لضمان بقاء النص جهة اليمين */
     margin-bottom: 20px;
     color: wheat;
 }
+
 #text-container-2 {
-    white-space: pre-wrap; 
+    white-space: pre-wrap;
     word-wrap: break-word;
     font-size: 1.3rem;
-    line-height: 1.6; /* لإضافة مسافة مريحة بين الأسطر */
-    text-align: right; /* لضمان بقاء النص جهة اليمين */
+    line-height: 1.6;
+    /* لإضافة مسافة مريحة بين الأسطر */
+    text-align: right;
+    /* لضمان بقاء النص جهة اليمين */
     margin-bottom: 20px;
     color: wheat;
 }
+
 lottie-player {
-    width: 280px; 
-    max-width: 90%; 
+    width: 280px;
+    max-width: 90%;
     height: auto;
     margin: 0 auto;
     display: block;
     margin-bottom: 10px;
+}
+
+/* Card2 */
+.card2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    max-width: 450px;
+    width: 95%;
+    height: 320px;
+    margin-bottom: 30px;
+    border-radius: 19px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0px 5px 4px 0px #0000004D;
+}
+
+.card2-tatel {
+    font-size: 2.8rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0 0 12px 0;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.card2-p {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+/* تنسيق الفوتر وتثبيته مستقل في الأسفل */
+.main-footer {
+    position: fixed;         /* 📌 تثبيت مطلق ومستقل في الشاشة */
+    bottom: 0;               /* الالتصاق بقعر الشاشة تماماً */
+    left: 0;
+    width: 100%;             /* ليمتد بكامل عرض الشاشة */
+    background: rgba(255, 255, 255, 0.09);
+backdrop-filter: blur(12px);
+-webkit-backdrop-filter: blur(12px);
+    text-align: center;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    z-index: 1000;           /* لضمان بقائه فوق الخلفية المتحركة */
 }
