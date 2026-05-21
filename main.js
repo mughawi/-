@@ -74,20 +74,43 @@ if (enableTracking) {
 
 //7777777777777777
 let lastScrollTop = 0;
+let isScrolling; // مؤقت لمراقبة توقف التمرير
 const footer = document.querySelector('.main-footer');
 
 window.addEventListener('scroll', function() {
     let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
     
-    // إذا كان التمرير للأعلى (الرقم الحالي أصغر من الرقم السابق) والمستخدم ليس في قمة الصفحة
-    if (currentScroll < lastScrollTop && currentScroll > 10) {
-        // أظهر الفوتر فوراً
+    // حساب ما إذا كان المستخدم قد وصل لآخر الصفحة تماماً
+    let windowHeight = window.innerHeight;
+    let documentHeight = document.documentElement.scrollHeight;
+    // إذا كان القارئ على بعد 40 بكسل أو أقل من النهاية الحقيقية
+    let isAtBottom = (currentScroll + windowHeight) >= (documentHeight - 40);
+    
+    // 1. إذا وصلنا لآخر الصفحة تماماً، نثبت الفوتر ولا نخفيه أبداً
+    if (isAtBottom) {
+        footer.classList.add('footer-visible');
+        window.clearTimeout(isScrolling); // إيقاف مؤقت الاختفاء
+        return; // الخروج من الدالة للحفاظ على ثباته
+    }
+    
+    // 2. أثناء التصفح: بمجرد النزول واستعراض أسفل الصفحة -> أظهر الفوتر فوراً
+    if (currentScroll > lastScrollTop) {
         footer.classList.add('footer-visible');
     } else {
-        // في حال التمرير للأسفل أو الوصول لقمة الصفحة، اخفِ الفوتر
+        // إذا رجع المستخدم لقمة الصفحة -> اخفِ الفوتر
         footer.classList.remove('footer-visible');
     }
     
-    // تحديث قيم التمرير لتأمين الحسابات
+    // 3. ذكاء التوقف: إلغاء المؤقت السابق طالما أن إصبعك يتحرك
+    window.clearTimeout(isScrolling);
+    
+    // إذا توقفت عن السحب لمدة نصف ثانية، يختفي الفوتر تلقائياً ليوسع لك الشاشة
+    isScrolling = setTimeout(function() {
+        if (!isAtBottom) { // شرط ألا نكون في نهاية الصفحة
+            footer.classList.remove('footer-visible');
+        }
+    }, 500);
+    
+    // تحديث قيمة التمرير
     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 });
