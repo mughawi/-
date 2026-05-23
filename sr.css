@@ -201,6 +201,7 @@ lottie-player {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0px 5px 4px 0px #0000004D;
+    z-index: 1;
 }
 
 .card2-tatel {
