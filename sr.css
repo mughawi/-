@@ -18,7 +18,7 @@
     /* نفس ارتفاع البطاقة الفخم السابق ليملأ شاشة المعاينة */
     position: sticky;
     top: 0;
-    z-index: 9999px;
+    z-index: 1000;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -117,7 +117,6 @@ main {
     border-top: 10px solid wheat;
     transition: transform 0.3s ease;
     margin-bottom: 20px;
-    z-index: 1;
     /* مسافة في حال أضفت بطاقة أخرى */
 }
 
@@ -234,7 +233,6 @@ lottie-player {
     text-align: center;
     padding: 12px 0;
     font-size: 1.1rem;
-    z-index: 1000;
     /* لضمان بقائه فوق الخلفية المتحركة */
     /* --- أضف هذه الأسطر فقط داخل الـ .main-footer الحالي --- */
     transition: transform 0.3s ease-in-out;

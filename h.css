@@ -18,7 +18,7 @@
     /* نفس ارتفاع البطاقة الفخم السابق ليملأ شاشة المعاينة */
     position: sticky;
     top: 0;
-    z-index: 1000px;
+    z-index: 1000;
     display: flex;
     flex-direction: column;
     justify-content: center;
