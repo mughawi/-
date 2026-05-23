@@ -52,7 +52,7 @@
     font-size: 2rem;
     font-weight: bold;
     color: #ffffff;
-    margin: 0 0 12px 0;
+    margin: 0 0 10px 0;
     text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     /* ظل النص ليبرز فوق الزجاج */
 }
@@ -173,7 +173,7 @@ h1 {
     margin-bottom: 20px;
     color: wheat;
 }
-
+/*
 lottie-player {
     width: 280px;
     max-width: 90%;
