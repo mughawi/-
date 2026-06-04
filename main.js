@@ -10,7 +10,7 @@ const pageName = window.location.pathname.split("/").pop().replace(".html", "") 
 fetch(`data/${pageName}.txt`)
     .then(response => response.text())
     .then(data => {
-        const parts = data.split('*'); // التقسيم عند النجمة
+        const parts = data.split('|'); // التقسيم عند النجمة
         
         parts.forEach((content, index) => {
             // إذا كان index هو 0 يبحث عن text-container، وإذا كان 1 يبحث عن text-container-2 وهكذا
@@ -18,11 +18,20 @@ fetch(`data/${pageName}.txt`)
             let element = document.getElementById(id);
             
             if (element && content.trim() !== "") {
-                element.innerText = content.trim();
+                let processed = content.trim();
+                // 1. تحويل التظليل الأصفر ==
+                processed = processed.replace(/==(.*?)==/g, '<mark>$1</mark>');
+                // 2. تحويل الخط العريض ** الذي ينسخه تطبيقك تلقائياً
+                processed = processed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                
+                // تشغيل التنسيقات داخل الصفحة بدلاً من innerText القديمة
+                element.innerHTML = processed;
+                
             }
         });
     })
     .catch(error => console.log('خطأ في جلب الملف'));
+
 
 // 2. كود الإحصائيات والعداد (يعمل فقط إذا كان الاختيار أعلاه true)
 if (enableTracking) {
@@ -71,8 +80,7 @@ if (enableTracking) {
     console.log("إحصائيات جوجل وعداد Firebase مجمّدان حالياً.");
 }
 
-
-//خااااص بالفوتر
+//خاص بالفووووتر
 let lastScrollTop = 0;
 let isScrolling; // مؤقت لمراقبة توقف التمرير
 const footer = document.querySelector('.main-footer');
