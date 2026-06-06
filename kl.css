@@ -246,8 +246,6 @@ lottie-player {
     display: inline-block;
 }
 
-
-
 /* تنسيق الفوتر وتثبيته مستقل في الأسفل */
 .main-footer {
     position: fixed;
@@ -288,5 +286,13 @@ lottie-player {
     mark {
         display: inline-block !important;
         text-align: right !important;
+    }
+
+    /* 🔢 إجبار الرقم على النزول لسطر مستقل فقط على شاشات الجوال */
+    .custom-number {
+        display: block !important;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        margin-left: 0px;
     }
 }
