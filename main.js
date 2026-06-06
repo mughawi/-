@@ -23,6 +23,8 @@ fetch(`data/${pageName}.txt`)
                 processed = processed.replace(/==(.*?)==/g, '<mark>$1</mark>');
                 // 2. تحويل الخط العريض ** الذي ينسخه تطبيقك تلقائياً
                 processed = processed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                processed = processed.replace(/^\s*-[ ]?/gm, '<span class="custom-bullet">●</span> ');
+                processed = processed.replace(/^\s*(\d+)[\.-][ ]?/gm, '<span class="custom-number">$1 .</span>  ');
                 
                 // تشغيل التنسيقات داخل الصفحة بدلاً من innerText القديمة
                 element.innerHTML = processed;
