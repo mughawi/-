@@ -275,19 +275,18 @@ lottie-player {
 .footer-visible {
     transform: translateY(0);
 }
-/* 📱 ضبط تنسيق النصوص والتظليل على شاشات الجوال */
-@media (max-width: 360px) {
-    /* تحويل المحاذاة إلى اليمين بدلاً من المط الكامل لمنع الفراغات الكبيرة */
+/* 📱 ضبط خطوط ومحاذاة النص على شاشات الجوال بالملي */
+@media (max-width: 480px) {
+    /* إلغاء المحاذاة الجبرية الممتدة وجعل النص يتدفق طبيعياً لليمين لمنع الفراغات */
     #text-container, [id^="text-container-"] {
         text-align: right !important; 
-        word-break: keep-all;
+        text-justify: none !important;
+        white-space: normal !important;
     }
 
-    /* ضبط سلوك التظليل لمنع التباعد المشوه */
+    /* منع التظليل من سحب أو مط الكلمات الملتصقة به */
     mark {
-        display: inline;
-        padding: 2px 4px;
-        box-decoration-break: clone;
-        -webkit-box-decoration-break: clone;
+        display: inline-block !important;
+        text-align: right !important;
     }
 }
