@@ -276,7 +276,7 @@ lottie-player {
     transform: translateY(0);
 }
 /* 📱 ضبط تنسيق النصوص والتظليل على شاشات الجوال */
-@media (max-width: 480px) {
+@media (max-width: 360px) {
     /* تحويل المحاذاة إلى اليمين بدلاً من المط الكامل لمنع الفراغات الكبيرة */
     #text-container, [id^="text-container-"] {
         text-align: right !important; 
