@@ -275,3 +275,19 @@ lottie-player {
 .footer-visible {
     transform: translateY(0);
 }
+/* 📱 ضبط تنسيق النصوص والتظليل على شاشات الجوال */
+@media (max-width: 480px) {
+    /* تحويل المحاذاة إلى اليمين بدلاً من المط الكامل لمنع الفراغات الكبيرة */
+    #text-container, [id^="text-container-"] {
+        text-align: right !important; 
+        word-break: keep-all;
+    }
+
+    /* ضبط سلوك التظليل لمنع التباعد المشوه */
+    mark {
+        display: inline;
+        padding: 2px 4px;
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
+    }
+}
