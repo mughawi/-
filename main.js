@@ -19,6 +19,7 @@ fetch(`data/${pageName}.txt`)
             
             if (element && content.trim() !== "") {
                 let processed = content.trim();
+                processed = processed.replace(/[ \t]+/g, ' ');
                 // 1. تحويل التظليل الأصفر ==
                 processed = processed.replace(/==(.*?)==/g, '<mark>$1</mark>');
                 // 2. تحويل الخط العريض ** الذي ينسخه تطبيقك تلقائياً
