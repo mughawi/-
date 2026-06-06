@@ -80,8 +80,7 @@
 
 body {
     font-family: 'Tajawal', sans-serif;
-    
-    background: radial-gradient(circle, rgba(196, 129, 14, 1) 0%, rgba(0, 0, 0, 1) 100%);
+background: linear-gradient(135deg, #312c00 0.000%, #312c00 14.286%, #332e1e calc(14.286% + 1px), #332e1e 28.571%, #323149 calc(28.571% + 1px), #323149 42.857%, #2c3377 calc(42.857% + 1px), #2c3377 57.143%, #2436a2 calc(57.143% + 1px), #2436a2 71.429%, #1a39c0 calc(71.429% + 1px), #1a39c0 85.714%, #113ccc calc(85.714% + 1px) 100.000%);
     min-height: 100vh;
     width: 100%;
     overflow-x: hidden;
@@ -119,6 +118,14 @@ main {
     transition: transform 0.3s ease;
     margin-bottom: 20px;
     /* مسافة في حال أضفت بطاقة أخرى */
+}
+
+.card blockquote {
+    color: pink;
+    border: 2px solid #000;
+    padding: 9px;
+    border-right-width: 10px;
+    
 }
 
 /* تأثير بسيط عند لمس البطاقة (اختياري) */
@@ -173,6 +180,7 @@ h1 {
     /* لضمان بقاء النص جهة اليمين */
     margin-bottom: 20px;
     color: #ffffff;
+    
 }
 
 /*
@@ -221,6 +229,22 @@ lottie-player {
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
+/* 🎨 تنسيق الدائرة الكبيرة أمام الأسطر */
+.custom-bullet {
+    font-size: 1.6rem;         /* تكبير حجم الدائرة (يمكنك زيادتها لـ 1.8 أو 2 كما تحب) */
+    color: #ff5e7e;            /* لون الدائرة (وردي متناسق مع الإطار) */
+    vertical-align: middle;    /* موازنة الدائرة لتصبح في منتصف السطر مع الكلام */
+    margin-left: 10px;         /* مسافة مريحة بين الدائرة وبداية الكلام العربي */
+    display: inline-block;     /* لضمان تطبيق الأبعاد بدقة هندسية */
+}
+/* 🔢 تنسيق الأرقام التلقائية في بداية الأسطر */
+.custom-number {
+    font-size: 1.6rem;         /* نفس حجم النقطة ليكون متناسقاً */
+    font-weight: bold;         /* جعل الرقم عريضاً وبارزاً */
+    color: red;        /* نفس اللون الوردي الجميل لموقعك */
+    margin-left: 4px;          /* مسافة صغيرة قبل النقطة التابعة للرقم */
+    display: inline-block;
+}
 
 
 
