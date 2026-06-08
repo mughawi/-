@@ -232,7 +232,7 @@ lottie-player {
 /* 🎨 تنسيق الدائرة الكبيرة أمام الأسطر */
 .custom-bullet {
     font-size: 1.6rem;         /* تكبير حجم الدائرة (يمكنك زيادتها لـ 1.8 أو 2 كما تحب) */
-    color: #ff5e7e;            /* لون الدائرة (وردي متناسق مع الإطار) */
+    color: red;           /* لون الدائرة (وردي متناسق مع الإطار) */
     vertical-align: middle;    /* موازنة الدائرة لتصبح في منتصف السطر مع الكلام */
     margin-left: 10px;         /* مسافة مريحة بين الدائرة وبداية الكلام العربي */
     display: inline-block;     /* لضمان تطبيق الأبعاد بدقة هندسية */
@@ -275,11 +275,11 @@ lottie-player {
 }
 /* 📱 ضبط خطوط ومحاذاة النص على شاشات الجوال بالملي */
 @media (max-width: 480px) {
-    /* إلغاء المحاذاة الجبرية الممتدة وجعل النص يتدفق طبيعياً لليمين لمنع الفراغات */
+    /* تجعل النص يتدفق طبيعياً لليمين ويحترم المسافات والأسطر كما في الشاشة الكبيرة */
     #text-container, [id^="text-container-"] {
         text-align: right !important; 
         text-justify: none !important;
-        white-space: normal !important;
+        white-space: pre-wrap !important; /* يحافظ على توزيع الأسطر والفقرات الصحيح */
     }
 
     /* منع التظليل من سحب أو مط الكلمات الملتصقة به */
@@ -288,11 +288,14 @@ lottie-player {
         text-align: right !important;
     }
 
-    /* 🔢 إجبار الرقم على النزول لسطر مستقل فقط على شاشات الجوال */
-    .custom-number {
-        display: block !important;
-        margin-top: 15px;
-        margin-bottom: 5px;
-        margin-left: 0px;
+    /* 🔢 جعل الرقم والنقطة في بداية فقرتهما تماماً وفي نفس السطر بدون أي رص عشوائي */
+    .custom-number, .custom-bullet {
+        display: inline-block !important;
+        float: none !important;          /* إلغاء التعويم نهائياً لمنع الرص فوق بعض */
+        margin-left: 8px !important;    /* مسافة كافية تمنع التصاق الرقم بالكلمة التي بعده */
+        margin-right: 0px !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        vertical-align: baseline !important; /* يضمن موازنة الارتفاع مع السطر */
     }
 }
