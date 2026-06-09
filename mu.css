@@ -1,0 +1,319 @@
+/* 1. تصفير المسافات وصمام أمان العرض */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* يمنع الـ Padding من زيادة عرض البطاقة */
+}
+
+/* =================================================== */
+/* كود الهيدر الإبداعي الكامل بالتأثير الزجاجي والتوهج */
+/* =================================================== */
+
+.main-header {
+    width: 100%;
+    
+    /* 🌟 ميزان الأبعاد الجديد للمعاينة 🌟 */
+    height: 100px;
+    /* نفس ارتفاع البطاقة الفخم السابق ليملأ شاشة المعاينة */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* يضمن بقاء النصوص في السنتر العمودي تماماً */
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 35px;
+    
+    /* التأثير الزجاجي الشفاف المضبب كما هو */
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(8px);
+    
+    /* انحناء زوايا فخم وموزون 
+    border-radius: 24px;
+    
+    /* حافة مضيئة تعزل لوح الزجاج برقة */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    
+    /* التوهج الأحمر الداكن ثلاثي الأبعاد */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(186, 36, 36, 0.25);
+    
+    /* تشغيل حركة الهبوط السلس عند فتح الصفحة */
+    animation: fadeInSlide 0.8s ease-out;
+}
+
+/* تنسيق العنوان الرئيسي بداخل الهيدر */
+.header-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0 0 10px 0;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    /* ظل النص ليبرز فوق الزجاج */
+}
+
+/* تنسيق الوصف الصغير بداخل الهيدر */
+.header-desc {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* حركة الهبوط البرمجي الاحترافي */
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background: linear-gradient(135deg, #312c00 0.000%, #312c00 14.286%, #332e1e calc(14.286% + 1px), #332e1e 28.571%, #323149 calc(28.571% + 1px), #323149 42.857%, #2c3377 calc(42.857% + 1px), #2c3377 57.143%, #2436a2 calc(57.143% + 1px), #2436a2 71.429%, #1a39c0 calc(71.429% + 1px), #1a39c0 85.714%, #113ccc calc(85.714% + 1px) 100.000%);
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+    /* يمنع التموج الأفقي نهائياً */
+    
+}
+
+/* 3. تنسيق الحاوية الكبرى (الأب) */
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 40px 10px;
+    /* مسافة من الأعلى والأسفل */
+}
+
+/* 4. تنسيق البطاقة (الابن) */
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0px 5px 4px 0px #0000004D;
+    padding: 35px 25px;
+    /* مسافات داخلية متوازنة */
+    border-radius: 30px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    width: 95%;
+    /* لضمان عدم خروجها عن شاشات الجوال الصغيرة */
+    text-align: center;
+    border-top: 10px solid wheat;
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
+    /* مسافة في حال أضفت بطاقة أخرى */
+}
+
+.card blockquote {
+    color: pink;
+    border: 2px solid #000;
+    padding: 9px;
+    border-right-width: 10px;
+    
+}
+
+/* تأثير بسيط عند لمس البطاقة (اختياري) */
+.card:hover {
+    transform: translateY(-5px);
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 26px;
+    margin-bottom: 15px;
+    text-shadow: 5px 5px 10px #000000;
+}
+
+/* 6. تنسيق العداد */
+.counter {
+    margin-top: 20px;
+    font-size: 14px;
+    color: black;
+    background: wheat;
+    padding: 8px 20px;
+    border-radius: 50px;
+    display: inline-block;
+    border: 1px solid #eee;
+}
+
+#view-count {
+    font-weight: bold;
+    color: blue;
+}
+
+/* هذا الكود يخبر المتصفح أن يحترم الأسطر والمسافات كما هي في ملف النص */
+#text-container {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    /* لإضافة مسافة مريحة بين الأسطر */
+    text-align: right;
+    /* لضمان بقاء النص جهة اليمين */
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+#text-container-2 {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    /* لإضافة مسافة مريحة بين الأسطر */
+    text-align: right;
+    /* لضمان بقاء النص جهة اليمين */
+    margin-bottom: 20px;
+    color: #ffffff;
+    
+}
+
+/*
+lottie-player {
+    width: 280px;
+    max-width: 90%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Card2 */
+.card2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    max-width: 450px;
+    width: 95%;
+    height: 320px;
+    margin-bottom: 30px;
+    border-radius: 19px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0px 5px 4px 0px #0000004D;
+    border-top: 10px solid #CCB283;
+}
+
+.card2-tatel {
+    font-size: 2.8rem;
+    font-weight: bold;
+    color: white;
+    margin: 0 0 12px 0;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    
+}
+
+.card2-p {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* 🎨 تنسيق الدائرة الكبيرة أمام الأسطر */
+.custom-bullet {
+    font-size: 1.6rem;
+    /* تكبير حجم الدائرة (يمكنك زيادتها لـ 1.8 أو 2 كما تحب) */
+    color: green;
+    /* لون الدائرة (وردي متناسق مع الإطار) */
+    vertical-align: middle;
+    /* موازنة الدائرة لتصبح في منتصف السطر مع الكلام */
+    margin-left: 10px;
+    /* مسافة مريحة بين الدائرة وبداية الكلام العربي */
+    display: inline-block;
+    /* لضمان تطبيق الأبعاد بدقة هندسية */
+}
+
+/* 🔢 تنسيق الأرقام التلقائية في بداية الأسطر */
+.custom-number {
+    font-size: 1.6rem;
+    /* نفس حجم النقطة ليكون متناسقاً */
+    font-weight: bold;
+    /* جعل الرقم عريضاً وبارزاً */
+    color: red;
+    /* نفس اللون الوردي الجميل لموقعك */
+    margin-left: 4px;
+    /* مسافة صغيرة قبل النقطة التابعة للرقم */
+    display: inline-block;
+}
+
+/* تنسيق الفوتر وتثبيته مستقل في الأسفل */
+.main-footer {
+    position: fixed;
+    /* 📌 تثبيت مطلق ومستقل في الشاشة */
+    bottom: 0;
+    /* الالتصاق بقعر الشاشة تماماً */
+    left: 0;
+    width: 100%;
+    /* ليمتد بكامل عرض الشاشة */
+    background: rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(10px);
+    text-align: center;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    /* لضمان بقائه فوق الخلفية المتحركة */
+    /* --- أضف هذه الأسطر فقط داخل الـ .main-footer الحالي --- */
+    transition: transform 0.3s ease-in-out;
+    /* تجعل صعود وهبوط الفوتر ناعماً */
+    transform: translateY(100%);
+    /* تجعل الفوتر يبدأ وهو مخفي تحت الشاشة تلقائياً */
+}
+
+/* --- أضف هذا الكلاس الجديد كاملاً في أسفل الملف --- */
+.footer-visible {
+    transform: translateY(0);
+}
+
+/* 📱 ضبط خطوط ومحاذاة النص على شاشات الجوال بالملي */
+@media (max-width: 480px) {
+
+    /* تجعل النص يتدفق طبيعياً لليمين ويحترم المسافات والأسطر كما في الشاشة الكبيرة */
+    #text-container,
+    [id^="text-container-"] {
+        text-align: right !important;
+        text-justify: none !important;
+        white-space: pre-wrap !important;
+        /* يحافظ على توزيع الأسطر والفقرات الصحيح */
+    }
+    
+    /* منع التظليل من سحب أو مط الكلمات الملتصقة به */
+    mark {
+        display: inline-block !important;
+        text-align: right !important;
+    }
+    
+    /* 🔢 جعل الرقم والنقطة في بداية فقرتهما تماماً وفي نفس السطر بدون أي رص عشوائي */
+    .custom-number,
+    .custom-bullet {
+        display: inline-block !important;
+        float: none !important;
+        /* إلغاء التعويم نهائياً لمنع الرص فوق بعض */
+        margin-left: 8px !important;
+        /* مسافة كافية تمنع التصاق الرقم بالكلمة التي بعده */
+        margin-right: 0px !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        vertical-align: baseline !important;
+        /* يضمن موازنة الارتفاع مع السطر */
+    }
+}
