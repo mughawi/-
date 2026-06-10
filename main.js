@@ -127,53 +127,46 @@ window.addEventListener('scroll', function() {
 });
 
 
-// دالة ذكية تقرأ مجلد الموقع على Vercel وتكتشف أحدث ملف HTML تم رفعه تلقائياً
-fetch('./')
-    .then(response => response.text())
-    .then(htmlListing => {
-        // إنشاء عنصر وهمي لقراءة الروابط المتاحة في المجلد
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlListing, 'text/html');
-        
-        // جمع كل روابط ملفات الـ HTML الموجودة في الموقع (باستثناء الرئيسية والأذكار والستايل)
-        const links = Array.from(doc.querySelectorAll('a'))
-            .map(a => a.getAttribute('href'))
-            .filter(href => href && href.endsWith('.html') && href !== 'index.html' && href !== 'mu.html' && href !== 'azkar.html');
+// 1. قائمة بصفحاتك العلمية الحالية (رتبها بحيث تكون الصفحة الجديدة دائماً هي الأخيرة في القائمة)
+const myPublishedPages = [
+    "mu.html", 
+    "azkar.html"
+    // عندما تنشر صفحة جديدة مستقبلاً (مثلاً sr.html)، أضفها هنا في النهاية فقط لتصبح: "azkar.html", "sr.html"
+];
 
-        // إذا وجد السكربت ملفات علمية منشورة في المجلد
-        if (links.length > 0) {
-            // تلقائياً: آخر ملف في القائمة هو أحدث ملف قمت بنشره ورفعه
-            const latestPage = links[links.length - 1];
+// 2. السكربت يأخذ تلقائياً آخر اسم صفحة قمت بإضافتها في نهاية القائمة أعلاه
+const latestAddedPage = myPublishedPages[myPublishedPages.length - 1];
 
-            // الآن ندخل إلى هذا الملف الجديد خلف الكواليس لنأخذ بياناته
-            fetch(latestPage)
-                .then(res => res.text())
-                .then(pageHtml => {
-                    const pageDoc = parser.parseFromString(pageHtml, 'text/html');
-                    
-                    // قراءة العنوان والوصف من داخل ملفك الجديد تلقائياً
-                    const pageTitle = pageDoc.querySelector('title')?.innerText || 'مادة علمية جديدة';
-                    const pageDesc = pageDoc.querySelector('meta[property="og:description"]')?.getAttribute('content') 
-                                  || 'اضغط لتصفح المادة العلمية الجديدة فوراً.';
-                    
-                    // حقن كرت النشر الفاخر في الواجهة الرئيسية تلقائياً
-                    const container = document.getElementById('latest-publication-container');
-                    if (container) {
-                        container.innerHTML = `
-                            <section class="premium-block latest-post-block">
-                              <div class="block-decoration animated-gradient"></div>
-                              <div class="block-body">
-                                <div>
-                                  <span class="block-label latest-label">✨ نُشر حديثاً تلقائياً</span>
-                                  <h3>${pageTitle}</h3>
-                                  <p>${pageDesc}</p>
-                                </div>
-                                <a href="${latestPage}" class="block-action-btn latest-btn">اقرأ المادة العلمية الآن <i>←</i></a>
-                              </div>
-                            </section>
-                        `;
-                    }
-                });
-        }
-    })
-    .catch(error => console.log('سيرفر Vercel مجمّد أو لا يدعم قراءة المجلدات حالياً'));
+if (latestAddedPage) {
+    // السكربت يدخل إلى الصفحة الأخيرة خلف الكواليس ويجلب بياناتها حية
+    fetch(latestAddedPage)
+        .then(response => response.text())
+        .then(htmlText => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlText, 'text/html');
+            
+            // سحب العنوان والوصف الأصليين من داخل ملف الصفحة الجديد تلقائياً
+            const pageTitle = doc.querySelector('title')?.innerText || 'مادة علمية جديدة';
+            const pageDesc = doc.querySelector('meta[property="og:description"]')?.getAttribute('content') 
+                          || 'اضغط لتصفح المادة العلمية الجديدة فوراً.';
+            
+            // حقن الكرت الفاخر في الواجهة الرئيسية
+            const container = document.getElementById('latest-publication-container');
+            if (container) {
+                container.innerHTML = `
+                    <section class="premium-block latest-post-block">
+                      <div class="block-decoration animated-gradient"></div>
+                      <div class="block-body">
+                        <div>
+                          <span class="block-label latest-label">✨ نُشر حديثاً</span>
+                          <h3>${pageTitle}</h3>
+                          <p>${pageDesc}</p>
+                        </div>
+                        <a href="${latestAddedPage}" class="block-action-btn latest-btn">اقرأ المادة العلمية الآن <i>←</i></a>
+                      </div>
+                    </section>
+                `;
+            }
+        })
+        .catch(error => console.log('تعذر جلب بيانات آخر صفحة مضافة'));
+}
