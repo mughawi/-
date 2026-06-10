@@ -129,8 +129,8 @@ window.addEventListener('scroll', function() {
 
 // 1. قائمة بصفحاتك العلمية الحالية (رتبها بحيث تكون الصفحة الجديدة دائماً هي الأخيرة في القائمة)
 const myPublishedPages = [
-    "mu.html", 
-    "azkar.html"
+    "azkar.html", 
+    "mu.html"
     // عندما تنشر صفحة جديدة مستقبلاً (مثلاً sr.html)، أضفها هنا في النهاية فقط لتصبح: "azkar.html", "sr.html"
 ];
 
