@@ -4,86 +4,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLR8YH05S2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        
-        gtag('config', 'G-PLR8YH05S2');
-    </script>
-    <title>بصمتك في رحيل الأيام</title>
+    
+    <!--<script async src="https://www.googletagmanager.com/gtag/js?id=G-PLR8YH05S2"></script>-->
+    
+    <title>منصة بصمتك في رحيل الأيام.</title>
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://opal-two-58.vercel.app/images/IMG_0823.jpeg">
     <meta property="og:image" content="https://opal-two-58.vercel.app/images/IMG_0823.jpeg">
+    <meta name="twitter:image" content="https://opal-two-58.vercel.app/images/IMG_0823.jpeg">
     <meta property="og:url" content="https://opal-two-58.vercel.app/index.html">
-    <meta property="og:title" content="بصمتك في رحيل الأيام">
-    <meta property="og:description" content="تمر بنا الأيام والليالي.. محتوى دعوي متجدد">
+    <meta property="og:title" content="منصة بصمتك في رحيل الأيام">
+    <meta property="og:description" content="منصة دعوية وعلمية متجددة تعتني بنشر ركائز منهج أهل السنة والجماعة والأذكار الشرعية.">
+    
+    
     
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+    
+    
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
 </head>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="data/style.css">
 
 <body>
-    <main>
-        <div class="card">
-            <img src="images/IMG_0823.jpeg" alt="قيمة الوقت
-" class="card-img">
+    
+    <header class="modern-hero">
+        <div class="hero-blur-bg"></div>
+        <div class="hero-wrapper">
+            <div class="hero-brand">
+                <img src="images/IMG_0823.jpeg" alt="شعار المنصة" class="brand-img">
+                <span class="brand-tag">منصة علمية دعوية متجددة</span>
+            </div>
+            <h1 class="hero-main-title">بصمتك في رحيل الأيام</h1>
             
-            <h1>بصمتك في رحيل الأيام</h1>
-            <div id="text-container">جاري جلب الكلام...</div>
-            
-            
-            <div class="counter">تمت قراءة هذه الصفحة <span id="view-count">...</span> مرة</div>
+            <div class="hero-welcome-badge">
+                <div id="text-container">جاري تحميل الكلمة الترحيبية للوجاهة...</div>
+            </div>
         </div>
+    </header>
+    
+    <main class="creative-layout">
+        <div id="latest-publication-container"></div>
+        
+        <div class="layout-header">
+            <h2>محتويات وعناوين المنصة</h2>
+            <p>تصفح المواد العلمية والأذكار الشرعية الثابتة</p>
+        </div>
+        
+        <div class="cards-split-zone">
+            
+            <section class="premium-block sunnah-block">
+                <div class="block-decoration"></div>
+                <div class="block-body">
+                    <span class="block-label">الركيزة الأولى</span>
+                    <h3>أهل السُّنَّةِ والجَمَاعَة</h3>
+                    <p>مفهوم شامل وأبرز ركائز المنهج القائم على الوسطية والاعتدال، ومصادر التشريع الأساسية الثابتة لديهم.</p>
+                    <a href="mu.html" class="block-action-btn">استعراض المادة العلمية <i>←</i></a>
+                </div>
+            </section>
+            
+            <section class="premium-block azkar-block">
+                <div class="block-decoration"></div>
+                <div class="block-body">
+                    <span class="block-label">الركيزة الثانية</span>
+                    <h3>الأذكار الشرعية اليومية</h3>
+                    <p>حصن المسلم اليومي من الأوردة النبوية الثابتة لحفظ المسلم وتنوير قلبه في غدوه ورواحه.</p>
+                    <a href="azkar.html" class="block-action-btn">تصفح حصن المسلم <i>←</i></a>
+                </div>
+            </section>
+            
+        </div>
+        
+        <div class="live-status-bar">
+            <div class="status-track">
+                <span class="status-pulse"></span>
+                <p class="counter">📊 إجمالي القراءات الحية لهذه الواجهة: <strong id="view-count">...</strong> مرة</p>
+            </div>
+        </div>
+        
     </main>
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyBnU74Im6--bbGVtxasiUxtL5RyK0VtgzY",
-            authDomain: "da3wa-tracker.firebaseapp.com",
-            databaseURL: "https://da3wa-tracker-default-rtdb.firebaseio.com",
-            projectId: "da3wa-tracker",
-            storageBucket: "da3wa-tracker.firebasestorage.app",
-            messagingSenderId: "481503479391",
-            appId: "1:481503479391:web:cb3d14a521f0626337fdea"
-        };
-        
-        // بدء تشغيل Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        
-        // تحديث عداد المشاهدات
-        const pagePath = 'post_01';
-        const viewsRef = db.ref('views/' + pagePath);
-        
-        viewsRef.transaction((currentValue) => {
-            return (currentValue || 0) + 1;
-        });
-        
-        // عرض العداد في الصفحة
-        viewsRef.on('value', (snapshot) => {
-            document.getElementById('view-count').innerText = snapshot.val() || 0;
-        });
-    </script>
-    <script>
-  // نطلب من المتصفح جلب ملف النص من مجلد data
-  fetch('data/content.txt')
-    .then(response => response.text()) // تحويل الملف إلى نص
-    .then(data => {
-      // وضع النص داخل الـ div الذي أنشأته في الخطوة السابقة
-      document.getElementById('text-container').innerText = data;
-    })
-    .catch(error => {
-      console.log('هناك خطأ في جلب النص:', error);
-    });
-</script>
-
+    
+    <footer class="main-footer">
+        <p>دعوة في ظهر الغيب © ٢٠٢٦ مغاوي</p>
+    </footer>
+    
+    <script src="main.js"></script>
+    
 </body>
+
 
 </html>
