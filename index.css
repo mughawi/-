@@ -305,3 +305,36 @@ html, body {
   background: #e11d48;
   color: #ffffff;
 }
+
+/* ==========================================================================
+   تنسيق خاص للتوسيط التام على شاشات الجوال الصغيرة (320px فما دون)
+   ========================================================================== */
+@media (max-width: 340px) {
+  /* تصفير الهوامش لضمان التوسيط التام في المساحة الضيقة */
+  .creative-layout {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  /* جعل منطقة البطاقات مرنة وتتوسط الشاشة تلقائياً */
+  .cards-split-zone, 
+  #latest-publication-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  /* ضبط عرض البطاقات الفردية لتأخذ مساحة متزنة وتتوسط المشهد */
+  .premium-block {
+    width: 100% !important;
+    max-width: 290px !important; /* لترك مسافة أمان بسيطة على الجوانب */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box;
+  }
+}
