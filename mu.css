@@ -80,7 +80,7 @@
 
 body {
     font-family: 'Tajawal', sans-serif;
-    background: linear-gradient(135deg, #312c00 0.000%, #312c00 14.286%, #332e1e calc(14.286% + 1px), #332e1e 28.571%, #323149 calc(28.571% + 1px), #323149 42.857%, #2c3377 calc(42.857% + 1px), #2c3377 57.143%, #2436a2 calc(57.143% + 1px), #2436a2 71.429%, #1a39c0 calc(71.429% + 1px), #1a39c0 85.714%, #113ccc calc(85.714% + 1px) 100.000%);
+background: linear-gradient(135deg, #312c00 0.000%, #312c00 14.286%, #332e1e calc(14.286% + 1px), #332e1e 28.571%, #323149 calc(28.571% + 1px), #323149 42.857%, #2c3377 calc(42.857% + 1px), #2c3377 57.143%, #2436a2 calc(57.143% + 1px), #2436a2 71.429%, #1a39c0 calc(71.429% + 1px), #1a39c0 85.714%, #113ccc calc(85.714% + 1px) 100.000%);
     min-height: 100vh;
     width: 100%;
     overflow-x: hidden;
@@ -113,7 +113,8 @@ main {
     max-width: 450px;
     width: 95%;
     /* لضمان عدم خروجها عن شاشات الجوال الصغيرة */
-    text-align: center;
+        direction: rtl;
+    text-align: right;
     border-top: 10px solid wheat;
     transition: transform 0.3s ease;
     margin-bottom: 20px;
@@ -138,19 +139,31 @@ h1 {
     font-size: 26px;
     margin-bottom: 15px;
     text-shadow: 5px 5px 10px #000000;
+    text-align: center;
 }
 
 /* 6. تنسيق العداد */
 .counter {
-    margin-top: 20px;
-    font-size: 14px;
-    color: black;
-    background: wheat;
-    padding: 8px 20px;
-    border-radius: 50px;
-    display: inline-block;
-    border: 1px solid #eee;
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #edf2f7;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #4a5568;
 }
+
+.counter span {
+  font-weight: bold;
+  color: #1a365d;
+}
+
+
+.counter span {
+  font-weight: bold;
+  color: #1a365d;
+}
+
 
 #view-count {
     font-weight: bold;
@@ -159,28 +172,31 @@ h1 {
 
 /* هذا الكود يخبر المتصفح أن يحترم الأسطر والمسافات كما هي في ملف النص */
 #text-container {
-    white-space: pre-wrap;
+    direction: rtl;
+    text-align: right;
+    text-align-last: right;
+    display: block;
+    white-space: pre-line;
     word-wrap: break-word;
     font-size: 1.3rem;
     line-height: 1.6;
-    /* لإضافة مسافة مريحة بين الأسطر */
-    text-align: right;
-    /* لضمان بقاء النص جهة اليمين */
     margin-bottom: 20px;
     color: #ffffff;
+    width: 100%;
 }
 
 #text-container-2 {
-    white-space: pre-wrap;
+    direction: rtl;
+    text-align: right;
+    text-align-last: right;
+    display: block;
+    white-space: pre-line;
     word-wrap: break-word;
     font-size: 1.3rem;
     line-height: 1.6;
-    /* لإضافة مسافة مريحة بين الأسطر */
-    text-align: right;
-    /* لضمان بقاء النص جهة اليمين */
     margin-bottom: 20px;
     color: #ffffff;
-    
+    width: 100%;
 }
 
 /*
@@ -229,31 +245,22 @@ lottie-player {
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* 🎨 تنسيق الدائرة الكبيرة أمام الأسطر */
+/* 🎨 تنسيق النقاط لتصطف عمودياً جهة اليمين */
 .custom-bullet {
     font-size: 1.6rem;
-    /* تكبير حجم الدائرة (يمكنك زيادتها لـ 1.8 أو 2 كما تحب) */
     color: green;
-    /* لون الدائرة (وردي متناسق مع الإطار) */
-    vertical-align: middle;
-    /* موازنة الدائرة لتصبح في منتصف السطر مع الكلام */
-    margin-left: 10px;
-    /* مسافة مريحة بين الدائرة وبداية الكلام العربي */
-    display: inline-block;
-    /* لضمان تطبيق الأبعاد بدقة هندسية */
+    display: inline;
+    direction: rtl;
 }
 
-/* 🔢 تنسيق الأرقام التلقائية في بداية الأسطر */
+
+/* 🔢 التعديل السحري لإنهاء التفكك وجعل الرقم والنص سطر واحد */
 .custom-number {
     font-size: 1.6rem;
-    /* نفس حجم النقطة ليكون متناسقاً */
     font-weight: bold;
-    /* جعل الرقم عريضاً وبارزاً */
     color: red;
-    /* نفس اللون الوردي الجميل لموقعك */
-    margin-left: 4px;
-    /* مسافة صغيرة قبل النقطة التابعة للرقم */
-    display: inline-block;
+    display: inline;
+    direction: rtl;
 }
 
 /* تنسيق الفوتر وتثبيته مستقل في الأسفل */
@@ -282,38 +289,4 @@ lottie-player {
 /* --- أضف هذا الكلاس الجديد كاملاً في أسفل الملف --- */
 .footer-visible {
     transform: translateY(0);
-}
-
-/* 📱 ضبط خطوط ومحاذاة النص على شاشات الجوال بالملي */
-@media (max-width: 480px) {
-
-    /* تجعل النص يتدفق طبيعياً لليمين ويحترم المسافات والأسطر كما في الشاشة الكبيرة */
-    #text-container,
-    [id^="text-container-"] {
-        text-align: right !important;
-        text-justify: none !important;
-        white-space: pre-wrap !important;
-        /* يحافظ على توزيع الأسطر والفقرات الصحيح */
-    }
-    
-    /* منع التظليل من سحب أو مط الكلمات الملتصقة به */
-    mark {
-        display: inline-block !important;
-        text-align: right !important;
-    }
-    
-    /* 🔢 جعل الرقم والنقطة في بداية فقرتهما تماماً وفي نفس السطر بدون أي رص عشوائي */
-    .custom-number,
-    .custom-bullet {
-        display: inline-block !important;
-        float: none !important;
-        /* إلغاء التعويم نهائياً لمنع الرص فوق بعض */
-        margin-left: 8px !important;
-        /* مسافة كافية تمنع التصاق الرقم بالكلمة التي بعده */
-        margin-right: 0px !important;
-        margin-top: 0px !important;
-        margin-bottom: 0px !important;
-        vertical-align: baseline !important;
-        /* يضمن موازنة الارتفاع مع السطر */
-    }
 }

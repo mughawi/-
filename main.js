@@ -25,7 +25,7 @@ fetch(`data/${pageName}.txt`)
                 // 2. تحويل الخط العريض ** الذي ينسخه تطبيقك تلقائياً
                 processed = processed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                 processed = processed.replace(/^\s*-[ ]?/gm, '<span class="custom-bullet">●</span> ');
-                processed = processed.replace(/^\s*(\d+)[\.-][ ]?/gm, '<span class="custom-number">$1 .</span>  ');
+                processed = processed.replace(/^\s*(\d+)[\.-][ ]?/gm, '<span class="custom-number">$1 .</span> ');
                 
                 // تشغيل التنسيقات داخل الصفحة بدلاً من innerText القديمة
                 element.innerHTML = processed;
@@ -129,7 +129,7 @@ window.addEventListener('scroll', function() {
 
 // 1. قائمة بصفحاتك العلمية الحالية (رتبها بحيث تكون الصفحة الجديدة دائماً هي الأخيرة في القائمة)
 const myPublishedPages = [
-    "azkar.html", 
+    "azkar.html",
     "mu.html"
     // عندما تنشر صفحة جديدة مستقبلاً (مثلاً sr.html)، أضفها هنا في النهاية فقط لتصبح: "azkar.html", "sr.html"
 ];
@@ -147,8 +147,8 @@ if (latestAddedPage) {
             
             // سحب العنوان والوصف الأصليين من داخل ملف الصفحة الجديد تلقائياً
             const pageTitle = doc.querySelector('title')?.innerText || 'مادة علمية جديدة';
-            const pageDesc = doc.querySelector('meta[property="og:description"]')?.getAttribute('content') 
-                          || 'اضغط لتصفح المادة العلمية الجديدة فوراً.';
+            const pageDesc = doc.querySelector('meta[property="og:description"]')?.getAttribute('content') ||
+                'اضغط لتصفح المادة العلمية الجديدة فوراً.';
             
             // حقن الكرت الفاخر في الواجهة الرئيسية
             const container = document.getElementById('latest-publication-container');
