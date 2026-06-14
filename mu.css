@@ -1,75 +1,112 @@
-/* 1. تصفير المسافات وصمام أمان العرض */
+/* ========================================
+   1. تصفير المسافات
+   ======================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* يمنع الـ Padding من زيادة عرض البطاقة */
 }
 
-/* =================================================== */
-/* كود الهيدر الإبداعي الكامل بالتأثير الزجاجي والتوهج */
-/* =================================================== */
-
+/* ========================================
+   2. الهيدر الخرافي
+   ======================================== */
 .main-header {
+    position: relative;
     width: 100%;
-    
-    /* 🌟 ميزان الأبعاد الجديد للمعاينة 🌟 */
-    height: 100px;
-    /* نفس ارتفاع البطاقة الفخم السابق ليملأ شاشة المعاينة */
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    min-height: 200px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* يضمن بقاء النصوص في السنتر العمودي تماماً */
     align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(30, 30, 60, 0.8) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 3px solid rgba(255, 215, 0, 0.4);
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(255, 215, 0, 0.2);
+    overflow: hidden;
+    padding: 50px 20px;
+}
+
+.header-bg-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.15) 0%, transparent 50%);
+    animation: headerFloat 8s ease-in-out infinite;
+}
+
+@keyframes headerFloat {
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+    
+    50% {
+        transform: scale(1.1) rotate(2deg);
+    }
+}
+
+.header-content {
+    position: relative;
+    z-index: 1;
     text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
-    margin-bottom: 35px;
-    
-    /* التأثير الزجاجي الشفاف المضبب كما هو */
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(8px);
-    
-    /* انحناء زوايا فخم وموزون 
-    border-radius: 24px;
-    
-    /* حافة مضيئة تعزل لوح الزجاج برقة */
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    
-    /* التوهج الأحمر الداكن ثلاثي الأبعاد */
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(186, 36, 36, 0.25);
-    
-    /* تشغيل حركة الهبوط السلس عند فتح الصفحة */
-    animation: fadeInSlide 0.8s ease-out;
+    animation: fadeInSlide 1s ease-out;
 }
 
-/* تنسيق العنوان الرئيسي بداخل الهيدر */
+.header-icon {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
 .header-title {
-    font-size: 2rem;
+    font-size: 2.8rem;
     font-weight: bold;
-    color: #ffffff;
-    margin: 0 0 10px 0;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    /* ظل النص ليبرز فوق الزجاج */
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 25px rgba(255, 215, 0, 0.4);
+    animation: glow 2.5s ease-in-out infinite;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
 }
 
-/* تنسيق الوصف الصغير بداخل الهيدر */
-.header-desc {
-    font-size: 1.3rem;
-    color: rgba(255, 255, 255, 0.85);
-    margin: 0;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+@keyframes glow {
+
+    0%,
+    100% {
+        filter: brightness(1);
+    }
+    
+    50% {
+        filter: brightness(1.4);
+    }
 }
 
-/* حركة الهبوط البرمجي الاحترافي */
 @keyframes fadeInSlide {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-30px);
     }
     
     to {
@@ -78,215 +115,673 @@
     }
 }
 
+.header-subtitle {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 15px 0 20px 0;
+    font-weight: 500;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.header-line {
+    width: 200px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #FFD700, transparent);
+    margin: 0 auto;
+    border-radius: 2px;
+    animation: lineGlow 2s ease-in-out infinite;
+}
+
+@keyframes lineGlow {
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+    
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    }
+}
+
+/* ========================================
+   3. الجسم والخلفية
+   ======================================== */
 body {
     font-family: 'Tajawal', sans-serif;
-background: linear-gradient(135deg, #312c00 0.000%, #312c00 14.286%, #332e1e calc(14.286% + 1px), #332e1e 28.571%, #323149 calc(28.571% + 1px), #323149 42.857%, #2c3377 calc(42.857% + 1px), #2c3377 57.143%, #2436a2 calc(57.143% + 1px), #2436a2 71.429%, #1a39c0 calc(71.429% + 1px), #1a39c0 85.714%, #113ccc calc(85.714% + 1px) 100.000%);
+    background: linear-gradient(135deg,
+            #0f0c29 0%,
+            #302b63 20%,
+            #24243e 40%,
+            #1a1a2e 60%,
+            #0f0c29 80%,
+            #1a1a2e 100%);
+    background-attachment: fixed;
     min-height: 100vh;
     width: 100%;
     overflow-x: hidden;
-    /* يمنع التموج الأفقي نهائياً */
-    
+    color: #ffffff;
+    line-height: 1.6;
 }
 
-/* 3. تنسيق الحاوية الكبرى (الأب) */
+/* ========================================
+   4. المحتوى الرئيسي
+   ======================================== */
 main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 50px 20px 100px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+main::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ========================================
+   5. البطاقة الرئيسية
+   ======================================== */
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 50px 40px;
+    border-radius: 30px;
+    max-width: 850px;
+    width: 100%;
+    border: 2px solid rgba(255, 215, 0, 0.25);
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    position: relative;
+    z-index: 1;
+    margin-bottom: 40px;
+    animation: slideUp 0.8s ease-out;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow:
+        0 35px 100px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 0 40px rgba(255, 215, 0, 0.15);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card>h1 {
+    font-size: 2.3rem;
+    text-align: center;
+    margin-bottom: 45px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    padding-bottom: 25px;
+    font-weight: 700;
+}
+
+.card>h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #FFD700, transparent);
+    border-radius: 2px;
+}
+
+/* ========================================
+   6. الحاويات النصية
+   ======================================== */
+#text-container,
+#text-container-2 {
+    direction: rtl;
+    text-align: right;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+#text-container p,
+#text-container-2 p {
+    font-size: 1.35rem;
+    line-height: 2.2;
+    margin-bottom: 25px;
+    color: #e8e8e8;
+    text-align: right;
+    padding: 0 10px;
+}
+
+/* ========================================
+   7. تنسيق القائمة (مثل g.html)
+   ======================================== */
+#text-container ol,
+#text-container-2 ol {
+    list-style: none;
+    padding: 0;
+    counter-reset: item;
+}
+
+#text-container li,
+#text-container-2 li {
+    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 25px;
+    padding: 25px 30px 25px 25px;
+    border-radius: 15px;
+    border-right: 5px solid #FFD700;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    counter-increment: item;
+    font-size: 1.3rem;
+    line-height: 2;
+    color: #ffffff;
+}
+
+#text-container li::before,
+#text-container-2 li::before {
+    content: counter(item);
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #000;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+    animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+    }
+    
+    50% {
+        transform: scale(1.08);
+        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.7);
+    }
+}
+
+#text-container li:hover,
+#text-container-2 li:hover {
+    transform: translateX(-5px);
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+    border-right-color: #FFA500;
+}
+
+#text-container li strong,
+#text-container-2 li strong {
+    color: #FFD700;
+    font-size: 1.3rem;
+    display: inline;
+    margin-bottom: 0;
+    font-weight: 700;
+}
+
+/* ========================================
+   8. تنسيق الآيات القرآنية
+   ======================================== */
+.quran-text {
+    font-family: 'Amiri', 'Tajawal', serif;
+    font-size: 1.4rem;
+    color: #4CAF50;
+    line-height: 2.5;
+    margin: 15px 0;
+    padding: 15px 20px;
+    background: rgba(76, 175, 80, 0.1);
+    border-radius: 10px;
+    border-right: 4px solid #4CAF50;
+    display: inline-block;
+    width: 100%;
+}
+
+/* ========================================
+   9. تنسيق المراجع
+   ======================================== */
+.quran-ref {
+    color: #FFD700;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 2px 8px;
+    background: rgba(255, 215, 0, 0.15);
+    border-radius: 5px;
+}
+
+/* ========================================
+   تنسيق الأحاديث النبوية
+   ======================================== */
+.hadith-box {
+    display: block;
+    font-family: 'Amiri', 'Tajawal', serif;
+    font-size: 1.4rem;
+    color: #FFD700;
+    line-height: 2.5;
+    margin: 15px 0;
+    padding: 15px 20px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 10px;
+    border-right: 4px solid #FFD700;
+    text-align: center;
+}
+
+.hadith-text:hover {
+    background: rgba(255, 215, 0, 0.15);
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+    transform: translateX(-3px);
+}
+
+
+/* ========================================
+   10. التظليل والعريض
+   ======================================== */
+mark {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.35) 0%, rgba(255, 165, 0, 0.35) 100%);
+    color: #FFD700;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.25);
+    display: inline-block;
+}
+
+strong {
+    color: #FFD700;
+    font-weight: 700;
+}
+
+font[color="#00b050"] {
+    color: #4CAF50 !important;
+    font-weight: 600;
+}
+
+/* ========================================
+   11. العداد المحسّن
+   ======================================== */
+.counter {
+    text-align: center;
+    margin-top: 45px;
+    padding: 35px;
+    background: linear-gradient(135deg,
+            rgba(255, 215, 0, 0.15) 0%,
+            rgba(255, 165, 0, 0.1) 100%);
+    border-radius: 25px;
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    font-size: 1.3rem;
+    color: #ffffff;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 1s ease-out 0.5s both;
+    box-shadow:
+        0 10px 40px rgba(255, 215, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    
+    to {
+        opacity: 1;
+    }
+}
+
+.counter::before {
+    content: '👁️';
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    opacity: 0.5;
+}
+
+.counter span {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #FFD700;
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+    display: inline-block;
+    margin: 0 12px;
+    animation: countGlow 2s ease-in-out infinite;
+}
+
+@keyframes countGlow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+    }
+    
+    50% {
+        text-shadow: 0 0 35px rgba(255, 215, 0, 0.9);
+    }
+}
+
+/* ========================================
+   12. البطاقة الثانية
+   ======================================== */
+.card2 {
+    position: relative;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 70px 40px;
+    max-width: 850px;
     width: 100%;
-    min-height: 100vh;
-    padding: 40px 10px;
-    /* مسافة من الأعلى والأسفل */
-}
-
-/* 4. تنسيق البطاقة (الابن) */
-.card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0px 5px 4px 0px #0000004D;
-    padding: 35px 25px;
-    /* مسافات داخلية متوازنة */
+    min-height: 320px;
+    margin-bottom: 50px;
     border-radius: 30px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    max-width: 450px;
-    width: 95%;
-    /* لضمان عدم خروجها عن شاشات الجوال الصغيرة */
-        direction: rtl;
-    text-align: right;
-    border-top: 10px solid wheat;
-    transition: transform 0.3s ease;
-    margin-bottom: 20px;
-    /* مسافة في حال أضفت بطاقة أخرى */
+    background: linear-gradient(135deg,
+            rgba(255, 215, 0, 0.12) 0%,
+            rgba(255, 165, 0, 0.06) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 215, 0, 0.35);
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 30px rgba(255, 215, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    animation: slideUp 0.8s ease-out 0.3s both;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card blockquote {
-    color: pink;
-    border: 2px solid #000;
-    padding: 9px;
-    border-right-width: 10px;
+.card2::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
+    animation: rotate 25s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
     
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-/* تأثير بسيط عند لمس البطاقة (اختياري) */
-.card:hover {
-    transform: translateY(-5px);
-}
-
-h1 {
-    color: #ffffff;
-    font-size: 26px;
-    margin-bottom: 15px;
-    text-shadow: 5px 5px 10px #000000;
-    text-align: center;
-}
-
-/* 6. تنسيق العداد */
-.counter {
-  text-align: center;
-  margin-top: 40px;
-  padding: 20px;
-  background-color: #edf2f7;
-  border-radius: 12px;
-  font-size: 14px;
-  color: #4a5568;
-}
-
-.counter span {
-  font-weight: bold;
-  color: #1a365d;
-}
-
-
-.counter span {
-  font-weight: bold;
-  color: #1a365d;
-}
-
-
-#view-count {
-    font-weight: bold;
-    color: blue;
-}
-
-/* هذا الكود يخبر المتصفح أن يحترم الأسطر والمسافات كما هي في ملف النص */
-#text-container {
-    direction: rtl;
-    text-align: right;
-    text-align-last: right;
-    display: block;
-    white-space: pre-line;
-    word-wrap: break-word;
-    font-size: 1.3rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    color: #ffffff;
-    width: 100%;
-}
-
-#text-container-2 {
-    direction: rtl;
-    text-align: right;
-    text-align-last: right;
-    display: block;
-    white-space: pre-line;
-    word-wrap: break-word;
-    font-size: 1.3rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    color: #ffffff;
-    width: 100%;
-}
-
-/*
-lottie-player {
-    width: 280px;
-    max-width: 90%;
-    height: auto;
-    margin: 0 auto;
-    display: block;
-    margin-bottom: 10px;
-}
-
-/* Card2 */
-.card2 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding-bottom: 20px;
-    box-sizing: border-box;
-    max-width: 450px;
-    width: 95%;
-    height: 320px;
-    margin-bottom: 30px;
-    border-radius: 19px;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0px 5px 4px 0px #0000004D;
-    border-top: 10px solid #CCB283;
+.card2:hover {
+    transform: translateY(-10px);
 }
 
 .card2-tatel {
-    font-size: 2.8rem;
+    font-size: 3.8rem;
     font-weight: bold;
-    color: white;
-    margin: 0 0 12px 0;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 25px 0;
+    text-shadow: 0 4px 35px rgba(255, 215, 0, 0.4);
+    position: relative;
+    z-index: 1;
+    animation: glow 3s ease-in-out infinite;
+    letter-spacing: 2px;
 }
 
 .card2-p {
-    font-size: 1.3rem;
-    color: rgba(255, 255, 255, 0.85);
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.95);
     margin: 0;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 1;
+    font-weight: 500;
 }
 
-/* 🎨 تنسيق النقاط لتصطف عمودياً جهة اليمين */
-.custom-bullet {
-    font-size: 1.6rem;
-    color: green;
-    display: inline;
-    direction: rtl;
-}
-
-
-/* 🔢 التعديل السحري لإنهاء التفكك وجعل الرقم والنص سطر واحد */
-.custom-number {
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: red;
-    display: inline;
-    direction: rtl;
-}
-
-/* تنسيق الفوتر وتثبيته مستقل في الأسفل */
+/* ========================================
+   13. الفوتر البسيط مع التواصل
+   ======================================== */
 .main-footer {
-    position: fixed;
-    /* 📌 تثبيت مطلق ومستقل في الشاشة */
-    bottom: 0;
-    /* الالتصاق بقعر الشاشة تماماً */
-    left: 0;
+    position: relative;
     width: 100%;
-    /* ليمتد بكامل عرض الشاشة */
-    background: rgba(255, 255, 255, 0.09);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(10px);
-    text-align: center;
-    padding: 12px 0;
-    font-size: 1.1rem;
-    /* لضمان بقائه فوق الخلفية المتحركة */
-    /* --- أضف هذه الأسطر فقط داخل الـ .main-footer الحالي --- */
-    transition: transform 0.3s ease-in-out;
-    /* تجعل صعود وهبوط الفوتر ناعماً */
-    transform: translateY(100%);
-    /* تجعل الفوتر يبدأ وهو مخفي تحت الشاشة تلقائياً */
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(26, 26, 46, 0.9) 100%);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #ffffff;
+    margin-top: 60px;
+    border-top: 3px solid rgba(255, 215, 0, 0.35);
+    box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* --- أضف هذا الكلاس الجديد كاملاً في أسفل الملف --- */
-.footer-visible {
-    transform: translateY(0);
+.footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.footer-section {
+    margin-bottom: 30px;
+}
+
+.footer-section h3 {
+    color: #FFD700;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    position: relative;
+    padding-bottom: 10px;
+    font-weight: 700;
+}
+
+.footer-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #FFD700, transparent);
+}
+
+.footer-section p {
+    opacity: 0.9;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.social-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.social-icon:hover {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+    border-color: #FFD700;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 25px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.footer-bottom p {
+    margin: 8px 0;
+    opacity: 0.9;
+    font-size: 1.05rem;
+}
+
+.footer-verse {
+    font-family: 'Amiri', 'Tajawal', serif;
+    color: #FFD700 !important;
+    font-size: 1.3rem !important;
+    margin-top: 12px !important;
+    font-weight: 600;
+    text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+}
+
+/* ========================================
+   14. التصميم المتجاوب
+   ======================================== */
+@media (max-width: 768px) {
+    .header-title {
+        font-size: 2rem;
+    }
+    
+    .header-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .header-icon {
+        font-size: 2.5rem;
+    }
+    
+    .card {
+        padding: 35px 25px;
+    }
+    
+    .card>h1 {
+        font-size: 1.9rem;
+        margin-bottom: 35px;
+    }
+    
+    #text-container p,
+    #text-container-2 p {
+        font-size: 1.15rem;
+        line-height: 2;
+    }
+    
+    #text-container li,
+    #text-container-2 li {
+        padding: 20px;
+        font-size: 1.15rem;
+    }
+    
+    #text-container li::before,
+    #text-container-2 li::before {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        top: -10px;
+        right: -10px;
+    }
+    
+    .card2-tatel {
+        font-size: 2.6rem;
+    }
+    
+    .card2-p {
+        font-size: 1.5rem;
+    }
+    
+    .counter {
+        padding: 25px;
+        font-size: 1rem;
+    }
+    
+    .counter span {
+        font-size: 1.8rem;
+    }
+    
+    .footer-section h3 {
+        font-size: 1.3rem;
+    }
+    
+    .footer-section p {
+        font-size: 1rem;
+    }
+    
+    .social-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-title {
+        font-size: 1.7rem;
+    }
+    
+    .main-header {
+        min-height: 160px;
+        padding: 30px 15px;
+    }
+    
+    .card {
+        padding: 25px 20px;
+    }
+    
+    .card2 {
+        padding: 50px 25px;
+    }
+    
+    .card2-tatel {
+        font-size: 2.2rem;
+    }
 }

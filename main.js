@@ -24,11 +24,30 @@ fetch(`data/${pageName}.txt`)
                 processed = processed.replace(/==(.*?)==/g, '<mark>$1</mark>');
                 // 2. تحويل الخط العريض ** الذي ينسخه تطبيقك تلقائياً
                 processed = processed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                processed = processed.replace(/^\s*-[ ]?/gm, '<span class="custom-bullet">●</span> ');
-                processed = processed.replace(/^\s*(\d+)[\.-][ ]?/gm, '<span class="custom-number">$1 .</span> ');
+                // إزالة الأرقام من البداية (سنضيفها عبر CSS مثل g.html)
+                // 3. تنسيق الآيات القرآنية
+                processed = processed.replace(/(﴿[^﴾]+﴾)/g, '<span class="quran-text">$1</span>');
+                // 4. تنسيق المراجع
+                processed = processed.replace(/(\[\S+:\s*\d+\])/g, '<span class="quran-ref">$1</span>');
+                // تنسيق الأحاديث بين القوسين
+                processed = processed.replace(/\(([^)]+)\)(?=\s*\[)/g,
+                    '</p><div class="hadith-box">($1)</div><p>');
                 
-                // تشغيل التنسيقات داخل الصفحة بدلاً من innerText القديمة
-                element.innerHTML = processed;
+                
+                // 5. إزالة الأرقام من البداية (سنضيفها تلقائياً عبر CSS)
+                processed = processed.replace(/^[ \t]*\d+[\.\-][ \t]*/gm, '');
+                
+                // 6. تحويل السطور إلى قائمة <ol><li>
+                const lines = processed.split('\n').filter(line => line.trim() !== '');
+                let html = '<ol>';
+                lines.forEach(line => {
+                    if (line.trim() !== '') {
+                        html += '<li>' + line.trim() + '</li>';
+                    }
+                });
+                html += '</ol>';
+                
+                element.innerHTML = html;
                 
             }
         });
@@ -83,48 +102,6 @@ if (enableTracking) {
     console.log("إحصائيات جوجل وعداد Firebase مجمّدان حالياً.");
 }
 
-//خاص بالفووووتر
-let lastScrollTop = 0;
-let isScrolling; // مؤقت لمراقبة توقف التمرير
-const footer = document.querySelector('.main-footer');
-
-window.addEventListener('scroll', function() {
-    let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // حساب ما إذا كان المستخدم قد وصل لآخر الصفحة تماماً
-    let windowHeight = window.innerHeight;
-    let documentHeight = document.documentElement.scrollHeight;
-    // إذا كان القارئ على بعد 40 بكسل أو أقل من النهاية الحقيقية
-    let isAtBottom = (currentScroll + windowHeight) >= (documentHeight - 40);
-    
-    // 1. إذا وصلنا لآخر الصفحة تماماً، نثبت الفوتر ولا نخفيه أبداً
-    if (isAtBottom) {
-        footer.classList.add('footer-visible');
-        window.clearTimeout(isScrolling); // إيقاف مؤقت الاختفاء
-        return; // الخروج من الدالة للحفاظ على ثباته
-    }
-    
-    // 2. أثناء التصفح: بمجرد النزول واستعراض أسفل الصفحة -> أظهر الفوتر فوراً
-    if (currentScroll > lastScrollTop) {
-        footer.classList.add('footer-visible');
-    } else {
-        // إذا رجع المستخدم لقمة الصفحة -> اخفِ الفوتر
-        footer.classList.remove('footer-visible');
-    }
-    
-    // 3. ذكاء التوقف: إلغاء المؤقت السابق طالما أن إصبعك يتحرك
-    window.clearTimeout(isScrolling);
-    
-    // إذا توقفت عن السحب لمدة نصف ثانية، يختفي الفوتر تلقائياً ليوسع لك الشاشة
-    isScrolling = setTimeout(function() {
-        if (!isAtBottom) { // شرط ألا نكون في نهاية الصفحة
-            footer.classList.remove('footer-visible');
-        }
-    }, 500);
-    
-    // تحديث قيمة التمرير
-    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-});
 
 
 // 1. قائمة بصفحاتك العلمية الحالية (رتبها بحيث تكون الصفحة الجديدة دائماً هي الأخيرة في القائمة)
