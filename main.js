@@ -24,7 +24,6 @@ fetch(`data/${pageName}.txt`)
                 processed = processed.replace(/==(.*?)==/g, '<mark>$1</mark>');
                 // 2. تحويل الخط العريض ** الذي ينسخه تطبيقك تلقائياً
                 processed = processed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                // إزالة الأرقام من البداية (سنضيفها عبر CSS مثل g.html)
                 // 3. تنسيق الآيات القرآنية
                 processed = processed.replace(/(﴿[^﴾]+﴾)/g, '<span class="quran-text">$1</span>');
                 // 4. تنسيق المراجع
