@@ -29,8 +29,10 @@ fetch(`data/${pageName}.txt`)
                 // 4. تنسيق المراجع
                 processed = processed.replace(/(\[\S+:\s*\d+\])/g, '<span class="quran-ref">$1</span>');
                 // تنسيق الأحاديث بين القوسين
-                processed = processed.replace(/\(([^)]+)\)(?=\s*\[)/g,
-                    '</p><div class="hadith-box">($1)</div><p>');
+                processed = processed.replace(/\(([^)]+?)\)\s*\./g, '<div class="hadith-box">($1)</div>.');
+                
+                // تنسيق 2: الأحاديث التي تنتهي بمرجع [رواه/صحيح/متفق]
+                processed = processed.replace(/\(([^)]+?)\)\s*(?=\[[^\]]+\])/g, '<div class="hadith-box">($1)</div>');
                 
                 
                 // 5. إزالة الأرقام من البداية (سنضيفها تلقائياً عبر CSS)
