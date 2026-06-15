@@ -31,6 +31,7 @@ fetch(`data/${pageName}.txt`)
                 processed = processed.replace(/(﴿[^﴾]+﴾)/g, '<span class="quran-text">$1</span>');
                 // 4. تنسيق المراجع
                 processed = processed.replace(/(\[\S+:\s*\d+\])/g, '<span class="quran-ref">$1</span>');
+                processed = processed.replace(/(\[(?:متفق عليه|رواه .+?|صحيح .+?|ضعيف .+?)\])/g, '<span class="quran-ref">$1</span>');
                 // تنسيق الأحاديث بين القوسين
                 processed = processed.replace(/\(([^)]+?)\)\s*\./g, '<div class="hadith-box">($1)</div>.');
                 
