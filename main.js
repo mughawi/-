@@ -20,6 +20,9 @@ fetch(`data/${pageName}.txt`)
             if (element && content.trim() !== "") {
                 let processed = content.trim();
                 processed = processed.replace(/[ \t]+/g, ' ');
+                processed = processed.replace(/^[ \t]*-[ \t]*/gm, '<span class="manual-bullet">● </span>');
+                // تنسيق الأرقام اليدوية (1. 2. 3.)
+                processed = processed.replace(/^(\d+[\.\-]\s*)/gm, '<span class="manual-number">$1</span>');
                 // 1. تحويل التظليل الأصفر ==
                 processed = processed.replace(/==(.*?)==/g, '<mark>$1</mark>');
                 // 2. تحويل الخط العريض ** الذي ينسخه تطبيقك تلقائياً
@@ -33,10 +36,6 @@ fetch(`data/${pageName}.txt`)
                 
                 // تنسيق 2: الأحاديث التي تنتهي بمرجع [رواه/صحيح/متفق]
                 processed = processed.replace(/\(([^)]+?)\)\s*(?=\[[^\]]+\])/g, '<div class="hadith-box">($1)</div>');
-                
-                
-                // 5. إزالة الأرقام من البداية (سنضيفها تلقائياً عبر CSS)
-                processed = processed.replace(/^[ \t]*\d+[\.\-][ \t]*/gm, '');
                 
                 // 6. تحويل السطور إلى قائمة <ol><li>
                 const lines = processed.split('\n').filter(line => line.trim() !== '');
