@@ -20,6 +20,9 @@ fetch(`data/${pageName}.txt`)
             if (element && content.trim() !== "") {
                 let processed = content.trim();
                 processed = processed.replace(/[ \t]+/g, ' ');
+                processed = processed.replace(/^###\s+(.*)/gm, '<h3>$1</h3>');
+                processed = processed.replace(/^##\s+(.*)/gm, '<h2>$1</h2>');
+                processed = processed.replace(/^#\s+(.*)/gm, '<h1>$1</h1>');
                 processed = processed.replace(/^[ \t]*-[ \t]*/gm, '<span class="manual-bullet">● </span>');
                 // تنسيق الأرقام اليدوية (1. 2. 3.)
                 processed = processed.replace(/^(\d+[\.\-]\s*)/gm, '<span class="manual-number">$1</span>');
