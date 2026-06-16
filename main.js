@@ -190,7 +190,7 @@ function sharePage() {
     const url = window.location.href;
     
     if (navigator.share) {
-        // نرسل الرابط فقط، ودع واتساب يجلب العنوان والوصف من الصفحة تلقائياً
+        // نرسل الرابط فقط - واتساب سيقرأ الميتا تاج تلقائياً
         navigator.share({
             url: url
         }).catch(() => {});
