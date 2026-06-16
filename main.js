@@ -151,3 +151,79 @@ if (latestAddedPage) {
         })
         .catch(error => console.log('تعذر جلب بيانات آخر صفحة مضافة'));
 }
+//*****************الازرار المشاركة 
+
+// ========================================
+// إنشاء الأزرار العائمة تلقائياً
+// ========================================
+function createFloatingButtons() {
+    // إنشاء الحاوية
+    const container = document.createElement('div');
+    container.className = 'floating-buttons';
+    
+    // زر العودة
+    const backBtn = document.createElement('a');
+    backBtn.href = 'index.html';
+    backBtn.className = 'float-btn back-btn';
+    backBtn.title = 'العودة للرئيسية';
+    backBtn.innerHTML = '🏠';
+    
+    // زر المشاركة
+    const shareBtn = document.createElement('button');
+    shareBtn.className = 'float-btn share-btn';
+    shareBtn.title = 'مشاركة الصفحة';
+    shareBtn.innerHTML = '📤';
+    shareBtn.onclick = sharePage;
+    
+    // إضافة الأزرار للحاوية
+    container.appendChild(backBtn);
+    container.appendChild(shareBtn);
+    
+    // إضافة الحاوية للصفحة
+    document.body.appendChild(container);
+}
+
+// ========================================
+// دالة المشاركة
+// ========================================
+function sharePage() {
+    const title = document.querySelector('meta[property="og:title"]')?.content || document.title;
+    const desc = document.querySelector('meta[property="og:description"]')?.content || '';
+    const url = window.location.href;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: title,
+            text: desc,
+            url: url
+        }).catch(() => {});
+    } else {
+        navigator.clipboard.writeText(url).then(() => {
+            showToast('✅ تم نسخ الرابط! يمكنك مشاركته الآن');
+        });
+    }
+}
+
+// ========================================
+// إشعار جميل
+// ========================================
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.className = 'toast-notification';
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('toast-hide');
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
+}
+
+// ========================================
+// تشغيل الأزرار عند تحميل الصفحة
+// ========================================
+document.addEventListener('DOMContentLoaded', function() {
+    // تأخير بسيط لضمان تحميل الصفحة
+    setTimeout(createFloatingButtons, 500);
+});
+
