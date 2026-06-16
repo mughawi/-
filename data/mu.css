@@ -610,6 +610,101 @@ font[color="#00b050"] {
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     display: inline-block;
 }
+/*الازرررررررررر المشاركة
+/* ========================================
+   🎯 الأزرار العائمة (بدون ميديا)
+   ======================================== */
+
+.floating-buttons {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 9999;
+    animation: floatSlideIn 0.8s ease-out;
+}
+
+@keyframes floatSlideIn {
+    from { transform: translateX(-100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.float-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.float-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 50%;
+}
+
+.float-btn:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 15px 35px rgba(255, 215, 0, 0.5);
+}
+
+.float-btn:hover::before {
+    opacity: 1;
+}
+
+.float-btn:active {
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* زر العودة */
+.back-btn {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: #FFD700;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.back-btn:hover {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #0a0a0f;
+}
+
+/* زر المشاركة */
+.share-btn {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #0a0a0f;
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    animation: shareGlow 3s ease-in-out infinite;
+}
+
+@keyframes shareGlow {
+    0%, 100% { box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4); }
+    50% { box-shadow: 0 8px 35px rgba(255, 215, 0, 0.7); }
+}
+
+/* ========================================
+    إشعار النسخ (بدون ميديا)
+   ======================================== */
+
+.toast-notification {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+}
 
 
 /* ========================================
