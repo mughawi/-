@@ -187,19 +187,16 @@ function createFloatingButtons() {
 // دالة المشاركة
 // ========================================
 function sharePage() {
-    const title = document.querySelector('meta[property="og:title"]')?.content || document.title;
-    const desc = document.querySelector('meta[property="og:description"]')?.content || '';
     const url = window.location.href;
     
     if (navigator.share) {
+        // نرسل الرابط فقط، ودع واتساب يجلب العنوان والوصف من الصفحة تلقائياً
         navigator.share({
-            title: title,
-            text: desc,
             url: url
         }).catch(() => {});
     } else {
         navigator.clipboard.writeText(url).then(() => {
-            showToast('✅ تم نسخ الرابط! يمكنك مشاركته الآن');
+            showToast('✅ تم نسخ الرابط!');
         });
     }
 }
