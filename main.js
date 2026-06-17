@@ -157,7 +157,6 @@ if (latestAddedPage) {
 // إنشاء الأزرار العائمة تلقائياً
 // ========================================
 function createFloatingButtons() {
-    // إنشاء الحاوية
     const container = document.createElement('div');
     container.className = 'floating-buttons';
     
@@ -165,24 +164,28 @@ function createFloatingButtons() {
     const backBtn = document.createElement('a');
     backBtn.href = 'index.html';
     backBtn.className = 'float-btn back-btn';
-    backBtn.title = 'العودة للرئيسية';
     backBtn.innerHTML = '🏠';
     
-    // زر المشاركة
+    // زر المشاركة مع النص
+    const shareWrapper = document.createElement('div');
+    shareWrapper.className = 'share-wrapper';
+    
     const shareBtn = document.createElement('button');
     shareBtn.className = 'float-btn share-btn';
-    shareBtn.title = 'مشاركة الصفحة';
     shareBtn.innerHTML = '📤';
     shareBtn.onclick = sharePage;
     
-    // إضافة الأزرار للحاوية
-    container.appendChild(backBtn);
-    container.appendChild(shareBtn);
+    const shareText = document.createElement('span');
+    shareText.className = 'share-text';
+    shareText.textContent = 'شارك';
     
-    // إضافة الحاوية للصفحة
+    shareWrapper.appendChild(shareBtn);
+    shareWrapper.appendChild(shareText);
+    
+    container.appendChild(backBtn);
+    container.appendChild(shareWrapper);
     document.body.appendChild(container);
 }
-
 // ========================================
 // دالة المشاركة
 // ========================================

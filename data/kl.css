@@ -617,8 +617,8 @@ font[color="#00b050"] {
 
 .floating-buttons {
     position: fixed;
-    bottom: 30px;
-    left: 30px;
+    bottom: 50px;
+    left: 10px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -705,6 +705,28 @@ font[color="#00b050"] {
     bottom: 100px;
     left: 50%;
 }
+/* زر المشاركة مع النص */
+.share-wrapper {
+    position: relative;
+}
+
+.share-text {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #FFD700;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: 'Tajawal', sans-serif;
+    background: rgba(255, 215, 0, 0.1);
+    padding: 4px 10px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    white-space: nowrap;
+    pointer-events: none;
+}
+
 
 /* ========================================
    14. التصميم المتجاوب
