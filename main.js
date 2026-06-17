@@ -35,12 +35,8 @@ fetch(`data/${pageName}.txt`)
                 // 4. تنسيق المراجع
                 processed = processed.replace(/(\[\S+:\s*\d+\])/g, '<span class="quran-ref">$1</span>');
                 processed = processed.replace(/(\[(?:متفق عليه|رواه .+?|صحيح .+?|ضعيف .+?)\])/g, '<span class="quran-ref">$1</span>');
-                // تنسيق الأحاديث بين القوسين
-                processed = processed.replace(/\(([^)]+?)\)\s*\./g, '<div class="hadith-box">($1)</div>.');
-                
-                // تنسيق 2: الأحاديث التي تنتهي بمرجع [رواه/صحيح/متفق]
-                processed = processed.replace(/\(([^)]+?)\)\s*(?=\[[^\]]+\])/g, '<div class="hadith-box">($1)</div>');
-                
+                // تنسيق الأحاديث بين القوسين (نسخة واحدة تغطي كل الحالات)
+                processed = processed.replace(/\(([^)]+?)\)/g, '<div class="hadith-box">($1)</div>');
                 // 6. تحويل السطور إلى قائمة <ol><li>
                 const lines = processed.split('\n').filter(line => line.trim() !== '');
                 let html = '<ol>';
@@ -226,4 +222,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // تأخير بسيط لضمان تحميل الصفحة
     setTimeout(createFloatingButtons, 500);
 });
-
