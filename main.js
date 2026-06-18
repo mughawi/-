@@ -107,7 +107,7 @@ if (enableTracking) {
 // 1. قائمة بصفحاتك العلمية الحالية (رتبها بحيث تكون الصفحة الجديدة دائماً هي الأخيرة في القائمة)
 const myPublishedPages = [
     "azkar.html",
-    "mu.html"
+    "makah.html"
     // عندما تنشر صفحة جديدة مستقبلاً (مثلاً sr.html)، أضفها هنا في النهاية فقط لتصبح: "azkar.html", "sr.html"
 ];
 
