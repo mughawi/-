@@ -136,6 +136,7 @@ if (latestAddedPage) {
                       <div class="block-body">
                         <div>
                           <span class="block-label latest-label">✨ نُشر حديثاً</span>
+                          <span class="latest-subtext">📌 كل جديد يُنشر سيظهر هنا</span>
                           <h3>${pageTitle}</h3>
                           <p>${pageDesc}</p>
                         </div>

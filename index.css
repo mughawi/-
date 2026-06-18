@@ -383,6 +383,19 @@ body::after {
     font-size: 1rem;
     margin-bottom: 25px;
 }
+.latest-subtext {
+    display: block;
+    color: rgba(255, 215, 0, 0.8);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 10px;
+    text-align: right;
+    padding: 5px 10px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 5px;
+    border-right: 3px solid #FFD700;
+}
+
 
 /* زر البطاقة */
 .block-action-btn {
