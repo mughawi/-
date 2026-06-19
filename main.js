@@ -33,7 +33,8 @@ fetch(`data/${pageName}.txt`)
                 // 3. تنسيق الآيات القرآنية
                 processed = processed.replace(/(﴿[^﴾]+﴾)/g, '<span class="quran-text">$1</span>');
                 // 4. تنسيق المراجع
-                processed = processed.replace(/(\[\S+:\s*\d+\])/g, '<span class="quran-ref">$1</span>');
+                processed = processed.replace(/(\[[^\]]+\])/g, '<span class="quran-ref">$1</span>');
+                // تنسيق مراجع الأحاديث
                 processed = processed.replace(/(\[(?:متفق عليه|رواه .+?|صحيح .+?|ضعيف .+?)\])/g, '<span class="quran-ref">$1</span>');
                 // تنسيق الأحاديث بين القوسين (نسخة واحدة تغطي كل الحالات)
                 processed = processed.replace(/\(([^)]+?)\)/g, '<div class="hadith-box">($1)</div>');
