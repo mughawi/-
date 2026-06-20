@@ -224,3 +224,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // تأخير بسيط لضمان تحميل الصفحة
     setTimeout(createFloatingButtons, 500);
 });
+
+// ========================================
+// 📚 القائمة الجانبية - بسيطة جداً
+// ========================================
+
+function createSidebarMenu() {
+    // تظهر فقط في الرئيسية
+    if (!window.location.pathname.endsWith('index.html') &&
+        window.location.pathname !== '/' &&
+        window.location.pathname !== '') {
+        return;
+    }
+    
+    // قائمة الصفحات (أضف صفحاتك هنا)
+    const pages = [
+        { href: 'h.html', title: 'غير نفسك' },
+        { href: 'mu.html', title: 'أهل السنة والجماعة' },
+        { href: 'makah.html', title: 'محاسبة النفس' },
+        { href: 'kl.html', title: 'الكلمة الطيبة' }
+    ];
+    
+    // إنشاء القائمة
+    const sidebar = document.createElement('div');
+    sidebar.className = 'sidebar-menu';
+    
+    let html = '<button class="sidebar-toggle" onclick="this.parentElement.classList.toggle(\'active\')">📚</button>';
+    html += '<div class="sidebar-list"><h4>📖 جميع المنشورات</h4>';
+    
+    pages.forEach(page => {
+        html += `<a href="${page.href}" class="sidebar-item">${page.title}</a>`;
+    });
+    
+    html += '</div>';
+    sidebar.innerHTML = html;
+    document.body.appendChild(sidebar);
+}
+
+// تشغيل
+document.addEventListener('DOMContentLoaded', createSidebarMenu);

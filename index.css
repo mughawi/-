@@ -949,6 +949,29 @@ strong {
     #text-container-2 h2 {
         font-size: 1.3rem;
     }
+        .sidebar-menu {
+        bottom: 210px;
+        left: 10px;
+    }
+    
+    .sidebar-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .sidebar-list {
+        min-width: 220px;
+        bottom: 65px;
+        padding: 15px;
+    }
+    
+    .sidebar-item {
+        padding: 10px 12px;
+        font-size: 0.95rem;
+    }
+
+
 }
 
 @media (max-width: 480px) {
@@ -971,7 +994,102 @@ strong {
         font-size: 1rem;
         padding: 12px 15px;
     }
+        .sidebar-menu {
+        bottom: 210px;
+        left: 8px;
+    }
+    
+    .sidebar-toggle {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+    
+    .sidebar-list {
+        min-width: 200px;
+        bottom: 60px;
+        padding: 12px;
+    }
+    
+    .sidebar-item {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+
+
 }
+/* ========================================
+    القائمة الجانبية للمنشورات
+   ======================================== */
+.sidebar-menu {
+    position: fixed;
+    bottom: 205px;
+    left: 10px;
+    z-index: 9998;
+}
+
+.sidebar-toggle {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+    transform: scale(1.1);
+}
+
+.sidebar-list {
+    position: absolute;
+    bottom: 70px;
+    left: 0;
+    min-width: 250px;
+    background: rgba(20, 20, 30, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.sidebar-menu.active .sidebar-list {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.sidebar-list h4 {
+    color: #FFD700;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.sidebar-item {
+    display: block;
+    padding: 12px 15px;
+    margin: 8px 0;
+    color: #f5f5f5;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.03);
+    border-right: 3px solid rgba(255, 215, 0, 0.3);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-item:hover {
+    background: rgba(255, 215, 0, 0.1);
+    border-right-color: #FFD700;
+    color: #FFD700;
+}
+
 
 /* ========================================
    ✨ تأثيرات خاصة
