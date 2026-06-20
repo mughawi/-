@@ -712,7 +712,7 @@ font[color="#00b050"] {
 
 .share-text {
     position: absolute;
-    bottom: -25px;
+    bottom: -40px;
     left: 50%;
     transform: translateX(-50%);
     color: #FFD700;
@@ -746,6 +746,9 @@ font[color="#00b050"] {
     .footer-section h3 { font-size: 1.3rem; }
     .footer-section p { font-size: 1rem; }
     .social-icon { width: 45px; height: 45px; font-size: 1.3rem; }
+    .float-btn {
+    width: 40px;
+    height: 40px;}
 }
 
 @media (max-width: 480px) {
