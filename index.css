@@ -780,8 +780,8 @@ strong {
 
 .floating-buttons {
     position: fixed;
-    bottom: 50px;
-    left: 10px;
+    bottom: 95px;
+    left: 7px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -875,7 +875,7 @@ strong {
 
 .share-text {
     position: absolute;
-    bottom: -25px;
+    bottom: -40px;
     left: 50%;
     transform: translateX(-50%);
     color: #FFD700;
@@ -950,13 +950,13 @@ strong {
         font-size: 1.3rem;
     }
         .sidebar-menu {
-        bottom: 210px;
+        bottom: 205px  !important;
         left: 10px;
     }
     
     .sidebar-toggle {
-        width: 50px;
-        height: 50px;
+        width: 30px  !important;
+        height: 30px  !important;
         font-size: 1.3rem;
     }
     
@@ -969,6 +969,10 @@ strong {
     .sidebar-item {
         padding: 10px 12px;
         font-size: 0.95rem;
+    }
+    .float-btn {
+    width: 40px;
+    height: 40px;
     }
 
 
@@ -995,13 +999,13 @@ strong {
         padding: 12px 15px;
     }
         .sidebar-menu {
-        bottom: 210px;
+        bottom: 205px  !important;
         left: 8px;
     }
     
     .sidebar-toggle {
-        width: 45px;
-        height: 45px;
+        width: 30px  !important;
+        height: 30px  !important;
         font-size: 1.2rem;
     }
     
@@ -1023,7 +1027,7 @@ strong {
    ======================================== */
 .sidebar-menu {
     position: fixed;
-    bottom: 205px;
+    bottom: 240px;
     left: 10px;
     z-index: 9998;
 }
