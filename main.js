@@ -242,7 +242,8 @@ function createSidebarMenu() {
         { href: 'h.html', title: 'غير نفسك' },
         { href: 'mu.html', title: 'أهل السنة والجماعة' },
         { href: 'makah.html', title: 'محاسبة النفس' },
-        { href: 'kl.html', title: 'الكلمة الطيبة' }
+        { href: 'kl.html', title: 'الكلمة الطيبة' },
+        { href: 'asl.html', title: 'نواقض الإسلام' }
     ];
     
     // إنشاء القائمة
