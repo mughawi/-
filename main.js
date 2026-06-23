@@ -108,7 +108,7 @@ if (enableTracking) {
 // 1. قائمة بصفحاتك العلمية الحالية (رتبها بحيث تكون الصفحة الجديدة دائماً هي الأخيرة في القائمة)
 const myPublishedPages = [
     "azkar.html",
-    "asl.html"
+    "ng.html"
     // عندما تنشر صفحة جديدة مستقبلاً (مثلاً sr.html)، أضفها هنا في النهاية فقط لتصبح: "azkar.html", "sr.html"
 ];
 
@@ -243,7 +243,8 @@ function createSidebarMenu() {
         { href: 'mu.html', title: 'أهل السنة والجماعة' },
         { href: 'makah.html', title: 'محاسبة النفس' },
         { href: 'kl.html', title: 'الكلمة الطيبة' },
-        { href: 'asl.html', title: 'نواقض الإسلام' }
+        { href: 'asl.html', title: 'نواقض الإسلام' },
+        { href: 'ng.html', title: 'شروط قبول العمل الصالح' }
     ];
     
     // إنشاء القائمة
