@@ -447,21 +447,21 @@ font[color="#00b050"] {
 }
 
 .counter::before {
-    content: '👁️';
+    content: '📊';
     position: absolute;
     top: 10px;
     right: 15px;
-    font-size: 1.5rem;
+    font-size: 1.0rem;
     opacity: 0.5;
 }
 
 .counter span {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: bold;
     color: #FFD700;
     text-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
     display: inline-block;
-    margin: 0 12px;
+    margin: 0 10px;
     animation: countGlow 2s ease-in-out infinite;
 }
 
@@ -770,12 +770,12 @@ font[color="#00b050"] {
     }
     
     .counter {
-        padding: 20px;
+        padding: 10px;
         font-size: 1rem;
     }
     
     .counter span {
-        font-size: 1.2rem;
+        font-size: 1.0rem;
     }
     
     .footer-section h3 {
