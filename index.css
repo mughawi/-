@@ -28,7 +28,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: 
+    background:
         radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
         radial-gradient(circle at 80% 70%, rgba(255, 165, 0, 0.08) 0%, transparent 50%),
         radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.05) 0%, transparent 70%);
@@ -37,8 +37,15 @@ body::before {
 }
 
 @keyframes bgShift {
-    0%, 100% { transform: scale(1) rotate(0deg); }
-    50% { transform: scale(1.1) rotate(5deg); }
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+    
+    50% {
+        transform: scale(1.1) rotate(5deg);
+    }
 }
 
 /* نجوم متحركة */
@@ -49,7 +56,7 @@ body::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: 
+    background-image:
         radial-gradient(2px 2px at 20px 30px, #FFD700, transparent),
         radial-gradient(2px 2px at 60px 70px, #FFA500, transparent),
         radial-gradient(1px 1px at 50px 160px, #FFD700, transparent),
@@ -64,8 +71,13 @@ body::after {
 }
 
 @keyframes starsMove {
-    from { background-position: 0 0; }
-    to { background-position: 200px 400px; }
+    from {
+        background-position: 0 0;
+    }
+    
+    to {
+        background-position: 200px 400px;
+    }
 }
 
 /* ========================================
@@ -87,7 +99,7 @@ body::after {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: 
+    background:
         radial-gradient(circle at 30% 50%, rgba(255, 215, 0, 0.15) 0%, transparent 40%),
         radial-gradient(circle at 70% 50%, rgba(255, 165, 0, 0.15) 0%, transparent 40%);
     filter: blur(80px);
@@ -96,8 +108,15 @@ body::after {
 }
 
 @keyframes heroBlur {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    50% { transform: translate(50px, -30px) rotate(180deg); }
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    
+    50% {
+        transform: translate(50px, -30px) rotate(180deg);
+    }
 }
 
 .hero-wrapper {
@@ -112,7 +131,7 @@ body::after {
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 215, 0, 0.2);
     border-radius: 30px;
-    box-shadow: 
+    box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.5),
         inset 0 1px 0 rgba(255, 215, 0, 0.2),
         0 0 100px rgba(255, 215, 0, 0.1);
@@ -120,8 +139,15 @@ body::after {
 }
 
 @keyframes heroFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    
+    50% {
+        transform: translateY(-15px);
+    }
 }
 
 /* الشعار */
@@ -141,8 +167,8 @@ body::after {
     object-fit: cover;
     border: 3px solid transparent;
     background: linear-gradient(#0a0a0f, #0a0a0f) padding-box,
-                linear-gradient(135deg, #FFD700, #FFA500) border-box;
-    box-shadow: 
+        linear-gradient(135deg, #FFD700, #FFA500) border-box;
+    box-shadow:
         0 10px 40px rgba(255, 215, 0, 0.4),
         0 0 60px rgba(255, 215, 0, 0.2);
     animation: logoGlow 3s ease-in-out infinite;
@@ -154,8 +180,15 @@ body::after {
 }
 
 @keyframes logoGlow {
-    0%, 100% { box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4), 0 0 60px rgba(255, 215, 0, 0.2); }
-    50% { box-shadow: 0 10px 60px rgba(255, 215, 0, 0.6), 0 0 100px rgba(255, 215, 0, 0.4); }
+
+    0%,
+    100% {
+        box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4), 0 0 60px rgba(255, 215, 0, 0.2);
+    }
+    
+    50% {
+        box-shadow: 0 10px 60px rgba(255, 215, 0, 0.6), 0 0 100px rgba(255, 215, 0, 0.4);
+    }
 }
 
 .brand-tag {
@@ -186,17 +219,33 @@ body::after {
 }
 
 @keyframes titleShine {
-    to { background-position: 200% center; }
+    to {
+        background-position: 200% center;
+    }
 }
 
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* شارة الترحيب */
@@ -252,8 +301,17 @@ body::after {
 }
 
 @keyframes sparkle {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.3); }
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+    50% {
+        opacity: 0.5;
+        transform: scale(1.3);
+    }
 }
 
 .layout-header p {
@@ -315,8 +373,13 @@ body::after {
 }
 
 @keyframes borderRotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* زخرفة البطاقة */
@@ -383,6 +446,7 @@ body::after {
     font-size: 1rem;
     margin-bottom: 25px;
 }
+
 .latest-subtext {
     display: block;
     color: rgba(255, 215, 0, 0.8);
@@ -475,8 +539,17 @@ body::after {
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.3); opacity: 0.7; }
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    
+    50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+    }
 }
 
 .counter {
@@ -577,13 +650,13 @@ body::after {
     opacity: 1;
 }
 
-.social-icon > * {
+.social-icon>* {
     position: relative;
     z-index: 2;
     transition: color 0.4s ease;
 }
 
-.social-icon:hover > * {
+.social-icon:hover>* {
     color: #0a0a0f;
 }
 
@@ -773,6 +846,7 @@ strong {
     text-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
     display: inline-block;
 }
+
 /*الازرررررررررر المشاركة
 /* ========================================
    🎯 الأزرار العائمة (بدون ميديا)
@@ -790,8 +864,15 @@ strong {
 }
 
 @keyframes floatSlideIn {
-    from { transform: translateX(-100px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .float-btn {
@@ -855,8 +936,15 @@ strong {
 }
 
 @keyframes shareGlow {
-    0%, 100% { box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4); }
-    50% { box-shadow: 0 8px 35px rgba(255, 215, 0, 0.7); }
+
+    0%,
+    100% {
+        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    }
+    
+    50% {
+        box-shadow: 0 8px 35px rgba(255, 215, 0, 0.7);
+    }
 }
 
 /* ========================================
@@ -868,6 +956,7 @@ strong {
     bottom: 100px;
     left: 50%;
 }
+
 /* زر المشاركة مع النص */
 .share-wrapper {
     position: relative;
@@ -949,20 +1038,23 @@ strong {
     #text-container-2 h2 {
         font-size: 1.3rem;
     }
-        .sidebar-menu {
+    
+    .sidebar-menu {
         bottom: 205px  !important;
-        left: 10px;
+        left: 7px  !important;
     }
     
     .sidebar-toggle {
-        width: 30px  !important;
-        height: 30px  !important;
+        width: 40px  !important;
+        height: 40px  !important;
         font-size: 1.3rem;
     }
     
     .sidebar-list {
+        bottom: 275px;
+        left: 10px;
         min-width: 220px;
-        bottom: 65px;
+        max-width: 260px;
         padding: 15px;
     }
     
@@ -970,12 +1062,13 @@ strong {
         padding: 10px 12px;
         font-size: 0.95rem;
     }
+    
     .float-btn {
-    width: 40px;
-    height: 40px;
+        width: 40px;
+        height: 40px;
     }
-
-
+    
+    
 }
 
 @media (max-width: 480px) {
@@ -998,20 +1091,23 @@ strong {
         font-size: 1rem;
         padding: 12px 15px;
     }
-        .sidebar-menu {
-        bottom: 205px  !important;
-        left: 8px;
-    }
     
-    .sidebar-toggle {
-        width: 30px  !important;
-        height: 30px  !important;
-        font-size: 1.2rem;
-    }
+    .sidebar-menu {
+    bottom: 205px !important;
+    left: 7px !important;
+}
+
+.sidebar-toggle {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.2rem;
+}
     
     .sidebar-list {
+        bottom: 260px;
+        left: 8px;
         min-width: 200px;
-        bottom: 60px;
+        max-width: 240px;
         padding: 12px;
     }
     
@@ -1019,16 +1115,16 @@ strong {
         padding: 8px 10px;
         font-size: 0.9rem;
     }
-
-
+    
 }
+
 /* ========================================
     القائمة الجانبية للمنشورات
    ======================================== */
 .sidebar-menu {
     position: fixed;
     bottom: 240px;
-    left: 10px;
+    left: 15px;
     z-index: 9998;
 }
 
@@ -1042,6 +1138,7 @@ strong {
     cursor: pointer;
     box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
     transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .sidebar-toggle:hover {
@@ -1049,12 +1146,12 @@ strong {
 }
 
 .sidebar-list {
-    position: absolute;
-    bottom: 70px;
-    left: 0;
+    position: fixed;
+    bottom: 290px;
+    left: 15px;
     min-width: 250px;
-    background: rgba(20, 20, 30, 0.95);
-    backdrop-filter: blur(20px);
+    max-width: 300px;
+    background: rgba(20, 20, 30, 0.98);
     border: 1px solid rgba(255, 215, 0, 0.3);
     border-radius: 15px;
     padding: 20px;
@@ -1062,18 +1159,22 @@ strong {
     visibility: hidden;
     transform: translateY(20px);
     transition: all 0.3s ease;
+    -webkit-transform: translateY(20px);
+    -webkit-transition: all 0.3s ease;
 }
 
 .sidebar-menu.active .sidebar-list {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+    -webkit-transform: translateY(0);
 }
 
 .sidebar-list h4 {
     color: #FFD700;
     margin-bottom: 15px;
     text-align: center;
+    font-size: 1.1rem;
 }
 
 .sidebar-item {
@@ -1086,6 +1187,8 @@ strong {
     border-right: 3px solid rgba(255, 215, 0, 0.3);
     border-radius: 8px;
     transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    font-size: 1rem;
 }
 
 .sidebar-item:hover {
@@ -1093,7 +1196,6 @@ strong {
     border-right-color: #FFD700;
     color: #FFD700;
 }
-
 
 /* ========================================
    ✨ تأثيرات خاصة
@@ -1123,4 +1225,3 @@ html {
     background: rgba(255, 215, 0, 0.3);
     color: #FFD700;
 }
-
