@@ -1051,10 +1051,10 @@ strong {
     }
     
     .sidebar-list {
-        bottom: 275px  !important;
-        left: 10px  !important;
-        min-width: 220px  !important;
-        max-width: 260px  !important;
+        bottom: 200px  !important;
+        left: 5px  !important;
+        min-width: 200px  !important;
+        max-width: 200px  !important;
         padding: 15px  !important;
     }
     
