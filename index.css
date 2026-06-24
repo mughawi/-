@@ -1073,7 +1073,7 @@ strong {
 }
 
 /* ========================================
-    القائمة الجانبية
+   📚 القائمة الجانبية
    ======================================== */
 
 .sidebar-menu {
@@ -1096,26 +1096,30 @@ strong {
     position: relative;
 }
 
-/* القائمة - مخفية افتراضياً */
+/* القائمة */
 .sidebar-list {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
+    height: -webkit-fill-available; /* مهم لـ iOS */
     background: rgba(10, 10, 15, 0.98);
     padding: 80px 20px 20px;
     z-index: 9998;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow-y: auto; /* السكرول */
+    -webkit-overflow-scrolling: touch; /* سكرول ناعم في iOS */
     
-    /* مخفية افتراضياً */
-    display: none;
+    /* مخفية */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* تظهر فقط عند إضافة active */
+/* ظاهرة */
 .sidebar-menu.active .sidebar-list {
-    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 /* خلفية معتمة */
@@ -1127,14 +1131,17 @@ strong {
     height: 100%;
     background: rgba(0, 0, 0, 0.7);
     z-index: 9997;
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .sidebar-menu.active .sidebar-overlay {
-    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
-/* مقبض السحب - خط ذهبي */
+/* مقبض السحب */
 .sidebar-handle {
     width: 40px;
     height: 4px;
