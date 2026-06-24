@@ -1039,72 +1039,6 @@ strong {
         font-size: 1.3rem;
     }
     
-    .sidebar-menu {
-    bottom: 180px;
-    left: 10px;
-}
-
-.sidebar-toggle {
-    width: 45px;
-    height: 45px;
-    font-size: 1.3rem;
-}
-
-.sidebar-list {
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    max-height: 70vh;
-    border-radius: 25px 25px 0 0;
-    border-top: 2px solid rgba(255, 215, 0, 0.3);
-    border-bottom: none;
-    padding: 30px 20px;
-    transform: translateY(100%);
-    opacity: 1;
-    visibility: visible;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-.sidebar-menu.active .sidebar-list {
-    transform: translateY(0);
-}
-
-.sidebar-overlay {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 9997;
-}
-
-.sidebar-menu.active .sidebar-overlay {
-    opacity: 1;
-    visibility: visible;
-}
-
-.sidebar-handle {
-    display: block;
-    width: 40px;
-    height: 4px;
-    background: rgba(255, 215, 0, 0.3);
-    border-radius: 2px;
-    margin: 0 auto 20px;
-}
-
-.sidebar-item {
-    padding: 15px 20px;
-    font-size: 1rem;
-}
     
     .float-btn {
         width: 40px;
@@ -1157,71 +1091,79 @@ strong {
     font-size: 1.5rem;
     cursor: pointer;
     box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-    transition: all 0.3s ease;
 }
 
-.sidebar-toggle:hover {
-    transform: scale(1.1);
-}
-
-/* ========================================
-   القاعدة الأساسية - قائمة جانبية (للشاشات الكبيرة)
-   ======================================== */
+/* القائمة - تغطي الشاشة بالكامل */
 .sidebar-list {
     position: fixed;
-    bottom: 290px;
-    left: 15px;
-    min-width: 250px;
-    max-width: 300px;
-    background: rgba(20, 20, 30, 0.98);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    border-radius: 15px;
-    padding: 20px;
-    transform: translateY(20px);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(10, 10, 15, 0.98);
+    padding: 80px 20px 20px;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
     z-index: 9998;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .sidebar-menu.active .sidebar-list {
-    transform: translateY(0);
     opacity: 1;
     visibility: visible;
 }
 
+/* خلفية معتمة */
 .sidebar-overlay {
-    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 9997;
 }
 
+.sidebar-menu.active .sidebar-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* مقبض السحب */
 .sidebar-handle {
-    display: none;
+    width: 40px;
+    height: 4px;
+    background: rgba(255, 215, 0, 0.3);
+    border-radius: 2px;
+    margin: 0 auto 20px;
 }
 
 .sidebar-list h4 {
     color: #FFD700;
     margin-bottom: 20px;
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 .sidebar-item {
     display: block;
-    padding: 12px 15px;
-    margin: 8px 0;
+    padding: 15px 20px;
+    margin: 10px 0;
     color: #f5f5f5;
     text-decoration: none;
     background: rgba(255, 255, 255, 0.05);
     border-right: 3px solid rgba(255, 215, 0, 0.3);
     border-radius: 12px;
-    transition: all 0.3s ease;
     font-size: 1rem;
 }
 
-.sidebar-item:hover {
-    background: rgba(255, 215, 0, 0.1);
-    border-right-color: #FFD700;
-    color: #FFD700;
+.sidebar-item:active {
+    background: rgba(255, 215, 0, 0.2);
 }
 /* ========================================
    ✨ تأثيرات خاصة
