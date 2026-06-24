@@ -854,8 +854,8 @@ strong {
 
 .floating-buttons {
     position: fixed;
-    bottom: 95px;
-    left: 7px;
+    bottom: 50px;
+    left: 10px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -1078,8 +1078,8 @@ strong {
 
 .sidebar-menu {
     position: fixed;
-    bottom: 200px;
-    left: 7px;
+    bottom: 155px;
+    left: 10px;
     z-index: 9998;
 }
 
