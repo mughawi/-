@@ -252,7 +252,13 @@ function createSidebarMenu() {
     sidebar.className = 'sidebar-menu';
     
     let html = '<button class="sidebar-toggle" onclick="this.parentElement.classList.toggle(\'active\')">📚</button>';
-    html += '<div class="sidebar-list"><h4>📖 جميع المنشورات</h4>';
+    
+    // خلفية معتمة للإغلاق عند الضغط خارجها
+    html += '<div class="sidebar-overlay" onclick="this.parentElement.classList.remove(\'active\')"></div>';
+    
+    html += '<div class="sidebar-list">';
+    html += '<div class="sidebar-handle"></div>'; // مقبض السحب للجوال
+    html += '<h4>📖 جميع المنشورات</h4>';
     
     pages.forEach(page => {
         html += `<a href="${page.href}" class="sidebar-item">${page.title}</a>`;
@@ -265,3 +271,4 @@ function createSidebarMenu() {
 
 // تشغيل
 document.addEventListener('DOMContentLoaded', createSidebarMenu);
+
