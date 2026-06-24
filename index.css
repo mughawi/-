@@ -1078,14 +1078,14 @@ strong {
 
 .sidebar-menu {
     position: fixed;
-    bottom: 220px;
-    left: 15px;
+    bottom: 200px;
+    left: 7px;
     z-index: 9998;
 }
 
 .sidebar-toggle {
-    width: 55px;
-    height: 55px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: linear-gradient(135deg, #FFD700, #FFA500);
     border: 2px solid rgba(255, 215, 0, 0.5);
