@@ -1073,8 +1073,9 @@ strong {
 }
 
 /* ========================================
-    القائمة الجانبية للمنشورات
+    القائمة الجانبية
    ======================================== */
+
 .sidebar-menu {
     position: fixed;
     bottom: 220px;
@@ -1091,9 +1092,11 @@ strong {
     font-size: 1.5rem;
     cursor: pointer;
     box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    z-index: 9999;
+    position: relative;
 }
 
-/* القائمة - تغطي الشاشة بالكامل */
+/* القائمة - مخفية افتراضياً */
 .sidebar-list {
     position: fixed;
     top: 0;
@@ -1102,17 +1105,17 @@ strong {
     height: 100vh;
     background: rgba(10, 10, 15, 0.98);
     padding: 80px 20px 20px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
     z-index: 9998;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    
+    /* مخفية افتراضياً */
+    display: none;
 }
 
+/* تظهر فقط عند إضافة active */
 .sidebar-menu.active .sidebar-list {
-    opacity: 1;
-    visibility: visible;
+    display: block;
 }
 
 /* خلفية معتمة */
@@ -1123,22 +1126,19 @@ strong {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.7);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
     z-index: 9997;
+    display: none;
 }
 
 .sidebar-menu.active .sidebar-overlay {
-    opacity: 1;
-    visibility: visible;
+    display: block;
 }
 
-/* مقبض السحب */
+/* مقبض السحب - خط ذهبي */
 .sidebar-handle {
     width: 40px;
     height: 4px;
-    background: rgba(255, 215, 0, 0.3);
+    background: rgba(255, 215, 0, 0.5);
     border-radius: 2px;
     margin: 0 auto 20px;
 }
@@ -1165,6 +1165,8 @@ strong {
 .sidebar-item:active {
     background: rgba(255, 215, 0, 0.2);
 }
+
+
 /* ========================================
    ✨ تأثيرات خاصة
    ======================================== */
