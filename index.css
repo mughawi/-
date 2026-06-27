@@ -429,6 +429,10 @@ body::after {
 .azkar-block .block-decoration {
     background: radial-gradient(circle, #FFA500, transparent);
 }
+/* بطاقة الإحصائيات */
+.stats-block .block-decoration {
+    background: radial-gradient(circle, #FFD700, transparent);
+}
 
 /* محتوى البطاقة */
 .block-body {

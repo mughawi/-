@@ -157,7 +157,10 @@ if (latestAddedPage) {
 function createFloatingButtons() {
     const container = document.createElement('div');
     container.className = 'floating-buttons';
-    
+        // ❌ لا تظهر الأزرار في صفحة الإحصائيات
+    if (window.location.pathname.includes('stats.html')) {
+        return;
+    }
     // زر العودة
     const backBtn = document.createElement('a');
     backBtn.href = 'index.html';
@@ -272,4 +275,94 @@ function createSidebarMenu() {
 
 // تشغيل
 document.addEventListener('DOMContentLoaded', createSidebarMenu);
+
+// ========================================
+// 📊 صفحة الإحصائيات - تعمل فقط في stats.html
+// ========================================
+
+if (window.location.pathname.includes('stats.html')) {
+    
+    // أسماء الصفحات (فقط الصفحات الموجودة فعلياً)
+    const pageNames = {
+        'azkar': 'الأذكار الشرعية',
+        'ng': 'شروط قبول العمل الصالح',
+        'h': 'غير نفسك',
+        'h1': 'باب التوبة',
+        'mu': 'أهل السنة والجماعة',
+        'makah': 'محاسبة النفس',
+        'kl': 'الكلمة الطيبة',
+        'asl': 'نواقض الإسلام',
+        'index': 'الصفحة الرئيسية'
+    };
+    
+    // استخدام Firebase المهيأ مسبقاً
+    const statsDb = firebase.database();
+    
+    // جلب الإحصائيات
+    statsDb.ref('views').on('value', (snapshot) => {
+        let totalViews = 0;
+        const pages = [];
+        
+        snapshot.forEach(child => {
+            const pageKey = child.key;
+            const views = child.val();
+            
+            // ✅ تجاهل الصفحات غير الموجودة في pageNames
+            if (!pageNames.hasOwnProperty(pageKey)) {
+                return; // تخطي هذه الصفحة
+            }
+            
+            totalViews += views;
+            
+            pages.push({
+                key: pageKey,
+                name: pageNames[pageKey],
+                views: views
+            });
+        });
+        
+        // ترتيب تنازلي
+        pages.sort((a, b) => b.views - a.views);
+        
+        // عرض الإجمالي
+        const totalViewsEl = document.getElementById('total-views');
+        if (totalViewsEl) {
+            totalViewsEl.innerText = totalViews.toLocaleString('ar-EG');
+        }
+        
+        // عرض عدد المواضيع
+        const totalPagesEl = document.getElementById('total-pages');
+        if (totalPagesEl) {
+            totalPagesEl.innerText = pages.length.toLocaleString('ar-EG');
+        }
+        
+        // عرض أكثر موضوع
+        const topPageEl = document.getElementById('top-page');
+        if (topPageEl && pages.length > 0) {
+            topPageEl.innerText = pages[0].name;
+        }
+        
+        // عرض قائمة أكثر المواضيع
+        const listContainer = document.getElementById('pages-list');
+        if (listContainer) {
+            listContainer.innerHTML = '';
+            
+            if (pages.length === 0) {
+                listContainer.innerHTML = '<p style="text-align: center; color: #999;">لا توجد إحصائيات بعد</p>';
+                return;
+            }
+            
+            pages.forEach((page, index) => {
+                const item = document.createElement('div');
+                item.className = 'page-item';
+                item.innerHTML = `
+                    <span class="page-rank">${index + 1}</span>
+                    <span class="page-name">${page.name}</span>
+                    <span class="page-views">${page.views.toLocaleString('ar-EG')} زيارة</span>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+    });
+}
 
