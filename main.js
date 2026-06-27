@@ -240,6 +240,7 @@ function createSidebarMenu() {
     // قائمة الصفحات (أضف صفحاتك هنا)
     const pages = [
         { href: 'h.html', title: 'غير نفسك' },
+        { href: 'h1.html', title: 'باب التوبة' },
         { href: 'mu.html', title: 'أهل السنة والجماعة' },
         { href: 'makah.html', title: 'محاسبة النفس' },
         { href: 'kl.html', title: 'الكلمة الطيبة' },
