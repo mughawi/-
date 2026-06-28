@@ -7,7 +7,7 @@ const enableTracking = true;
 const pageName = window.location.pathname.split("/").pop().replace(".html", "") || "index";
 
 // 1. جلب المحتوى من Edge Function (معالج في السيرفر)
-const contentPages = ['ng', 'kl', 'h', 'h1', 'mu', 'makah', 'asl', 'azkar'];
+const contentPages = ['ng', 'kl', 'h', 'h1', 'mu', 'makah', 'asl', 'index'];
 
 if (contentPages.includes(pageName)) {
     fetch(`/api/content/${pageName}`)
