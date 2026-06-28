@@ -6,25 +6,55 @@ const enableTracking = true;
 // استخراج اسم الصفحة الحالية تلقائياً
 const pageName = window.location.pathname.split("/").pop().replace(".html", "") || "index";
 
-// 1. جلب المحتوى من Edge Function (معالج في السيرفر)
-const contentPages = ['ng', 'kl', 'h', 'h1', 'mu', 'makah', 'asl', 'index'];
-
-if (contentPages.includes(pageName)) {
-    fetch(`/api/content/${pageName}`)
-        .then(response => response.json())
-        .then(data => {
-            // عرض المحتوى في كل containers
-            if (data.containers) {
-                Object.keys(data.containers).forEach(containerId => {
-                    const element = document.getElementById(containerId);
-                    if (element) {
-                        element.innerHTML = data.containers[containerId];
+// 1. جلب "نص الموضوع" (يعمل دائماً لتستطيع رؤية تعديلاتك)
+fetch(`data/${pageName}.txt`)
+    .then(response => response.text())
+    .then(data => {
+        const parts = data.split('|'); // التقسيم عند النجمة
+        
+        parts.forEach((content, index) => {
+            // إذا كان index هو 0 يبحث عن text-container، وإذا كان 1 يبحث عن text-container-2 وهكذا
+            let id = index === 0 ? 'text-container' : `text-container-${index + 1}`;
+            let element = document.getElementById(id);
+            
+            if (element && content.trim() !== "") {
+                let processed = content.trim();
+                processed = processed.replace(/[ \t]+/g, ' ');
+                processed = processed.replace(/^###\s+(.*)/gm, '<h3>$1</h3>');
+                processed = processed.replace(/^##\s+(.*)/gm, '<h2>$1</h2>');
+                processed = processed.replace(/^#\s+(.*)/gm, '<h1>$1</h1>');
+                processed = processed.replace(/^[ \t]*-[ \t]*/gm, '<span class="manual-bullet">● </span>');
+                // تنسيق الأرقام اليدوية (1. 2. 3.)
+                processed = processed.replace(/^(\d+[\.\-]\s*)/gm, '<span class="manual-number">$1</span>');
+                // 1. تحويل التظليل الأصفر ==
+                processed = processed.replace(/==(.*?)==/g, '<mark>$1</mark>');
+                // 2. تحويل الخط العريض ** الذي ينسخه تطبيقك تلقائياً
+                processed = processed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                // 3. تنسيق الآيات القرآنية
+                processed = processed.replace(/(﴿[^﴾]+﴾)/g, '<span class="quran-text">$1</span>');
+                // 4. تنسيق المراجع
+                processed = processed.replace(/(\[[^\]]+\])/g, '<span class="quran-ref">$1</span>');
+                // تنسيق مراجع الأحاديث
+                processed = processed.replace(/(\[(?:متفق عليه|رواه .+?|صحيح .+?|ضعيف .+?)\])/g, '<span class="quran-ref">$1</span>');
+                // تنسيق الأحاديث بين القوسين (نسخة واحدة تغطي كل الحالات)
+                processed = processed.replace(/\(([^)]+?)\)/g, '<div class="hadith-box">($1)</div>');
+                // 6. تحويل السطور إلى قائمة <ol><li>
+                const lines = processed.split('\n').filter(line => line.trim() !== '');
+                let html = '<ol>';
+                lines.forEach(line => {
+                    if (line.trim() !== '') {
+                        html += '<li>' + line.trim() + '</li>';
                     }
                 });
+                html += '</ol>';
+                
+                element.innerHTML = html;
+                
             }
-        })
-        .catch(error => console.log('خطأ في جلب المحتوى:', error));
-}
+        });
+    })
+    .catch(error => console.log('خطأ في جلب الملف'));
+
 
 // 2. كود الإحصائيات والعداد (يعمل فقط إذا كان الاختيار أعلاه true)
 if (enableTracking) {
