@@ -6,7 +6,7 @@ export default async function handler(request) {
   const url = new URL(request.url);
   const slug = url.pathname.split('/').pop().replace('.json', '');
   
-  const allowedPages = ['ng', 'kl', 'h', 'h1', 'mu', 'makah', 'asl', 'azkar'];
+  const allowedPages = ['ng', 'kl', 'h', 'h1', 'mu', 'makah', 'asl', 'index'];
   
   if (!allowedPages.includes(slug)) {
     return new Response(
