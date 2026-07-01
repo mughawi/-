@@ -600,130 +600,31 @@ body {
    ======================================== */
 
 /* الحاوية العامة */
-#text-container,
-#text-container-2 {
-    background: rgba(20, 20, 30, 0.4);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 215, 0, 0.15);
-    border-radius: 20px;
-    padding: 30px;
-    margin: 20px 0;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-}
+/* ========================================
+   📝 تنسيق النص الوحيد في الرئيسية
+   ======================================== */
 
-/* القائمة */
-#text-container ol,
-#text-container-2 ol {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#text-container li,
-#text-container-2 li {
-    color: #f5f5f5;
-    line-height: 2;
-    font-size: 1.1rem;
-    margin-bottom: 15px;
-    padding: 15px 20px;
-    background: rgba(255, 255, 255, 0.02);
-    border-right: 3px solid rgba(255, 215, 0, 0.3);
-    border-radius: 10px;
-    transition: all 0.3s ease;
-}
-
-#text-container li:hover,
-#text-container-2 li:hover {
-    background: rgba(255, 215, 0, 0.05);
-    border-right-color: #FFD700;
-    transform: translateX(-5px);
-}
-
-/* العناوين */
-#text-container h1,
-#text-container-2 h1 {
-    font-size: 1.8rem;
-    color: #FFD700;
-    font-weight: 700;
-    margin: 25px 0 15px 0;
+#text-container {
     text-align: center;
-    border-bottom: 3px solid rgba(255, 215, 0, 0.4);
-    padding-bottom: 12px;
-    line-height: 1.4;
-}
-
-#text-container h2,
-#text-container-2 h2 {
-    font-size: 1.5rem;
-    color: #FFA500;
-    font-weight: 700;
-    margin: 20px 0 12px 0;
-    padding-right: 15px;
-    border-right: 4px solid #FFA500;
-    line-height: 1.4;
-}
-
-#text-container h3,
-#text-container-2 h3 {
-    font-size: 1.3rem;
-    color: #FFD700;
-    font-weight: 600;
-    margin: 18px 0 10px 0;
-    padding-right: 10px;
-    line-height: 1.4;
-}
-
-/* الآيات القرآنية */
-.quran-text {
-    font-family: 'Amiri', 'Tajawal', serif;
-    color: #44FF44;
-    font-size: 1.3rem;
-    font-weight: 600;
-    padding: 5px 10px;
-    background: rgba(68, 255, 68, 0.08);
-    border-radius: 8px;
-    display: inline-block;
-    line-height: 2;
-    text-shadow: 0 0 10px rgba(68, 255, 68, 0.3);
-}
-
-/* المراجع */
-.quran-ref {
-    color: #FFD700;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 2px 8px;
-    background: rgba(255, 215, 0, 0.15);
-    border-radius: 5px;
-    display: inline-block;
-    margin: 0 5px;
-}
-
-/* صندوق الحديث */
-.hadith-box {
-    background: rgba(255, 215, 0, 0.05);
+    padding: 20px 30px;
+    margin: 30px auto;
+    max-width: 700px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 165, 0, 0.03));
     border: 1px solid rgba(255, 215, 0, 0.2);
     border-radius: 15px;
-    padding: 20px;
-    margin: 15px 0;
-    color: #f5f5f5;
-    line-height: 2;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+#text-container p {
+    color: #FFD700;
     font-size: 1.1rem;
-    position: relative;
-    overflow: hidden;
+    font-weight: 600;
+    line-height: 1.8;
+    margin: 0;
+    letter-spacing: 0.5px;
 }
 
-.hadith-box::before {
-    content: '❝';
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 3rem;
-    color: rgba(255, 215, 0, 0.2);
-    font-family: serif;
-}
 
-/* التظليل */
 mark {
     background: linear-gradient(135deg, rgba(255, 215, 0, 0.35) 0%, rgba(255, 165, 0, 0.35) 100%);
     color: #FFD700;
