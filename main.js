@@ -137,7 +137,7 @@ if (latestAddedPage) {
 function createFloatingButtons() {
     const container = document.createElement('div');
     container.className = 'floating-buttons';
-        // ❌ لا تظهر الأزرار في صفحة الإحصائيات
+    // ❌ لا تظهر الأزرار في صفحة الإحصائيات
     if (window.location.pathname.includes('stats.html')) {
         return;
     }
@@ -345,4 +345,3 @@ if (window.location.pathname.includes('stats.html')) {
         }
     });
 }
-

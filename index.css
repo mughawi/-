@@ -122,6 +122,7 @@ body {
     border-radius: 20px;
     backdrop-filter: blur(10px);
 }
+
 /* ========================================
    🎯 النص الترحيبي في الهيدر
    ======================================== */
@@ -184,7 +185,7 @@ body {
 }
 
 @keyframes sparkle {
-
+    
     0%,
     100% {
         opacity: 1;
@@ -293,6 +294,7 @@ body {
 .azkar-block .block-decoration {
     background: radial-gradient(circle, #FFA500, transparent);
 }
+
 /* بطاقة الإحصائيات */
 .stats-block .block-decoration {
     background: radial-gradient(circle, #FFD700, transparent);
@@ -431,13 +433,15 @@ body {
 .counter::before {
     content: '';
     position: absolute;
-    top: -5px;      /* ← اخرجها قليلاً من الأعلى */
-    right: center;    /* ← اخرجها قليلاً من اليمين */
+    top: -5px;
+    /* ← اخرجها قليلاً من الأعلى */
+    right: center;
+    /* ← اخرجها قليلاً من اليمين */
     width: 16px;
     height: 16px;
     background: #44FF44;
     border-radius: 50%;
-    box-shadow: 
+    box-shadow:
         0 0 15px #44FF44,
         0 0 30px #44FF44,
         0 0 45px rgba(68, 255, 68, 0.6),
@@ -446,10 +450,13 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% {
+    
+    0%,
+    100% {
         transform: scale(1);
         opacity: 1;
     }
+    
     50% {
         transform: scale(1.3);
         opacity: 0.7;
@@ -750,7 +757,7 @@ strong {
 }
 
 @keyframes shareGlow {
-
+    
     0%,
     100% {
         box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
@@ -1015,6 +1022,7 @@ html {
     background: rgba(255, 215, 0, 0.3);
     color: #FFD700;
 }
+
 /* ========================================
    💻 في الكمبيوتر فقط - قائمة جانبية صغيرة
    ======================================== */
@@ -1041,4 +1049,3 @@ html {
         display: none;
     }
 }
-

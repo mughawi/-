@@ -202,11 +202,11 @@ main::before {
 
 #text-container ul li,
 #text-container-2 ul li {
-   /* background: rgba(255, 255, 255, 0.05);*/
+    /* background: rgba(255, 255, 255, 0.05);*/
     margin-bottom: 15px;
     /*padding: 15px 20px;*/
     padding-right: 40px;
-   /* border-radius: 10px;
+    /* border-radius: 10px;
     border-right: 4px solid #FFA500;*/
     position: relative;
     font-size: 1.3rem;
@@ -241,7 +241,7 @@ main::before {
     margin-bottom: 10px;
     /*padding: 25px 30px;*/
     padding-right: 40px;
-   /* border-radius: 15px;
+    /* border-radius: 15px;
     border-right: 5px solid #FFD700;*/
     /*box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);*/
     font-size: 1.3rem;
