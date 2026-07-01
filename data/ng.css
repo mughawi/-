@@ -8,7 +8,7 @@
 }
 
 /* ========================================
-   2. الهيدر الخرافي
+   2. الهيدر
    ======================================== */
 .main-header {
     position: relative;
@@ -21,9 +21,7 @@
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 3px solid rgba(255, 215, 0, 0.4);
-    box-shadow:
-        0 10px 40px rgba(0, 0, 0, 0.6),
-        0 0 30px rgba(255, 215, 0, 0.2);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     overflow: hidden;
     padding: 50px 20px;
 }
@@ -37,45 +35,18 @@
     background:
         radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.15) 0%, transparent 50%);
-    animation: headerFloat 8s ease-in-out infinite;
-}
-
-@keyframes headerFloat {
-    
-    0%,
-    100% {
-        transform: scale(1) rotate(0deg);
-    }
-    
-    50% {
-        transform: scale(1.1) rotate(2deg);
-    }
 }
 
 .header-content {
     position: relative;
     z-index: 1;
     text-align: center;
-    animation: fadeInSlide 1s ease-out;
 }
 
 .header-icon {
     font-size: 3.5rem;
     margin-bottom: 15px;
-    animation: float 3s ease-in-out infinite;
     filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
-}
-
-@keyframes float {
-    
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-    
-    50% {
-        transform: translateY(-10px);
-    }
 }
 
 .header-title {
@@ -86,33 +57,8 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-shadow: 0 4px 25px rgba(255, 215, 0, 0.4);
-    animation: glow 2.5s ease-in-out infinite;
     letter-spacing: 1px;
     margin-bottom: 5px;
-}
-
-@keyframes glow {
-    
-    0%,
-    100% {
-        filter: brightness(1);
-    }
-    
-    50% {
-        filter: brightness(1.4);
-    }
-}
-
-@keyframes fadeInSlide {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .header-subtitle {
@@ -129,20 +75,6 @@
     background: linear-gradient(90deg, transparent, #FFD700, transparent);
     margin: 0 auto;
     border-radius: 2px;
-    animation: lineGlow 2s ease-in-out infinite;
-}
-
-@keyframes lineGlow {
-    
-    0%,
-    100% {
-        opacity: 0.7;
-    }
-    
-    50% {
-        opacity: 1;
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-    }
 }
 
 /* ========================================
@@ -150,25 +82,16 @@
    ======================================== */
 body {
     font-family: 'Tajawal', sans-serif;
-    background: 
-    /* زوايا إضافية للتوزيع المتساوي */
-    radial-gradient(ellipse at 20% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 40%),
-    radial-gradient(ellipse at 80% 20%, rgba(255, 165, 0, 0.1) 0%, transparent 40%),
-    radial-gradient(ellipse at 20% 80%, rgba(255, 165, 0, 0.1) 0%, transparent 40%),
-    radial-gradient(ellipse at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 40%),
-    /* وسط الصفحة */
-    radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
-    /* التدرج الأسود */
-    linear-gradient(135deg,
-        #000000 0%,
-        #0a0a0a 25%,
-        #1a1a1a 50%,
-        #0a0a0a 75%,
-        #000000 100%),
-    /* طبقة ناعمة */
-    linear-gradient(0deg, rgba(255, 215, 0, 0.02) 0%, transparent 100%);
-background-attachment: fixed;
-background-blend-mode: screen, screen, screen, screen, soft-light, normal, normal;
+    background:
+        radial-gradient(ellipse at 20% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 80% 20%, rgba(255, 165, 0, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 20% 80%, rgba(255, 165, 0, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+        linear-gradient(135deg, #000000 0%, #0a0a0a 25%, #1a1a1a 50%, #0a0a0a 75%, #000000 100%),
+        linear-gradient(0deg, rgba(255, 215, 0, 0.02) 0%, transparent 100%);
+    background-attachment: fixed;
+    background-blend-mode: screen, screen, screen, screen, soft-light, normal, normal;
     min-height: 100vh;
     width: 100%;
     overflow-x: hidden;
@@ -223,54 +146,6 @@ main::before {
     position: relative;
     z-index: 1;
     margin-bottom: 10px;
-    animation: slideUp 0.8s ease-out;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow:
-        0 35px 100px rgba(0, 0, 0, 0.7),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        0 0 40px rgba(255, 215, 0, 0.15);
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.card>h1 {
-    font-size: 2.3rem;
-    text-align: center;
-    margin-bottom: 45px;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    position: relative;
-    padding-bottom: 25px;
-    font-weight: 700;
-}
-
-.card>h1::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 180px;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, #FFD700, transparent);
-    border-radius: 2px;
 }
 
 /* ========================================
@@ -295,47 +170,199 @@ main::before {
 }
 
 /* ========================================
-   7. تنسيق الفقرات (بدون أرقام تلقائية)
+   7. تنسيقات Markdown
    ======================================== */
+
+/* العناوين الفرعية */
+#text-container h2,
+#text-container-2 h2 {
+    font-size: 1.8rem;
+    color: #FFD700;
+    margin: 30px 0 20px 0;
+    padding-bottom: 10px;
+    /*border-bottom: 2px solid rgba(255, 215, 0, 0.3);*/
+    font-weight: 700;
+}
+
+#text-container h3,
+#text-container-2 h3 {
+    font-size: 1.5rem;
+    color: #FFA500;
+    margin: 25px 0 15px 0;
+    font-weight: 600;
+}
+
+/* القوائم النقطية ul */
+#text-container ul,
+#text-container-2 ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+#text-container ul li,
+#text-container-2 ul li {
+   /* background: rgba(255, 255, 255, 0.05);*/
+    margin-bottom: 15px;
+    /*padding: 15px 20px;*/
+    padding-right: 40px;
+   /* border-radius: 10px;
+    border-right: 4px solid #FFA500;*/
+    position: relative;
+    font-size: 1.3rem;
+    line-height: 2;
+    color: #ffffff;
+}
+
+#text-container ul li::before,
+#text-container-2 ul li::before {
+    content: '●';
+    position: absolute;
+    right: 15px;
+    top: 18px;
+    transform: translateY(-50%);
+    color: #FFA500;
+    font-size: 1.2rem;
+}
+
+/* القوائم المرقمة ol */
 #text-container ol,
 #text-container-2 ol {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 20px 0;
+    counter-reset: item;
 }
 
-#text-container li,
-#text-container-2 li {
-    background: rgba(255, 255, 255, 0.05);
-    margin-bottom: 25px;
-    padding: 25px 30px;
-    border-radius: 15px;
-    border-right: 5px solid #FFD700;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+#text-container ol li,
+#text-container-2 ol li {
+    counter-increment: item;
+    /*background: rgba(255, 255, 255, 0.05);*/
+    margin-bottom: 10px;
+    /*padding: 25px 30px;*/
+    padding-right: 40px;
+   /* border-radius: 15px;
+    border-right: 5px solid #FFD700;*/
+    /*box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);*/
     font-size: 1.3rem;
     line-height: 2;
     color: #ffffff;
     position: relative;
 }
 
-#text-container li:hover,
-#text-container-2 li:hover {
-    transform: translateX(-5px);
-    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
-    border-right-color: #FFA500;
+#text-container ol li::before,
+#text-container-2 ol li::before {
+    content: counter(item) ".";
+    position: absolute;
+    right: 15px;
+    top: 18px;
+    transform: translateY(-50%);
+    color: #FFD700;
+    font-weight: 700;
+    font-size: 1.3rem;
 }
 
-#text-container li strong,
-#text-container-2 li strong {
+#text-container ol li strong,
+#text-container-2 ol li strong {
     color: #FFD700;
     font-weight: 700;
 }
 
-/* دعم الألوان من Obsidian */
-#text-container li span[style*="color"],
-#text-container-2 li span[style*="color"] {
-    font-weight: 600;
+/* الأحاديث */
+.hadith-box {
+    display: block;
+    font-family: 'Amiri', 'Tajawal', serif;
+    font-size: 1.4rem;
+    color: #FFD700;
+    line-height: 2.5;
+    margin: 15px 0;
+    padding: 15px 20px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 10px;
+    border-right: 4px solid #FFD700;
+    text-align: center;
+}
+
+/* الجداول */
+/* العنوان الرئيسي h1 */
+#text-container h1,
+#text-container-2 h1 {
+    font-size: 2.3rem;
+    text-align: center;
+    margin-bottom: 45px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    padding-bottom: 25px;
+    font-weight: 700;
+}
+
+#text-container h1::after,
+#text-container-2 h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #FFD700, transparent);
+    border-radius: 2px;
+}
+
+#text-container table,
+#text-container-2 table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#text-container th,
+#text-container-2 th,
+#text-container td,
+#text-container-2 td {
+    padding: 15px;
+    text-align: right;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+#text-container th,
+#text-container-2 th {
+    background: rgba(255, 215, 0, 0.1);
+    color: #FFD700;
+    font-weight: 700;
+}
+
+/* الروابط */
+#text-container a,
+#text-container-2 a {
+    color: #FFD700;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+/* الصور */
+#text-container img,
+#text-container-2 img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    margin: 20px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* الفواصل */
+#text-container hr,
+#text-container-2 hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #FFD700, transparent);
+    margin: 30px 0;
 }
 
 /* ========================================
@@ -368,29 +395,6 @@ main::before {
 }
 
 /* ========================================
-   تنسيق الأحاديث النبوية
-   ======================================== */
-.hadith-box {
-    display: block;
-    font-family: 'Amiri', 'Tajawal', serif;
-    font-size: 1.4rem;
-    color: #FFD700;
-    line-height: 2.5;
-    margin: 15px 0;
-    padding: 15px 20px;
-    background: rgba(255, 215, 0, 0.1);
-    border-radius: 10px;
-    border-right: 4px solid #FFD700;
-    text-align: center;
-}
-
-.hadith-box:hover {
-    background: rgba(255, 215, 0, 0.15);
-    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
-    transform: translateX(-3px);
-}
-
-/* ========================================
    10. التظليل والعريض
    ======================================== */
 mark {
@@ -408,70 +412,30 @@ strong {
     font-weight: 700;
 }
 
-font[color="#00b050"] {
-    color: #4CAF50 !important;
-    font-weight: 600;
-}
-
 /* ========================================
-   11. العداد المحسّن
+   11. العداد
    ======================================== */
 .counter {
     text-align: center;
     margin-top: 45px;
     padding: 20px;
-    /*background: linear-gradient(135deg,
-            rgba(255, 215, 0, 0.15) 0%,
-            rgba(255, 165, 0, 0.1) 100%);
-    /*border-radius: 25px;
-    border: 2px solid rgba(255, 215, 0, 0.4);*/
     font-size: 1.3rem;
     color: #ffffff;
-    /*backdrop-filter: blur(10px);
-    animation: fadeIn 1s ease-out 0.5s both;
-    box-shadow:
-        0 10px 40px rgba(255, 215, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);*/
     position: relative;
-    /*overflow: hidden;*/
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    
-    to {
-        opacity: 1;
-    }
 }
 
 .counter::before {
     content: '';
     position: absolute;
-    top: -5px;      /* ← اخرجها قليلاً من الأعلى */
-    right: -5px;    /* ← اخرجها قليلاً من اليمين */
+    top: -5px;
+    right: -5px;
     width: 16px;
     height: 16px;
     background: #44FF44;
     border-radius: 50%;
-    box-shadow: 
+    box-shadow:
         0 0 15px #44FF44,
-        0 0 30px #44FF44,
-        0 0 45px rgba(68, 255, 68, 0.6),
-        0 0 60px rgba(68, 255, 68, 0.3);
-    animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.3);
-        opacity: 0.7;
-    }
+        0 0 30px #44FF44;
 }
 
 .counter span {
@@ -481,23 +445,10 @@ font[color="#00b050"] {
     text-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
     display: inline-block;
     margin: 0 10px;
-    animation: countGlow 2s ease-in-out infinite;
-}
-
-@keyframes countGlow {
-    
-    0%,
-    100% {
-        text-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
-    }
-    
-    50% {
-        text-shadow: 0 0 35px rgba(255, 215, 0, 0.9);
-    }
 }
 
 /* ========================================
-   13. الفوتر البسيط مع التواصل
+   12. الفوتر
    ======================================== */
 .main-footer {
     position: relative;
@@ -565,15 +516,7 @@ font[color="#00b050"] {
     justify-content: center;
     text-decoration: none;
     font-size: 1.5rem;
-    transition: all 0.3s ease;
     border: 2px solid rgba(255, 215, 0, 0.3);
-}
-
-.social-icon:hover {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
-    border-color: #FFD700;
 }
 
 .footer-bottom {
@@ -598,31 +541,9 @@ font[color="#00b050"] {
     text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
 }
 
-/* تنسيق النقطة الكبيرة (●) */
-.manual-bullet {
-    color: #FFA500;
-    font-weight: 800;
-    font-size: 1.5rem;
-    margin-left: 8px;
-    text-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
-    display: inline-block;
-}
-
-/* تنسيق الأرقام اليدوية (1. 2. 3.) */
-.manual-number {
-    color: #FFD700;
-    font-weight: 800;
-    font-size: 1.4rem;
-    margin-left: 8px;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    display: inline-block;
-}
-
-/*الازرررررررررر المشاركة
 /* ========================================
-   🎯 الأزرار العائمة (بدون ميديا)
+   13. الأزرار العائمة
    ======================================== */
-
 .floating-buttons {
     position: fixed;
     bottom: 50px;
@@ -631,19 +552,6 @@ font[color="#00b050"] {
     flex-direction: column;
     gap: 15px;
     z-index: 9999;
-    animation: floatSlideIn 0.8s ease-out;
-}
-
-@keyframes floatSlideIn {
-    from {
-        transform: translateX(-100px);
-        opacity: 0;
-    }
-    
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
 }
 
 .float-btn {
@@ -658,69 +566,21 @@ font[color="#00b050"] {
     border: none;
     cursor: pointer;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 }
 
-.float-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    border-radius: 50%;
-}
-
-.float-btn:hover {
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 15px 35px rgba(255, 215, 0, 0.5);
-}
-
-.float-btn:hover::before {
-    opacity: 1;
-}
-
-.float-btn:active {
-    transform: translateY(-2px) scale(1.05);
-}
-
-/* زر العودة */
 .back-btn {
     background: linear-gradient(135deg, #2c3e50, #34495e);
     color: #FFD700;
     border: 2px solid rgba(255, 215, 0, 0.3);
 }
 
-.back-btn:hover {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    color: #0a0a0f;
-}
-
-/* زر المشاركة */
 .share-btn {
     background: linear-gradient(135deg, #FFD700, #FFA500);
     color: #0a0a0f;
     border: 2px solid rgba(255, 215, 0, 0.5);
-    animation: shareGlow 3s ease-in-out infinite;
 }
-
-@keyframes shareGlow {
-    
-    0%,
-    100% {
-        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-    }
-    
-    50% {
-        box-shadow: 0 8px 35px rgba(255, 215, 0, 0.7);
-    }
-}
-
-/* ========================================
-    إشعار النسخ (بدون ميديا)
-   ======================================== */
 
 .toast-notification {
     position: fixed;
@@ -728,7 +588,6 @@ font[color="#00b050"] {
     left: 50%;
 }
 
-/* زر المشاركة مع النص */
 .share-wrapper {
     position: relative;
 }
@@ -749,7 +608,6 @@ font[color="#00b050"] {
     white-space: nowrap;
     pointer-events: none;
 }
-
 
 /* ========================================
    14. التصميم المتجاوب
@@ -782,47 +640,56 @@ font[color="#00b050"] {
         line-height: 2;
     }
     
-    #text-container li,
-    #text-container-2 li {
-        padding: 20px;
+    #text-container ol li,
+    #text-container-2 ol li,
+    #text-container ul li,
+    #text-container-2 ul li {
+        padding: 5px 35px 5px 15px !important;
         font-size: 1.15rem;
+        margin-bottom: 5px !important;
+        line-height: 2;
+        
     }
     
-    .counter {
-        padding: 10px;
-        font-size: 1rem;
-    }
     
-    .counter span {
-        font-size: 1.0rem;
-    }
-    
-    .footer-section h3 {
-        font-size: 1.3rem;
-    }
-    
-    .footer-section p {
-        font-size: 1rem;
-    }
-    
-    .social-icon {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
-    }
-    
-    .float-btn {
-        width: 40px;
-        height: 40px;
-    }
-    main {
+}
+
+.counter {
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.counter span {
+    font-size: 1.0rem;
+}
+
+.footer-section h3 {
+    font-size: 1.3rem;
+}
+
+.footer-section p {
+    font-size: 1rem;
+}
+
+.social-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+}
+
+.float-btn {
+    width: 40px;
+    height: 40px;
+}
+
+main {
     padding-bottom: 20px;
-    }
+}
 
 .main-footer {
     margin-top: 20px;
-    }
 }
+
 
 @media (max-width: 480px) {
     .header-title {
@@ -837,11 +704,12 @@ font[color="#00b050"] {
     .card {
         padding: 25px 20px;
     }
+    
     main {
-    padding-bottom: 15px;
+        padding-bottom: 15px;
     }
-
-.main-footer {
-    margin-top: 15px;
+    
+    .main-footer {
+        margin-top: 15px;
     }
 }
