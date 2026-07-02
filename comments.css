@@ -1,0 +1,161 @@
+/* ==========================================
+   نظام التعليقات
+   ========================================== */
+
+.comments-container {
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #FFD700;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 40px 0;
+    direction: rtl;
+    text-align: right;
+}
+
+.comments-container h3 {
+    color: #FFD700;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+    padding-bottom: 15px;
+}
+
+/* نموذج التعليقات */
+.comment-form {
+    margin-bottom: 30px;
+}
+
+.comment-input,
+.comment-textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    font-family: 'Tahoma', sans-serif;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.comment-input:focus,
+.comment-textarea:focus {
+    outline: none;
+    border-color: #FFD700;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+.comment-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #000;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Tahoma', sans-serif;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* قائمة التعليقات */
+.comments-list {
+    margin-top: 20px;
+}
+
+.comment-item {
+    background: rgba(255, 215, 0, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.comment-item:hover {
+    background: rgba(255, 215, 0, 0.08);
+    border-color: rgba(255, 215, 0, 0.4);
+    transform: translateX(-5px);
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.comment-name {
+    color: #FFD700;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.comment-date {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.comment-text {
+    color: #eee;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+
+.comment-actions {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.like-btn {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #FFD700;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+}
+
+.like-btn:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: #FFD700;
+}
+
+.like-count {
+    font-weight: bold;
+}
+
+/* رسالة عدم وجود تعليقات */
+.comments-list p {
+    text-align: center;
+    color: #888;
+    padding: 30px;
+    font-size: 1.1rem;
+}
+
