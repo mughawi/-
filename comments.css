@@ -21,6 +21,50 @@
     padding-bottom: 15px;
 }
 
+/* زر إعجاب الصفحة */
+.page-like-section {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.page-like-btn {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.2) 100%);
+    border: 2px solid #FFD700;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #FFD700;
+    font-family: 'Tahoma', sans-serif;
+}
+
+.page-like-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.3) 100%);
+}
+
+.page-like-btn:disabled {
+    cursor: not-allowed;
+}
+
+.page-like-btn #page-like-icon {
+    font-size: 1.5rem;
+}
+
+.like-count {
+    font-weight: bold;
+    font-size: 1.3rem;
+    min-width: 30px;
+    display: inline-block;
+}
+
 /* نموذج التعليقات */
 .comment-form {
     margin-bottom: 30px;
@@ -121,34 +165,6 @@
     line-height: 1.6;
     margin-bottom: 10px;
     word-wrap: break-word;
-}
-
-.comment-actions {
-    text-align: left;
-    margin-top: 10px;
-}
-
-.like-btn {
-    background: rgba(255, 215, 0, 0.1);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    color: #FFD700;
-    padding: 8px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    transition: all 0.3s ease;
-}
-
-.like-btn:hover {
-    background: rgba(255, 215, 0, 0.2);
-    border-color: #FFD700;
-}
-
-.like-count {
-    font-weight: bold;
 }
 
 /* رسالة عدم وجود تعليقات */

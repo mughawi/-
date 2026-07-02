@@ -11,23 +11,31 @@ const commentsConfig = {
     appId: "1:663756299662:web:4d5c47bb9df937fc13d8df"
 };
 
-// تهيئة Firebase (باسم مختلف لعدم التعارض)
+// تهيئة Firebase بشكل منفصل تماماً
 const commentsApp = firebase.initializeApp(commentsConfig, "CommentsApp");
 const commentsDb = firebase.firestore(commentsApp);
 
 // ==========================================
-// دالة إنشاء نموذج التعليقات
+// دالة إنشاء صندوق التعليقات
 // ==========================================
 
 function createCommentsBox() {
     const container = document.getElementById('comments-box');
     if (!container) return;
 
-    // الحصول على اسم الصفحة الحالية
     const pageName = window.location.pathname.split('/').pop() || 'home';
 
     container.innerHTML = `
         <div class="comments-container">
+            <!-- زر إعجاب الصفحة -->
+            <div class="page-like-section">
+                <button onclick="likePage()" id="page-like-btn" class="page-like-btn">
+                    <span id="page-like-icon">🤍</span>
+                    <span id="page-like-count" class="like-count">0</span>
+                    <span>إعجاب</span>
+                </button>
+            </div>
+            
             <h3>💬 التعليقات</h3>
             
             <!-- نموذج إضافة تعليق -->
@@ -42,8 +50,82 @@ function createCommentsBox() {
         </div>
     `;
 
+    // تحميل إعجابات الصفحة
+    loadPageLikes(pageName);
+    
     // تحميل التعليقات
     loadComments(pageName);
+}
+
+// ==========================================
+// دالة إعجاب الصفحة
+// ==========================================
+
+function likePage() {
+    const pageName = window.location.pathname.split('/').pop() || 'home';
+    const likedPages = JSON.parse(localStorage.getItem('likedPages') || '[]');
+    
+    if (likedPages.includes(pageName)) {
+        alert('لقد أعجبت بهذه الصفحة بالفعل');
+        return;
+    }
+    
+    commentsDb.collection('pages').doc(pageName).get().then(doc => {
+        if (doc.exists) {
+            const currentLikes = doc.data().likes || 0;
+            commentsDb.collection('pages').doc(pageName).update({
+                likes: currentLikes + 1
+            });
+        } else {
+            commentsDb.collection('pages').doc(pageName).set({
+                page: pageName,
+                likes: 1
+            });
+        }
+        
+        // حفظ في localStorage
+        likedPages.push(pageName);
+        localStorage.setItem('likedPages', JSON.stringify(likedPages));
+        
+        // تحديث الزر
+        document.getElementById('page-like-icon').textContent = '❤️';
+        const btn = document.getElementById('page-like-btn');
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+    }).catch(error => {
+        console.error('Error liking page:', error);
+    });
+}
+
+// ==========================================
+// دالة تحميل إعجابات الصفحة
+// ==========================================
+
+function loadPageLikes(pageName) {
+    commentsDb.collection('pages').doc(pageName).onSnapshot(doc => {
+        const countElement = document.getElementById('page-like-count');
+        const iconElement = document.getElementById('page-like-icon');
+        const btn = document.getElementById('page-like-btn');
+        
+        if (!countElement || !iconElement || !btn) return;
+        
+        if (doc.exists) {
+            const likes = doc.data().likes || 0;
+            countElement.textContent = likes;
+        } else {
+            countElement.textContent = '0';
+        }
+        
+        // التحقق إذا كان المستخدم قد أعجب بالفعل
+        const likedPages = JSON.parse(localStorage.getItem('likedPages') || '[]');
+        if (likedPages.includes(pageName)) {
+            iconElement.textContent = '❤️';
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+        }
+    });
 }
 
 // ==========================================
@@ -68,10 +150,8 @@ function addComment() {
         page: pageName,
         name: name,
         text: text,
-        likes: 0,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
-        // تفريغ الحقول
         nameInput.value = '';
         textInput.value = '';
     }).catch((error) => {
@@ -89,7 +169,6 @@ function loadComments(pageName) {
     
     if (!commentsList) return;
     
-    // بدون orderBy - لا يحتاج Index
     commentsDb.collection('comments')
         .where('page', '==', pageName)
         .onSnapshot(snapshot => {
@@ -100,13 +179,11 @@ function loadComments(pageName) {
                 return;
             }
             
-            // تحويل إلى مصفوفة وترتيبها يدوياً
             const comments = [];
             snapshot.forEach(doc => {
                 comments.push({ id: doc.id, ...doc.data() });
             });
             
-            // ترتيب حسب التاريخ (الأحدث أولاً)
             comments.sort((a, b) => {
                 const dateA = a.createdAt ? a.createdAt.toDate() : new Date(0);
                 const dateB = b.createdAt ? b.createdAt.toDate() : new Date(0);
@@ -123,8 +200,6 @@ function loadComments(pageName) {
         });
 }
 
-
-
 // ==========================================
 // دالة إنشاء عنصر التعليق
 // ==========================================
@@ -133,7 +208,11 @@ function createCommentElement(id, data) {
     const div = document.createElement('div');
     div.className = 'comment-item';
     
-    const date = data.createdAt ? data.createdAt.toDate().toLocaleDateString('ar-SA') : '';
+    const date = data.createdAt ? data.createdAt.toDate().toLocaleDateString('ar-SA', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    }) : '';
     
     div.innerHTML = `
         <div class="comment-header">
@@ -141,42 +220,13 @@ function createCommentElement(id, data) {
             <span class="comment-date">${date}</span>
         </div>
         <p class="comment-text">${escapeHtml(data.text)}</p>
-        <div class="comment-actions">
-            <button onclick="likeComment('${id}', ${data.likes})" class="like-btn">
-                ❤️ <span class="like-count">${data.likes || 0}</span>
-            </button>
-        </div>
     `;
     
     return div;
 }
 
 // ==========================================
-// دالة الإعجاب بالتعليق
-// ==========================================
-
-function likeComment(id, currentLikes) {
-    // التحقق مما إذا كان المستخدم قد أعجب بالفعل (باستخدام localStorage)
-    const likedComments = JSON.parse(localStorage.getItem('likedComments') || '[]');
-    
-    if (likedComments.includes(id)) {
-        alert('لقد أعجبت بهذا التعليق بالفعل');
-        return;
-    }
-    
-    commentsDb.collection('comments').doc(id).update({
-        likes: (currentLikes || 0) + 1
-    }).then(() => {
-        // حفظ أن المستخدم أعجب بهذا التعليق
-        likedComments.push(id);
-        localStorage.setItem('likedComments', JSON.stringify(likedComments));
-    }).catch(error => {
-        console.error('Error liking comment:', error);
-    });
-}
-
-// ==========================================
-// دالة حماية النصوص (XSS Protection)
+// دالة حماية النصوص
 // ==========================================
 
 function escapeHtml(text) {
