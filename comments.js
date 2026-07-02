@@ -87,9 +87,11 @@ function addComment() {
 function loadComments(pageName) {
     const commentsList = document.getElementById('comments-list');
     
+    if (!commentsList) return;
+    
+    // بدون orderBy - لا يحتاج Index
     commentsDb.collection('comments')
         .where('page', '==', pageName)
-        .orderBy('createdAt', 'desc')
         .onSnapshot(snapshot => {
             commentsList.innerHTML = '';
             
@@ -98,11 +100,21 @@ function loadComments(pageName) {
                 return;
             }
             
+            // تحويل إلى مصفوفة وترتيبها يدوياً
+            const comments = [];
             snapshot.forEach(doc => {
-                const data = doc.data();
-                const commentId = doc.id;
-                
-                const commentElement = createCommentElement(commentId, data);
+                comments.push({ id: doc.id, ...doc.data() });
+            });
+            
+            // ترتيب حسب التاريخ (الأحدث أولاً)
+            comments.sort((a, b) => {
+                const dateA = a.createdAt ? a.createdAt.toDate() : new Date(0);
+                const dateB = b.createdAt ? b.createdAt.toDate() : new Date(0);
+                return dateB - dateA;
+            });
+            
+            comments.forEach(comment => {
+                const commentElement = createCommentElement(comment.id, comment);
                 commentsList.appendChild(commentElement);
             });
         }, error => {
@@ -110,6 +122,8 @@ function loadComments(pageName) {
             commentsList.innerHTML = '<p style="text-align: center; color: #ff0000;">حدث خطأ في تحميل التعليقات</p>';
         });
 }
+
+
 
 // ==========================================
 // دالة إنشاء عنصر التعليق
