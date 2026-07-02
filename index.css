@@ -521,7 +521,7 @@ body {
 }
 
 .footer-section p {
-    color: #aaa;
+    color: #ffffff;
     margin-bottom: 25px;
 }
 
@@ -589,7 +589,7 @@ body {
 }
 
 .footer-bottom p {
-    color: #888;
+    color: #ffffff;
     margin: 5px 0;
     font-size: 0.95rem;
 }
@@ -602,24 +602,15 @@ body {
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
-/* ========================================
-   📺 تنسيق الشاشات (المحتوى النصي)
-   ======================================== */
-
-/* الحاوية العامة */
-/* ========================================
-   📝 تنسيق النص الوحيد في الرئيسية
-   ======================================== */
-
 #text-container {
     text-align: center;
-    padding: 20px 30px;
-    margin: 30px auto;
+    padding: 10px 15px;
+    margin: 5px auto;
     max-width: 700px;
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 165, 0, 0.03));
+    /*background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 165, 0, 0.03));
     border: 1px solid rgba(255, 215, 0, 0.2);
     border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);*/
 }
 
 #text-container p {
@@ -847,7 +838,7 @@ strong {
     
     #text-container,
     #text-container-2 {
-        padding: 20px 15px;
+        padding: 10px 15px;
     }
     
     #text-container h1,
