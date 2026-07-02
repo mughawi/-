@@ -20,7 +20,7 @@ const commentsDb = firebase.firestore(commentsApp);
 // ==========================================
 
 let isAdmin = false;
-const ADMIN_PASSWORD = 'admin123'; // ⚠️ غيّر هذه الكلمة!
+const ADMIN_PASSWORD = 'ASDqwe123'; // ⚠️ غيّر هذه الكلمة!
 
 // التحقق من الأدمن عند تحميل الصفحة
 function checkAdmin() {
