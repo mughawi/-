@@ -11,8 +11,10 @@ const commentsConfig = {
     appId: "1:663756299662:web:4d5c47bb9df937fc13d8df"
 };
 
-// استخدام نفس Firebase الموجود في main.js
-const commentsDb = firebase.firestore();
+// تهيئة Firebase (باسم مختلف لعدم التعارض)
+const commentsApp = firebase.initializeApp(commentsConfig, "CommentsApp");
+const commentsDb = firebase.firestore(commentsApp);
+
 // ==========================================
 // دالة إنشاء نموذج التعليقات
 // ==========================================
