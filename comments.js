@@ -11,9 +11,84 @@ const commentsConfig = {
     appId: "1:663756299662:web:4d5c47bb9df937fc13d8df"
 };
 
-// تهيئة Firebase بشكل منفصل تماماً
+// تهيئة Firebase بشكل منفصل تماماً (لا تعارض مع الموقع الرئيسي)
 const commentsApp = firebase.initializeApp(commentsConfig, "CommentsApp");
 const commentsDb = firebase.firestore(commentsApp);
+
+// ==========================================
+// نظام الأدمن
+// ==========================================
+
+let isAdmin = false;
+const ADMIN_PASSWORD = 'admin123'; // ⚠️ غيّر هذه الكلمة!
+
+// التحقق من الأدمن عند تحميل الصفحة
+function checkAdmin() {
+    const savedAdmin = localStorage.getItem('isAdmin');
+    if (savedAdmin === 'true') {
+        isAdmin = true;
+    }
+}
+
+// تسجيل دخول الأدمن
+function loginAdmin() {
+    const password = prompt('🔐 أدخل كلمة مرور الأدمن:');
+    if (password === ADMIN_PASSWORD) {
+        isAdmin = true;
+        localStorage.setItem('isAdmin', 'true');
+        alert('✅ تم تسجيل الدخول كأدمن بنجاح');
+        location.reload();
+    } else if (password !== null) {
+        alert('❌ كلمة المرور خاطئة');
+    }
+}
+
+// تسجيل خروج الأدمن
+function logoutAdmin() {
+    isAdmin = false;
+    localStorage.removeItem('isAdmin');
+    alert('✅ تم تسجيل الخروج');
+    location.reload();
+}
+
+// إضافة زر الأدمن في الصفحة
+function addAdminButton() {
+    const container = document.getElementById('comments-box');
+    if (!container) return;
+    
+    const adminDiv = document.createElement('div');
+    adminDiv.style.cssText = 'text-align: left; margin-bottom: 10px;';
+    
+    if (isAdmin) {
+        adminDiv.innerHTML = `
+            <button onclick="logoutAdmin()" style="
+                background: rgba(255, 0, 0, 0.2);
+                border: 1px solid rgba(255, 0, 0, 0.4);
+                color: #ff6666;
+                padding: 5px 10px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 0.85rem;
+                font-family: 'Tahoma', sans-serif;
+            ">خروج أدمن 🔓</button>
+        `;
+    } else {
+        adminDiv.innerHTML = `
+            <button onclick="loginAdmin()" style="
+                background: rgba(255, 215, 0, 0.1);
+                border: 1px solid rgba(255, 215, 0, 0.3);
+                color: #FFD700;
+                padding: 5px 10px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 0.85rem;
+                font-family: 'Tahoma', sans-serif;
+            ">دخول أدمن 🔐</button>
+        `;
+    }
+    
+    container.insertBefore(adminDiv, container.firstChild);
+}
 
 // ==========================================
 // دالة إنشاء صندوق التعليقات
@@ -50,6 +125,10 @@ function createCommentsBox() {
         </div>
     `;
 
+    // التحقق من الأدمن وإضافة الزر
+    checkAdmin();
+    addAdminButton();
+    
     // تحميل إعجابات الصفحة
     loadPageLikes(pageName);
     
@@ -88,11 +167,14 @@ function likePage() {
         localStorage.setItem('likedPages', JSON.stringify(likedPages));
         
         // تحديث الزر
-        document.getElementById('page-like-icon').textContent = '❤️';
+        const iconElement = document.getElementById('page-like-icon');
         const btn = document.getElementById('page-like-btn');
-        btn.disabled = true;
-        btn.style.opacity = '0.5';
-        btn.style.cursor = 'not-allowed';
+        if (iconElement) iconElement.textContent = '❤️';
+        if (btn) {
+            btn.disabled = true;
+            btn.style.opacity = '0.6';
+            btn.style.cursor = 'not-allowed';
+        }
     }).catch(error => {
         console.error('Error liking page:', error);
     });
@@ -122,7 +204,7 @@ function loadPageLikes(pageName) {
         if (likedPages.includes(pageName)) {
             iconElement.textContent = '❤️';
             btn.disabled = true;
-            btn.style.opacity = '0.5';
+            btn.style.opacity = '0.6';
             btn.style.cursor = 'not-allowed';
         }
     });
@@ -214,15 +296,55 @@ function createCommentElement(id, data) {
         day: 'numeric'
     }) : '';
     
+    // زر الحذف للأدمن فقط
+    const deleteButton = isAdmin ? `
+        <button onclick="deleteComment('${id}')" style="
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid rgba(255, 0, 0, 0.4);
+            color: #ff6666;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            float: left;
+            margin-top: 10px;
+            font-family: 'Tahoma', sans-serif;
+        ">🗑️ حذف</button>
+    ` : '';
+    
     div.innerHTML = `
         <div class="comment-header">
             <span class="comment-name">${escapeHtml(data.name)}</span>
             <span class="comment-date">${date}</span>
         </div>
         <p class="comment-text">${escapeHtml(data.text)}</p>
+        ${deleteButton}
+        <div style="clear: both;"></div>
     `;
     
     return div;
+}
+
+// ==========================================
+// دالة حذف التعليق (للأدمن فقط)
+// ==========================================
+
+function deleteComment(commentId) {
+    if (!isAdmin) {
+        alert('يجب تسجيل الدخول كأدمن أولاً');
+        return;
+    }
+    
+    if (confirm('هل أنت متأكد من حذف هذا التعليق نهائياً؟')) {
+        commentsDb.collection('comments').doc(commentId).delete()
+            .then(() => {
+                // الحذف يتم تلقائياً عبر onSnapshot
+            })
+            .catch(error => {
+                console.error('Error deleting comment:', error);
+                alert('حدث خطأ أثناء الحذف');
+            });
+    }
 }
 
 // ==========================================
