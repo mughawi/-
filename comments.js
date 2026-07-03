@@ -20,7 +20,7 @@ const commentsDb = firebase.firestore(commentsApp);
 // ==========================================
 
 let isAdmin = false;
-const ADMIN_PASSWORD = 'ASDqwe123'; // ⚠️ غيّر هذه الكلمة!
+const ADMIN_PASSWORD_HASH = 'a36d22c73d208f6f041e15bb2959ab6f834b5ccf632bbf6a4ad8fffbadba9386';
 
 // التحقق من الأدمن عند تحميل الصفحة
 function checkAdmin() {
@@ -31,18 +31,23 @@ function checkAdmin() {
 }
 
 // تسجيل دخول الأدمن
-function loginAdmin() {
-    const password = prompt('🔐 أدخل كلمة مرور الأدمن:');
-    if (password === ADMIN_PASSWORD) {
+async function loginAdmin() {
+    const password = prompt(' أدخل كلمة مرور الأدمن:');
+    if (password === null) return;
+    
+    const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(password));
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    
+    if (hashHex === ADMIN_PASSWORD_HASH) {
         isAdmin = true;
         localStorage.setItem('isAdmin', 'true');
         alert('✅ تم تسجيل الدخول كأدمن بنجاح');
         location.reload();
-    } else if (password !== null) {
+    } else {
         alert('❌ كلمة المرور خاطئة');
     }
 }
-
 // تسجيل خروج الأدمن
 function logoutAdmin() {
     isAdmin = false;
