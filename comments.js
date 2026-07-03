@@ -32,7 +32,7 @@ function checkAdmin() {
 
 // تسجيل دخول الأدمن
 async function loginAdmin() {
-    const password = prompt(' أدخل كلمة مرور الأدمن:');
+    const password = prompt('🔐 أدخل كلمة مرور الأدمن:');
     if (password === null) return;
     
     const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(password));
@@ -43,11 +43,15 @@ async function loginAdmin() {
         isAdmin = true;
         localStorage.setItem('isAdmin', 'true');
         alert('✅ تم تسجيل الدخول كأدمن بنجاح');
+        
+        // ✅ أزل #admin من الرابط قبل إعادة التحميل
+        history.replaceState(null, null, window.location.pathname);
         location.reload();
     } else {
         alert('❌ كلمة المرور خاطئة');
     }
 }
+
 // تسجيل خروج الأدمن
 function logoutAdmin() {
     isAdmin = false;
@@ -340,21 +344,20 @@ function deleteComment(commentId) {
     }
 }
 
-// ==========================================
-// دالة حماية النصوص
-// ==========================================
-
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
 // دخول الأدمن عبر رابط سري
-if (window.location.hash === '#admin') {
-    setTimeout(() => {
-        loginAdmin();
-    }, 500);
-}
+window.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash === '#admin') {
+        // تحقق أولاً إذا كان مسجلاً بالفعل
+        checkAdmin();
+        
+        // فقط إذا لم يكن مسجلاً، اطلب كلمة المرور
+        if (!isAdmin) {
+            setTimeout(() => {
+                loginAdmin();
+            }, 500);
+        }
+    }
+});
 
 // ==========================================
 // تشغيل عند تحميل الصفحة
