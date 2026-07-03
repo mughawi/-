@@ -141,8 +141,9 @@ function likePage() {
     const pageName = window.location.pathname.split('/').pop() || 'home';
     const likedPages = JSON.parse(localStorage.getItem('likedPages') || '[]');
     
+    // ✅ تحقق مزدوج
     if (likedPages.includes(pageName)) {
-        alert('لقد أعجبت بهذه الصفحة بالفعل');
+        alert('لقد أعجبت بهذه الصفحة بالفعل ❤️');
         return;
     }
     
@@ -163,7 +164,7 @@ function likePage() {
         likedPages.push(pageName);
         localStorage.setItem('likedPages', JSON.stringify(likedPages));
         
-        // تحديث الزر
+        // تحديث الزر فوراً
         const iconElement = document.getElementById('page-like-icon');
         const btn = document.getElementById('page-like-btn');
         if (iconElement) iconElement.textContent = '❤️';
@@ -171,6 +172,7 @@ function likePage() {
             btn.disabled = true;
             btn.style.opacity = '0.6';
             btn.style.cursor = 'not-allowed';
+            btn.onclick = null; // ✅ إزالة حدث النقر
         }
     }).catch(error => {
         console.error('Error liking page:', error);
@@ -196,13 +198,14 @@ function loadPageLikes(pageName) {
             countElement.textContent = '0';
         }
         
-        // التحقق إذا كان المستخدم قد أعجب بالفعل
+        // ✅ تحقق من localStorage
         const likedPages = JSON.parse(localStorage.getItem('likedPages') || '[]');
         if (likedPages.includes(pageName)) {
             iconElement.textContent = '❤️';
             btn.disabled = true;
             btn.style.opacity = '0.6';
             btn.style.cursor = 'not-allowed';
+            btn.onclick = null; // ✅ إزالة حدث النقر
         }
     });
 }
