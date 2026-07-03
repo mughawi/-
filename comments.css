@@ -151,3 +151,29 @@
     font-size: 0.95rem;
 }
 
+/* تحسين للجوال */
+@media (max-width: 768px) {
+    .comments-container {
+        padding: 15px;
+        margin: 20px 10px;
+    }
+    
+    .comment-input,
+    .comment-textarea {
+        font-size: 16px;
+        /* يمنع التكبير التلقائي في iPhone */
+        padding: 12px;
+    }
+    
+    .submit-btn {
+        width: 100%;
+        /* زر بعرض كامل للجوال */
+        padding: 14px;
+        font-size: 16px;
+    }
+    
+    .page-like-btn {
+        width: 100%;
+        padding: 12px;
+    }
+}
