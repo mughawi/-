@@ -139,10 +139,9 @@ function createCommentsBox() {
 
 function likePage() {
     const pageName = window.location.pathname.split('/').pop() || 'home';
-    const likedPages = JSON.parse(localStorage.getItem('likedPages') || '[]');
     
-    // ✅ تحقق مزدوج
-    if (likedPages.includes(pageName)) {
+    // ✅ التحقق من Cookie
+    if (document.cookie.includes(`liked_${pageName}=true`)) {
         alert('لقد أعجبت بهذه الصفحة بالفعل ❤️');
         return;
     }
@@ -160,9 +159,10 @@ function likePage() {
             });
         }
         
-        // حفظ في localStorage
-        likedPages.push(pageName);
-        localStorage.setItem('likedPages', JSON.stringify(likedPages));
+        // ✅ حفظ في Cookie لمدة سنة
+        const expiryDate = new Date();
+        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+        document.cookie = `liked_${pageName}=true; expires=${expiryDate.toUTCString()}; path=/; SameSite=Strict`;
         
         // تحديث الزر فوراً
         const iconElement = document.getElementById('page-like-icon');
@@ -172,13 +172,12 @@ function likePage() {
             btn.disabled = true;
             btn.style.opacity = '0.6';
             btn.style.cursor = 'not-allowed';
-            btn.onclick = null; // ✅ إزالة حدث النقر
+            btn.onclick = null;
         }
     }).catch(error => {
         console.error('Error liking page:', error);
     });
 }
-
 // ==========================================
 // دالة تحميل إعجابات الصفحة
 // ==========================================
@@ -198,18 +197,16 @@ function loadPageLikes(pageName) {
             countElement.textContent = '0';
         }
         
-        // ✅ تحقق من localStorage
-        const likedPages = JSON.parse(localStorage.getItem('likedPages') || '[]');
-        if (likedPages.includes(pageName)) {
+        // ✅ التحقق من Cookie
+        if (document.cookie.includes(`liked_${pageName}=true`)) {
             iconElement.textContent = '❤️';
             btn.disabled = true;
             btn.style.opacity = '0.6';
             btn.style.cursor = 'not-allowed';
-            btn.onclick = null; // ✅ إزالة حدث النقر
+            btn.onclick = null;
         }
     });
 }
-
 // ==========================================
 // دالة إضافة تعليق
 // ==========================================
