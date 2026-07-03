@@ -53,39 +53,27 @@ function logoutAdmin() {
 
 // إضافة زر الأدمن في الصفحة
 function addAdminButton() {
+    // إخفاء الزر تماماً للزوار العاديين
+    if (!isAdmin) return;
+    
     const container = document.getElementById('comments-box');
     if (!container) return;
     
     const adminDiv = document.createElement('div');
     adminDiv.style.cssText = 'text-align: left; margin-bottom: 10px;';
     
-    if (isAdmin) {
-        adminDiv.innerHTML = `
-            <button onclick="logoutAdmin()" style="
-                background: rgba(255, 0, 0, 0.2);
-                border: 1px solid rgba(255, 0, 0, 0.4);
-                color: #ff6666;
-                padding: 5px 10px;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 0.85rem;
-                font-family: 'Tahoma', sans-serif;
-            ">خروج أدمن 🔓</button>
-        `;
-    } else {
-        adminDiv.innerHTML = `
-            <button onclick="loginAdmin()" style="
-                background: rgba(255, 215, 0, 0.1);
-                border: 1px solid rgba(255, 215, 0, 0.3);
-                color: #FFD700;
-                padding: 5px 10px;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 0.85rem;
-                font-family: 'Tahoma', sans-serif;
-            ">دخول أدمن 🔐</button>
-        `;
-    }
+    adminDiv.innerHTML = `
+        <button onclick="logoutAdmin()" style="
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid rgba(255, 0, 0, 0.4);
+            color: #ff6666;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: 'Tahoma', sans-serif;
+        ">خروج أدمن 🔓</button>
+    `;
     
     container.insertBefore(adminDiv, container.firstChild);
 }
@@ -355,6 +343,12 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+// دخول الأدمن عبر رابط سري
+if (window.location.hash === '#admin') {
+    setTimeout(() => {
+        loginAdmin();
+    }, 500);
 }
 
 // ==========================================
