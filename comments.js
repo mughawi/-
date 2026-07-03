@@ -344,7 +344,20 @@ function deleteComment(commentId) {
     }
 }
 
+// ==========================================
+// دالة حماية النصوص
+// ==========================================
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// ==========================================
 // دخول الأدمن عبر رابط سري
+// ==========================================
+
 window.addEventListener('DOMContentLoaded', () => {
     if (window.location.hash === '#admin') {
         // تحقق أولاً إذا كان مسجلاً بالفعل
