@@ -132,7 +132,7 @@ main::before {
    ======================================== */
 .card {
     background: rgba(45, 40, 15, 0.9);
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 30px 35px;
     max-width: 95%;
     width: 95%;
