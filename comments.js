@@ -16,6 +16,11 @@ const commentsApp = firebase.initializeApp(commentsConfig, "CommentsApp");
 const commentsDb = firebase.firestore(commentsApp);
 
 // ==========================================
+// تتبع حالة الإعجاب في الذاكرة (جديد)
+// ==========================================
+let hasLiked = {};
+
+// ==========================================
 // نظام الأدمن
 // ==========================================
 
@@ -97,31 +102,31 @@ function createCommentsBox() {
     
     const pageName = window.location.pathname.split('/').pop() || 'home';
     
-container.innerHTML = `
-    <div class="comments-container">
-        <div class="page-like-section">
-            <button onclick="likePage()" id="page-like-btn" class="page-like-btn">
-                <span id="page-like-icon" class="like-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7 11V20H4C3.45 20 3 19.55 3 19V12C3 11.45 3.45 11 4 11H7ZM14 9V5C14 3.9 13.1 3 12 3L6.5 9.12C6.19 9.46 6 9.91 6 10.4V18C6 19.1 6.9 20 8 20H17.21C17.95 20 18.6 19.51 18.81 18.8L20.81 11.8C20.93 11.38 20.99 10.93 20.99 10.48C21 9.66 20.34 9 19.52 9H14Z"/>
-                    </svg>
-                </span>
-                <span id="page-like-count" class="like-count">0</span>
-                <span>إعجاب</span>
-            </button>
-        </div>
-        
-        <h3>💬 التعليقات</h3>
-        
-        <div class="comment-form">
-            <input type="text" id="comment-name" placeholder="الاسم" class="comment-input">
-            <textarea id="comment-text" placeholder="اكتب تعليقك..." class="comment-textarea"></textarea>
-            <button onclick="addComment()" class="submit-btn">إرسال التعليق</button>
-        </div>
+    container.innerHTML = `
+        <div class="comments-container">
+            <div class="page-like-section">
+                <button onclick="likePage()" id="page-like-btn" class="page-like-btn">
+                    <span id="page-like-icon" class="like-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 11V20H4C3.45 20 3 19.55 3 19V12C3 11.45 3.45 11 4 11H7ZM14 9V5C14 3.9 13.1 3 12 3L6.5 9.12C6.19 9.46 6 9.91 6 10.4V18C6 19.1 6.9 20 8 20H17.21C17.95 20 18.6 19.51 18.81 18.8L20.81 11.8C20.93 11.38 20.99 10.93 20.99 10.48C21 9.66 20.34 9 19.52 9H14Z"/>
+                        </svg>
+                    </span>
+                    <span id="page-like-count" class="like-count">0</span>
+                    <span>إعجاب</span>
+                </button>
+            </div>
+            
+            <h3>💬 التعليقات</h3>
+            
+            <div class="comment-form">
+                <input type="text" id="comment-name" placeholder="الاسم" class="comment-input">
+                <textarea id="comment-text" placeholder="اكتب تعليقك..." class="comment-textarea"></textarea>
+                <button onclick="addComment()" class="submit-btn">إرسال التعليق</button>
+            </div>
 
-        <div id="comments-list" class="comments-list"></div>
-    </div>
-`;
+            <div id="comments-list" class="comments-list"></div>
+        </div>
+    `;
     
     // التحقق من الأدمن وإضافة الزر
     checkAdmin();
@@ -135,19 +140,34 @@ container.innerHTML = `
 }
 
 // ==========================================
-// دالة إعجاب الصفحة
+// دالة إعجاب الصفحة (معدلة - منع التكرار)
 // ==========================================
 
 function likePage() {
     const pageName = window.location.pathname.split('/').pop() || 'home';
     
-    // ✅ التحقق المزدوج (localStorage + Cookie)
+    // ✅ التحقق الثلاثي (ذاكرة + localStorage + Cookie)
+    if (hasLiked[pageName]) {
+        alert('لقد أعجبت بهذه الصفحة بالفعل 🤙️');
+        return;
+    }
+    
     const likedInStorage = localStorage.getItem(`liked_${pageName}`) === 'true';
     const likedInCookie = document.cookie.includes(`liked_${pageName}=true`);
     
     if (likedInStorage || likedInCookie) {
+        hasLiked[pageName] = true;
         alert('لقد أعجبت بهذه الصفحة بالفعل 🤙️');
         return;
+    }
+    
+    // تعطيل الزر فوراً قبل أي عملية
+    const btn = document.getElementById('page-like-btn');
+    if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = '0.8';
+        btn.style.cursor = 'not-allowed';
+        btn.onclick = null;
     }
     
     commentsDb.collection('pages').doc(pageName).get().then(doc => {
@@ -163,6 +183,9 @@ function likePage() {
             });
         }
         
+        // ✅ حفظ في الذاكرة
+        hasLiked[pageName] = true;
+        
         // ✅ حفظ في localStorage
         localStorage.setItem(`liked_${pageName}`, 'true');
         
@@ -170,24 +193,26 @@ function likePage() {
         const expiryDate = new Date();
         expiryDate.setFullYear(expiryDate.getFullYear() + 1);
         document.cookie = `liked_${pageName}=true; expires=${expiryDate.toUTCString()}; path=/`;
-        // تحديث الزر فوراً
+        
+        // تحديث الأيقونة
         const iconElement = document.getElementById('page-like-icon');
-        const btn = document.getElementById('page-like-btn');
         if (iconElement) {
-            iconElement.classList.add('liked'); // ✅ إضافة class للون الأزرق
-        }
-        if (btn) {
-            btn.disabled = true;
-            btn.style.opacity = '0.8';
-            btn.style.cursor = 'not-allowed';
-            btn.onclick = null;
+            iconElement.classList.add('liked');
         }
     }).catch(error => {
         console.error('Error liking page:', error);
+        // إعادة تفعيل الزر إذا فشل
+        if (btn) {
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            btn.style.cursor = 'pointer';
+            btn.onclick = likePage;
+        }
     });
 }
+
 // ==========================================
-// دالة تحميل إعجابات الصفحة
+// دالة تحميل إعجابات الصفحة (معدلة)
 // ==========================================
 
 function loadPageLikes(pageName) {
@@ -205,13 +230,14 @@ function loadPageLikes(pageName) {
             countElement.textContent = '0';
         }
         
-        // ✅ التحقق المزدوج
+        // ✅ التحقق الثلاثي
+        const likedInMemory = hasLiked[pageName] === true;
         const likedInStorage = localStorage.getItem(`liked_${pageName}`) === 'true';
         const likedInCookie = document.cookie.includes(`liked_${pageName}=true`);
         
-        // 👇 هذا هو الكود الذي سألت عنه 👇
-        if (likedInStorage || likedInCookie) {
-            iconElement.classList.add('liked'); // ✅ إضافة class للون الأزرق
+        if (likedInMemory || likedInStorage || likedInCookie) {
+            hasLiked[pageName] = true;
+            iconElement.classList.add('liked');
             btn.disabled = true;
             btn.style.opacity = '0.8';
             btn.style.cursor = 'not-allowed';
@@ -219,6 +245,7 @@ function loadPageLikes(pageName) {
         }
     });
 }
+
 // ==========================================
 // دالة إضافة تعليق
 // ==========================================
@@ -389,3 +416,4 @@ window.addEventListener('DOMContentLoaded', () => {
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', createCommentsBox);
+
