@@ -140,8 +140,11 @@ function createCommentsBox() {
 function likePage() {
     const pageName = window.location.pathname.split('/').pop() || 'home';
     
-    // ✅ التحقق من Cookie
-    if (document.cookie.includes(`liked_${pageName}=true`)) {
+    // ✅ التحقق المزدوج (localStorage + Cookie)
+    const likedInStorage = localStorage.getItem(`liked_${pageName}`) === 'true';
+    const likedInCookie = document.cookie.includes(`liked_${pageName}=true`);
+    
+    if (likedInStorage || likedInCookie) {
         alert('لقد أعجبت بهذه الصفحة بالفعل ❤️');
         return;
     }
@@ -159,10 +162,13 @@ function likePage() {
             });
         }
         
+        // ✅ حفظ في localStorage
+        localStorage.setItem(`liked_${pageName}`, 'true');
+        
         // ✅ حفظ في Cookie لمدة سنة
         const expiryDate = new Date();
         expiryDate.setFullYear(expiryDate.getFullYear() + 1);
-        document.cookie = `liked_${pageName}=true; expires=${expiryDate.toUTCString()}; path=/; SameSite=Strict`;
+        document.cookie = `liked_${pageName}=true; expires=${expiryDate.toUTCString()}; path=/`;
         
         // تحديث الزر فوراً
         const iconElement = document.getElementById('page-like-icon');
@@ -197,8 +203,11 @@ function loadPageLikes(pageName) {
             countElement.textContent = '0';
         }
         
-        // ✅ التحقق من Cookie
-        if (document.cookie.includes(`liked_${pageName}=true`)) {
+        // ✅ التحقق المزدوج
+        const likedInStorage = localStorage.getItem(`liked_${pageName}`) === 'true';
+        const likedInCookie = document.cookie.includes(`liked_${pageName}=true`);
+        
+        if (likedInStorage || likedInCookie) {
             iconElement.textContent = '❤️';
             btn.disabled = true;
             btn.style.opacity = '0.6';
