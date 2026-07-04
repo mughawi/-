@@ -11,12 +11,11 @@ const commentsConfig = {
     appId: "1:663756299662:web:4d5c47bb9df937fc13d8df"
 };
 
-// تهيئة Firebase بشكل منفصل تماماً (لا تعارض مع الموقع الرئيسي)
 const commentsApp = firebase.initializeApp(commentsConfig, "CommentsApp");
 const commentsDb = firebase.firestore(commentsApp);
 
 // ==========================================
-// تتبع حالة الإعجاب في الذاكرة (جديد)
+// تتبع حالة الإعجاب في الذاكرة
 // ==========================================
 let hasLiked = {};
 
@@ -27,7 +26,6 @@ let hasLiked = {};
 let isAdmin = false;
 const ADMIN_PASSWORD_HASH = 'a36d22c73d208f6f041e15bb2959ab6f834b5ccf632bbf6a4ad8fffbadba9386';
 
-// التحقق من الأدمن عند تحميل الصفحة
 function checkAdmin() {
     const savedAdmin = localStorage.getItem('isAdmin');
     if (savedAdmin === 'true') {
@@ -35,7 +33,6 @@ function checkAdmin() {
     }
 }
 
-// تسجيل دخول الأدمن
 async function loginAdmin() {
     const password = prompt('🔐 أدخل كلمة مرور الأدمن:');
     if (password === null) return;
@@ -48,8 +45,6 @@ async function loginAdmin() {
         isAdmin = true;
         localStorage.setItem('isAdmin', 'true');
         alert('✅ تم تسجيل الدخول كأدمن بنجاح');
-        
-        // ✅ أزل #admin من الرابط قبل إعادة التحميل
         history.replaceState(null, null, window.location.pathname);
         location.reload();
     } else {
@@ -57,7 +52,6 @@ async function loginAdmin() {
     }
 }
 
-// تسجيل خروج الأدمن
 function logoutAdmin() {
     isAdmin = false;
     localStorage.removeItem('isAdmin');
@@ -65,9 +59,7 @@ function logoutAdmin() {
     location.reload();
 }
 
-// إضافة زر الأدمن في الصفحة
 function addAdminButton() {
-    // إخفاء الزر تماماً للزوار العاديين
     if (!isAdmin) return;
     
     const container = document.getElementById('comments-box');
@@ -128,40 +120,59 @@ function createCommentsBox() {
         </div>
     `;
     
-    // التحقق من الأدمن وإضافة الزر
     checkAdmin();
     addAdminButton();
-    
-    // تحميل إعجابات الصفحة
     loadPageLikes(pageName);
-    
-    // تحميل التعليقات
     loadComments(pageName);
 }
 
 // ==========================================
-// دالة إعجاب الصفحة (معدلة - منع التكرار)
+// دالة توليد معرف فريد للجهاز
 // ==========================================
+function getDeviceId() {
+    let deviceId = null;
+    
+    try {
+        deviceId = localStorage.getItem('device_id');
+    } catch (e) {
+        console.warn('localStorage غير متاح');
+    }
+    
+    if (!deviceId) {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            const [name, value] = cookie.trim().split('=');
+            if (name === 'device_id') {
+                deviceId = value;
+                break;
+            }
+        }
+    }
+    
+    if (!deviceId) {
+        deviceId = 'device_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        
+        try {
+            localStorage.setItem('device_id', deviceId);
+        } catch (e) {
+            console.warn('فشل حفظ في localStorage');
+        }
+        
+        const expiryDate = new Date();
+        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+        document.cookie = `device_id=${deviceId}; expires=${expiryDate.toUTCString()}; path=/`;
+    }
+    
+    return deviceId;
+}
 
+// ==========================================
+// دالة إعجاب الصفحة
+// ==========================================
 function likePage() {
     const pageName = window.location.pathname.split('/').pop() || 'home';
+    const deviceId = getDeviceId();
     
-    // ✅ التحقق الثلاثي (ذاكرة + localStorage + Cookie)
-    if (hasLiked[pageName]) {
-        alert('لقد أعجبت بهذه الصفحة بالفعل 🤙️');
-        return;
-    }
-    
-    const likedInStorage = localStorage.getItem(`liked_${pageName}`) === 'true';
-    const likedInCookie = document.cookie.includes(`liked_${pageName}=true`);
-    
-    if (likedInStorage || likedInCookie) {
-        hasLiked[pageName] = true;
-        alert('لقد أعجبت بهذه الصفحة بالفعل 🤙️');
-        return;
-    }
-    
-    // تعطيل الزر فوراً قبل أي عملية
     const btn = document.getElementById('page-like-btn');
     if (btn) {
         btn.disabled = true;
@@ -170,80 +181,105 @@ function likePage() {
         btn.onclick = null;
     }
     
-    commentsDb.collection('pages').doc(pageName).get().then(doc => {
-        if (doc.exists) {
-            const currentLikes = doc.data().likes || 0;
-            commentsDb.collection('pages').doc(pageName).update({
-                likes: currentLikes + 1
+    commentsDb.collection('page_likes')
+        .where('page', '==', pageName)
+        .where('deviceId', '==', deviceId)
+        .get()
+        .then(snapshot => {
+            if (!snapshot.empty) {
+                hasLiked[pageName] = true;
+                alert('لقد أعجبت بهذه الصفحة بالفعل 🤙️');
+                
+                if (btn) {
+                    btn.disabled = true;
+                    btn.style.opacity = '0.8';
+                    btn.style.cursor = 'not-allowed';
+                }
+                return;
+            }
+            
+            commentsDb.collection('pages').doc(pageName).get().then(doc => {
+                if (doc.exists) {
+                    const currentLikes = doc.data().likes || 0;
+                    commentsDb.collection('pages').doc(pageName).update({
+                        likes: currentLikes + 1
+                    });
+                } else {
+                    commentsDb.collection('pages').doc(pageName).set({
+                        page: pageName,
+                        likes: 1
+                    });
+                }
+                
+                commentsDb.collection('page_likes').add({
+                    page: pageName,
+                    deviceId: deviceId,
+                    likedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                hasLiked[pageName] = true;
+                
+                const iconElement = document.getElementById('page-like-icon');
+                if (iconElement) {
+                    iconElement.classList.add('liked');
+                }
             });
-        } else {
-            commentsDb.collection('pages').doc(pageName).set({
-                page: pageName,
-                likes: 1
-            });
-        }
-        
-        // ✅ حفظ في الذاكرة
-        hasLiked[pageName] = true;
-        
-        // ✅ حفظ في localStorage
-        localStorage.setItem(`liked_${pageName}`, 'true');
-        
-        // ✅ حفظ في Cookie لمدة سنة
-        const expiryDate = new Date();
-        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
-        document.cookie = `liked_${pageName}=true; expires=${expiryDate.toUTCString()}; path=/`;
-        
-        // تحديث الأيقونة
-        const iconElement = document.getElementById('page-like-icon');
-        if (iconElement) {
-            iconElement.classList.add('liked');
-        }
-    }).catch(error => {
-        console.error('Error liking page:', error);
-        // إعادة تفعيل الزر إذا فشل
-        if (btn) {
-            btn.disabled = false;
-            btn.style.opacity = '1';
-            btn.style.cursor = 'pointer';
-            btn.onclick = likePage;
-        }
-    });
+        })
+        .catch(error => {
+            console.error('Error checking like status:', error);
+            if (btn) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+                btn.onclick = likePage;
+            }
+        });
 }
 
 // ==========================================
-// دالة تحميل إعجابات الصفحة (معدلة)
+// دالة تحميل إعجابات الصفحة
 // ==========================================
-
 function loadPageLikes(pageName) {
+    const deviceId = getDeviceId();
+    
     commentsDb.collection('pages').doc(pageName).onSnapshot(doc => {
         const countElement = document.getElementById('page-like-count');
-        const iconElement = document.getElementById('page-like-icon');
-        const btn = document.getElementById('page-like-btn');
         
-        if (!countElement || !iconElement || !btn) return;
-        
-        if (doc.exists) {
-            const likes = doc.data().likes || 0;
-            countElement.textContent = likes;
-        } else {
-            countElement.textContent = '0';
-        }
-        
-        // ✅ التحقق الثلاثي
-        const likedInMemory = hasLiked[pageName] === true;
-        const likedInStorage = localStorage.getItem(`liked_${pageName}`) === 'true';
-        const likedInCookie = document.cookie.includes(`liked_${pageName}=true`);
-        
-        if (likedInMemory || likedInStorage || likedInCookie) {
-            hasLiked[pageName] = true;
-            iconElement.classList.add('liked');
-            btn.disabled = true;
-            btn.style.opacity = '0.8';
-            btn.style.cursor = 'not-allowed';
-            btn.onclick = null;
+        if (countElement) {
+            if (doc.exists) {
+                countElement.textContent = doc.data().likes || 0;
+            } else {
+                countElement.textContent = '0';
+            }
         }
     });
+    
+    commentsDb.collection('page_likes')
+        .where('page', '==', pageName)
+        .where('deviceId', '==', deviceId)
+        .get()
+        .then(snapshot => {
+            const iconElement = document.getElementById('page-like-icon');
+            const btn = document.getElementById('page-like-btn');
+            
+            if (!snapshot.empty) {
+                hasLiked[pageName] = true;
+                
+                if (iconElement) {
+                    iconElement.classList.add('liked');
+                }
+                
+                if (btn) {
+                    btn.disabled = true;
+                    btn.style.opacity = '0.8';
+                    btn.style.cursor = 'not-allowed';
+                    btn.onclick = null;
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error loading like status:', error);
+        });
 }
 
 // ==========================================
@@ -332,7 +368,6 @@ function createCommentElement(id, data) {
         day: 'numeric'
     }) : '';
     
-    // زر الحذف للأدمن فقط
     const deleteButton = isAdmin ? `
         <button onclick="deleteComment('${id}')" style="
             background: rgba(255, 0, 0, 0.2);
@@ -362,7 +397,7 @@ function createCommentElement(id, data) {
 }
 
 // ==========================================
-// دالة حذف التعليق (للأدمن فقط)
+// دالة حذف التعليق
 // ==========================================
 
 function deleteComment(commentId) {
@@ -373,9 +408,7 @@ function deleteComment(commentId) {
     
     if (confirm('هل أنت متأكد من حذف هذا التعليق نهائياً؟')) {
         commentsDb.collection('comments').doc(commentId).delete()
-            .then(() => {
-                // الحذف يتم تلقائياً عبر onSnapshot
-            })
+            .then(() => {})
             .catch(error => {
                 console.error('Error deleting comment:', error);
                 alert('حدث خطأ أثناء الحذف');
@@ -399,10 +432,8 @@ function escapeHtml(text) {
 
 window.addEventListener('DOMContentLoaded', () => {
     if (window.location.hash === '#admin') {
-        // تحقق أولاً إذا كان مسجلاً بالفعل
         checkAdmin();
         
-        // فقط إذا لم يكن مسجلاً، اطلب كلمة المرور
         if (!isAdmin) {
             setTimeout(() => {
                 loginAdmin();
