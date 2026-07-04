@@ -94,20 +94,23 @@ function addAdminButton() {
 function createCommentsBox() {
     const container = document.getElementById('comments-box');
     if (!container) return;
-
+    
     const pageName = window.location.pathname.split('/').pop() || 'home';
-
+    
     container.innerHTML = `
         <div class="comments-container">
             <!-- زر إعجاب الصفحة -->
-            <div class="page-like-section">
-                <button onclick="likePage()" id="page-like-btn" class="page-like-btn">
-                    <span id="page-like-icon">🤍</span>
-                    <span id="page-like-count" class="like-count">0</span>
-                    <span>إعجاب</span>
-                </button>
-            </div>
-            
+<div class="page-like-section">
+    <button onclick="likePage()" id="page-like-btn" class="page-like-btn">
+        <span id="page-like-icon" class="like-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 11V20H4C3.45 20 3 19.55 3 19V12C3 11.45 3.45 11 4 11H7ZM14 9V5C14 3.9 13.1 3 12 3L6.5 9.12C6.19 9.46 6 9.91 6 10.4V18C6 19.1 6.9 20 8 20H17.21C17.95 20 18.6 19.51 18.81 18.8L20.81 11.8C20.93 11.38 20.99 10.93 20.99 10.48C21 9.66 20.34 9 19.52 9H14Z" fill="currentColor"/>
+            </svg>
+        </span>
+        <span id="page-like-count" class="like-count">0</span>
+        <span>إعجاب</span>
+    </button>
+</div>
             <h3>💬 التعليقات</h3>
             
             <!-- نموذج إضافة تعليق -->
@@ -121,7 +124,7 @@ function createCommentsBox() {
             <div id="comments-list" class="comments-list"></div>
         </div>
     `;
-
+    
     // التحقق من الأدمن وإضافة الزر
     checkAdmin();
     addAdminButton();
@@ -145,7 +148,7 @@ function likePage() {
     const likedInCookie = document.cookie.includes(`liked_${pageName}=true`);
     
     if (likedInStorage || likedInCookie) {
-        alert('لقد أعجبت بهذه الصفحة بالفعل ❤️');
+        alert('لقد أعجبت بهذه الصفحة بالفعل 🤙️');
         return;
     }
     
@@ -169,14 +172,15 @@ function likePage() {
         const expiryDate = new Date();
         expiryDate.setFullYear(expiryDate.getFullYear() + 1);
         document.cookie = `liked_${pageName}=true; expires=${expiryDate.toUTCString()}; path=/`;
-        
         // تحديث الزر فوراً
         const iconElement = document.getElementById('page-like-icon');
         const btn = document.getElementById('page-like-btn');
-        if (iconElement) iconElement.textContent = '❤️';
+        if (iconElement) {
+            iconElement.classList.add('liked'); // ✅ إضافة class للون الأزرق
+        }
         if (btn) {
             btn.disabled = true;
-            btn.style.opacity = '0.6';
+            btn.style.opacity = '0.8';
             btn.style.cursor = 'not-allowed';
             btn.onclick = null;
         }
@@ -207,10 +211,11 @@ function loadPageLikes(pageName) {
         const likedInStorage = localStorage.getItem(`liked_${pageName}`) === 'true';
         const likedInCookie = document.cookie.includes(`liked_${pageName}=true`);
         
+        // 👇 هذا هو الكود الذي سألت عنه 👇
         if (likedInStorage || likedInCookie) {
-            iconElement.textContent = '❤️';
+            iconElement.classList.add('liked'); // ✅ إضافة class للون الأزرق
             btn.disabled = true;
-            btn.style.opacity = '0.6';
+            btn.style.opacity = '0.8';
             btn.style.cursor = 'not-allowed';
             btn.onclick = null;
         }
@@ -231,9 +236,9 @@ function addComment() {
         alert('الرجاء ملء الاسم والتعليق');
         return;
     }
-
+    
     const pageName = window.location.pathname.split('/').pop() || 'home';
-
+    
     commentsDb.collection('comments').add({
         page: pageName,
         name: name,
@@ -386,4 +391,3 @@ window.addEventListener('DOMContentLoaded', () => {
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', createCommentsBox);
-
