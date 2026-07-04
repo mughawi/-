@@ -97,33 +97,31 @@ function createCommentsBox() {
     
     const pageName = window.location.pathname.split('/').pop() || 'home';
     
-    container.innerHTML = `
-        <div class="comments-container">
-            <!-- زر إعجاب الصفحة -->
-<div class="page-like-section">
-    <button onclick="likePage()" id="page-like-btn" class="page-like-btn">
-        <span id="page-like-icon" class="like-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 11V20H4C3.45 20 3 19.55 3 19V12C3 11.45 3.45 11 4 11H7ZM14 9V5C14 3.9 13.1 3 12 3L6.5 9.12C6.19 9.46 6 9.91 6 10.4V18C6 19.1 6.9 20 8 20H17.21C17.95 20 18.6 19.51 18.81 18.8L20.81 11.8C20.93 11.38 20.99 10.93 20.99 10.48C21 9.66 20.34 9 19.52 9H14Z" fill="currentColor"/>
-            </svg>
-        </span>
-        <span id="page-like-count" class="like-count">0</span>
-        <span>إعجاب</span>
-    </button>
-</div>
-            <h3>💬 التعليقات</h3>
-            
-            <!-- نموذج إضافة تعليق -->
-            <div class="comment-form">
-                <input type="text" id="comment-name" placeholder="الاسم" class="comment-input">
-                <textarea id="comment-text" placeholder="اكتب تعليقك..." class="comment-textarea"></textarea>
-                <button onclick="addComment()" class="submit-btn">إرسال التعليق</button>
-            </div>
-
-            <!-- قائمة التعليقات -->
-            <div id="comments-list" class="comments-list"></div>
+container.innerHTML = `
+    <div class="comments-container">
+        <div class="page-like-section">
+            <button onclick="likePage()" id="page-like-btn" class="page-like-btn">
+                <span id="page-like-icon" class="like-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 11V20H4C3.45 20 3 19.55 3 19V12C3 11.45 3.45 11 4 11H7ZM14 9V5C14 3.9 13.1 3 12 3L6.5 9.12C6.19 9.46 6 9.91 6 10.4V18C6 19.1 6.9 20 8 20H17.21C17.95 20 18.6 19.51 18.81 18.8L20.81 11.8C20.93 11.38 20.99 10.93 20.99 10.48C21 9.66 20.34 9 19.52 9H14Z"/>
+                    </svg>
+                </span>
+                <span id="page-like-count" class="like-count">0</span>
+                <span>إعجاب</span>
+            </button>
         </div>
-    `;
+        
+        <h3>💬 التعليقات</h3>
+        
+        <div class="comment-form">
+            <input type="text" id="comment-name" placeholder="الاسم" class="comment-input">
+            <textarea id="comment-text" placeholder="اكتب تعليقك..." class="comment-textarea"></textarea>
+            <button onclick="addComment()" class="submit-btn">إرسال التعليق</button>
+        </div>
+
+        <div id="comments-list" class="comments-list"></div>
+    </div>
+`;
     
     // التحقق من الأدمن وإضافة الزر
     checkAdmin();
