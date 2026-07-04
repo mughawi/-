@@ -135,9 +135,10 @@ main::before {
     border: 1px solid rgba(255, 215, 0, 0.3);
     border-radius: 8px;
     padding: 20px;
-    width: 100%;
-    margin: 0 0 20px 0;
+    width: calc(100% + 20px);
+    margin: 0 -10px 20px -10px;
 }
+
 /* ========================================
    6. الحاويات النصية
    ======================================== */
