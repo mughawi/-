@@ -131,14 +131,12 @@ main::before {
    5. البطاقة الرئيسية
    ======================================== */
 .card {
-    background: rgba(45, 40, 15, 0.9);
-    border-radius: 12px;
-    padding: 30px 35px;
-    width: 90%;
-    max-width: 800px;
-    margin: 0 auto 20px auto;
-    border: 1px solid rgba(180, 160, 60, 0.4);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    margin: 0 0 20px 0;
 }
 /* ========================================
    6. الحاويات النصية
