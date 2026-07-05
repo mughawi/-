@@ -1,5 +1,5 @@
 // ==========================================
-// إعدادات Firebase - مشروع التعليقات
+// إعدادات Firebase
 // ==========================================
 
 const commentsConfig = {
@@ -14,17 +14,14 @@ const commentsConfig = {
 const commentsApp = firebase.initializeApp(commentsConfig, "CommentsApp");
 const commentsDb = firebase.firestore(commentsApp);
 
-// ==========================================
-// تتبع حالة الإعجاب في الذاكرة
-// ==========================================
 let hasLiked = {};
+let isProcessing = false; // لمنع الضغط المتكرر
+let isAdmin = false;
+const ADMIN_PASSWORD_HASH = 'a36d22c73d208f6f041e15bb2959ab6f834b5ccf632bbf6a4ad8fffbadba9386';
 
 // ==========================================
 // نظام الأدمن
 // ==========================================
-
-let isAdmin = false;
-const ADMIN_PASSWORD_HASH = 'a36d22c73d208f6f041e15bb2959ab6f834b5ccf632bbf6a4ad8fffbadba9386';
 
 function checkAdmin() {
     const savedAdmin = localStorage.getItem('isAdmin');
@@ -61,13 +58,11 @@ function logoutAdmin() {
 
 function addAdminButton() {
     if (!isAdmin) return;
-    
     const container = document.getElementById('comments-box');
     if (!container) return;
     
     const adminDiv = document.createElement('div');
     adminDiv.style.cssText = 'text-align: left; margin-bottom: 10px;';
-    
     adminDiv.innerHTML = `
         <button onclick="logoutAdmin()" style="
             background: rgba(255, 0, 0, 0.2);
@@ -80,12 +75,11 @@ function addAdminButton() {
             font-family: 'Tahoma', sans-serif;
         ">خروج أدمن 🔓</button>
     `;
-    
     container.insertBefore(adminDiv, container.firstChild);
 }
 
 // ==========================================
-// دالة إنشاء صندوق التعليقات
+// إنشاء صندوق التعليقات
 // ==========================================
 
 function createCommentsBox() {
@@ -127,17 +121,22 @@ function createCommentsBox() {
 }
 
 // ==========================================
-// دالة توليد معرف فريد للجهاز
+// دالة توليد معرف فريد وثابت للجهاز
 // ==========================================
 function getDeviceId() {
-    let deviceId = null;
-    
-    try {
-        deviceId = localStorage.getItem('device_id');
-    } catch (e) {
-        console.warn('localStorage غير متاح');
+    // 1. الذاكرة المؤقتة (أسرع)
+    if (window.deviceIdCache) {
+        return window.deviceIdCache;
     }
     
+    let deviceId = null;
+    
+    // 2. localStorage
+    try {
+        deviceId = localStorage.getItem('device_id');
+    } catch (e) {}
+    
+    // 3. Cookie
     if (!deviceId) {
         const cookies = document.cookie.split(';');
         for (let cookie of cookies) {
@@ -149,55 +148,88 @@ function getDeviceId() {
         }
     }
     
+    // 4. إنشاء جديد فقط إذا لم يوجد
     if (!deviceId) {
-        deviceId = 'device_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        // استخدام معلومات ثابتة عن الجهاز
+        const ua = navigator.userAgent;
+        const screenInfo = screen.width + 'x' + screen.height + 'x' + screen.colorDepth;
+        const lang = navigator.language;
+        const platform = navigator.platform;
+        
+        const raw = ua + screenInfo + lang + platform;
+        let hash = 0;
+        for (let i = 0; i < raw.length; i++) {
+            const char = raw.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        deviceId = 'device_' + Math.abs(hash).toString(36) + '_' + Date.now();
         
         try {
             localStorage.setItem('device_id', deviceId);
-        } catch (e) {
-            console.warn('فشل حفظ في localStorage');
-        }
+        } catch (e) {}
         
         const expiryDate = new Date();
         expiryDate.setFullYear(expiryDate.getFullYear() + 1);
-        document.cookie = `device_id=${deviceId}; expires=${expiryDate.toUTCString()}; path=/`;
+        document.cookie = 'device_id=' + deviceId + '; expires=' + expiryDate.toUTCString() + '; path=/';
     }
     
+    window.deviceIdCache = deviceId;
     return deviceId;
 }
 
 // ==========================================
-// دالة إعجاب الصفحة
+// دالة إعجاب الصفحة (محدثة - مع حماية كاملة)
 // ==========================================
 function likePage() {
+    // منع الضغط المتكرر
+    if (isProcessing) {
+        alert('جاري المعالجة، انتظر لحظة...');
+        return;
+    }
+    
     const pageName = window.location.pathname.split('/').pop() || 'home';
     const deviceId = getDeviceId();
     
+    // التحقق من الذاكرة أولاً
+    if (hasLiked[pageName]) {
+        alert('لقد أعجبت بهذه الصفحة بالفعل 🤙️');
+        return;
+    }
+    
+    // تعطيل الزر فوراً
+    isProcessing = true;
     const btn = document.getElementById('page-like-btn');
     if (btn) {
         btn.disabled = true;
-        btn.style.opacity = '0.8';
+        btn.style.opacity = '0.5';
         btn.style.cursor = 'not-allowed';
-        btn.onclick = null;
     }
     
+    console.log('Checking like status for page:', pageName, 'deviceId:', deviceId);
+    
+    // التحقق من Firebase
     commentsDb.collection('page_likes')
         .where('page', '==', pageName)
         .where('deviceId', '==', deviceId)
         .get()
         .then(snapshot => {
+            console.log('Found', snapshot.size, 'existing likes');
+            
             if (!snapshot.empty) {
+                // أعجب مسبقاً
                 hasLiked[pageName] = true;
                 alert('لقد أعجبت بهذه الصفحة بالفعل 🤙️');
                 
                 if (btn) {
                     btn.disabled = true;
-                    btn.style.opacity = '0.8';
-                    btn.style.cursor = 'not-allowed';
+                    btn.style.opacity = '0.5';
                 }
+                isProcessing = false;
                 return;
             }
             
+            // لم يعجب مسبقاً - أضف الإعجاب
             commentsDb.collection('pages').doc(pageName).get().then(doc => {
                 if (doc.exists) {
                     const currentLikes = doc.data().likes || 0;
@@ -211,27 +243,33 @@ function likePage() {
                     });
                 }
                 
+                // حفظ الإعجاب في page_likes
                 commentsDb.collection('page_likes').add({
                     page: pageName,
                     deviceId: deviceId,
                     likedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    console.log('Like saved successfully');
+                    hasLiked[pageName] = true;
+                    
+                    const iconElement = document.getElementById('page-like-icon');
+                    if (iconElement) {
+                        iconElement.classList.add('liked');
+                    }
+                }).catch(err => {
+                    console.error('Error saving like:', err);
                 });
-                
-                hasLiked[pageName] = true;
-                
-                const iconElement = document.getElementById('page-like-icon');
-                if (iconElement) {
-                    iconElement.classList.add('liked');
-                }
             });
+            
+            isProcessing = false;
         })
         .catch(error => {
             console.error('Error checking like status:', error);
+            isProcessing = false;
             if (btn) {
                 btn.disabled = false;
                 btn.style.opacity = '1';
                 btn.style.cursor = 'pointer';
-                btn.onclick = likePage;
             }
         });
 }
@@ -242,9 +280,9 @@ function likePage() {
 function loadPageLikes(pageName) {
     const deviceId = getDeviceId();
     
+    // تحميل عدد الإعجابات
     commentsDb.collection('pages').doc(pageName).onSnapshot(doc => {
         const countElement = document.getElementById('page-like-count');
-        
         if (countElement) {
             if (doc.exists) {
                 countElement.textContent = doc.data().likes || 0;
@@ -254,11 +292,13 @@ function loadPageLikes(pageName) {
         }
     });
     
+    // التحقق من حالة الإعجاب
     commentsDb.collection('page_likes')
         .where('page', '==', pageName)
         .where('deviceId', '==', deviceId)
         .get()
         .then(snapshot => {
+            console.log('Loading likes - found:', snapshot.size);
             const iconElement = document.getElementById('page-like-icon');
             const btn = document.getElementById('page-like-btn');
             
@@ -271,7 +311,7 @@ function loadPageLikes(pageName) {
                 
                 if (btn) {
                     btn.disabled = true;
-                    btn.style.opacity = '0.8';
+                    btn.style.opacity = '0.5';
                     btn.style.cursor = 'not-allowed';
                     btn.onclick = null;
                 }
@@ -285,7 +325,6 @@ function loadPageLikes(pageName) {
 // ==========================================
 // دالة إضافة تعليق
 // ==========================================
-
 function addComment() {
     const nameInput = document.getElementById('comment-name');
     const textInput = document.getElementById('comment-text');
@@ -317,10 +356,8 @@ function addComment() {
 // ==========================================
 // دالة تحميل التعليقات
 // ==========================================
-
 function loadComments(pageName) {
     const commentsList = document.getElementById('comments-list');
-    
     if (!commentsList) return;
     
     commentsDb.collection('comments')
@@ -357,7 +394,6 @@ function loadComments(pageName) {
 // ==========================================
 // دالة إنشاء عنصر التعليق
 // ==========================================
-
 function createCommentElement(id, data) {
     const div = document.createElement('div');
     div.className = 'comment-item';
@@ -399,7 +435,6 @@ function createCommentElement(id, data) {
 // ==========================================
 // دالة حذف التعليق
 // ==========================================
-
 function deleteComment(commentId) {
     if (!isAdmin) {
         alert('يجب تسجيل الدخول كأدمن أولاً');
@@ -408,7 +443,6 @@ function deleteComment(commentId) {
     
     if (confirm('هل أنت متأكد من حذف هذا التعليق نهائياً؟')) {
         commentsDb.collection('comments').doc(commentId).delete()
-            .then(() => {})
             .catch(error => {
                 console.error('Error deleting comment:', error);
                 alert('حدث خطأ أثناء الحذف');
@@ -419,7 +453,6 @@ function deleteComment(commentId) {
 // ==========================================
 // دالة حماية النصوص
 // ==========================================
-
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
@@ -429,11 +462,9 @@ function escapeHtml(text) {
 // ==========================================
 // دخول الأدمن عبر رابط سري
 // ==========================================
-
 window.addEventListener('DOMContentLoaded', () => {
     if (window.location.hash === '#admin') {
         checkAdmin();
-        
         if (!isAdmin) {
             setTimeout(() => {
                 loginAdmin();
@@ -445,6 +476,5 @@ window.addEventListener('DOMContentLoaded', () => {
 // ==========================================
 // تشغيل عند تحميل الصفحة
 // ==========================================
-
 document.addEventListener('DOMContentLoaded', createCommentsBox);
 
