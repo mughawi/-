@@ -312,12 +312,12 @@ function likePage() {
         });
 }
 // ==========================================
-// دالة تحميل إعجابات الصفحة (محدثة لـ IndexedDB)
+// دالة تحميل إعجابات الصفحة (محدثة - تتحقق وتلون عند التحميل)
 // ==========================================
 function loadPageLikes(pageName) {
     const deviceId = getDeviceId();
     
-    // تحميل عدد الإعجابات (يعمل فوراً)
+    // 1. تحميل عدد الإعجابات (يعمل فوراً)
     commentsDb.collection('pages').doc(pageName).onSnapshot(doc => {
         const countElement = document.getElementById('page-like-count');
         if (countElement) {
@@ -325,15 +325,15 @@ function loadPageLikes(pageName) {
         }
     });
     
-    // التحقق من حالة الإعجاب (مع انتظار جاهزية المعرف)
-    const checkLikeStatus = () => {
-        // إذا كان المعرف لا يزال قيد التهيئة، ننتظر قليلاً ونحاول مجدداً
+    // 2. التحقق من حالة الإعجاب وتلوين الأيقونة عند التحميل
+    const checkAndColorLike = () => {
+        // انتظار حتى يصبح deviceId جاهزاً (بسبب IndexedDB غير المتزامن)
         if (deviceId === 'pending_init') {
-            setTimeout(checkLikeStatus, 300);
+            setTimeout(checkAndColorLike, 200);
             return;
         }
 
-        console.log('🔍 Checking like status with ID:', deviceId);
+        console.log('🔍 Checking like status on load for:', pageName);
         
         commentsDb.collection('page_likes')
             .where('page', '==', pageName)
@@ -345,29 +345,31 @@ function loadPageLikes(pageName) {
                 const btn = document.getElementById('page-like-btn');
                 
                 if (!snapshot.empty) {
-                    console.log('✅ Like found! Coloring icon...');
+                    console.log('✅ Like found! Applying .liked class...');
                     
-                    // تلوين الأيقونة وتفعيل الحالة
-                    if (iconElement) iconElement.classList.add('liked');
+                    // ✅ إضافة كلاس liked لتفعيل لون الأزرق في CSS
+                    if (iconElement) {
+                        iconElement.classList.add('liked');
+                    }
                     
+                    // تعطيل الزر ومنع النقر
                     if (btn) {
                         btn.disabled = true;
                         btn.style.opacity = '0.6';
                         btn.style.cursor = 'not-allowed';
-                        // إزالة مستمع الحدث القديم لمنع التكرار
-                        btn.onclick = null; 
+                        btn.onclick = null; // إزالة حدث النقر تماماً
                     }
                 } else {
-                    console.log('ℹ️ No like found for this device.');
+                    console.log('ℹ️ No previous like found.');
                 }
             })
             .catch(error => {
-                console.error('❌ Error loading like status:', error);
+                console.error('❌ Error checking like status:', error);
             });
     };
 
-    // بدء التحقق
-    checkLikeStatus();
+    // بدء التحقق بعد تأخير بسيط لضمان جاهزية DOM
+    setTimeout(checkAndColorLike, 500);
 }
 // ==========================================
 // دالة إضافة تعليق
