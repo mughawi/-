@@ -312,53 +312,63 @@ function likePage() {
         });
 }
 // ==========================================
-// دالة تحميل إعجابات الصفحة
+// دالة تحميل إعجابات الصفحة (محدثة لـ IndexedDB)
 // ==========================================
 function loadPageLikes(pageName) {
     const deviceId = getDeviceId();
     
-    // تحميل عدد الإعجابات
+    // تحميل عدد الإعجابات (يعمل فوراً)
     commentsDb.collection('pages').doc(pageName).onSnapshot(doc => {
         const countElement = document.getElementById('page-like-count');
         if (countElement) {
-            if (doc.exists) {
-                countElement.textContent = doc.data().likes || 0;
-            } else {
-                countElement.textContent = '0';
-            }
+            countElement.textContent = doc.exists ? (doc.data().likes || 0) : '0';
         }
     });
     
-    // التحقق من حالة الإعجاب
-    commentsDb.collection('page_likes')
-        .where('page', '==', pageName)
-        .where('deviceId', '==', deviceId)
-        .get()
-        .then(snapshot => {
-            console.log('Loading likes - found:', snapshot.size);
-            const iconElement = document.getElementById('page-like-icon');
-            const btn = document.getElementById('page-like-btn');
-            
-            if (!snapshot.empty) {
-                hasLiked[pageName] = true;
-                
-                if (iconElement) {
-                    iconElement.classList.add('liked');
-                }
-                
-                if (btn) {
-                    btn.disabled = true;
-                    btn.style.opacity = '0.5';
-                    btn.style.cursor = 'not-allowed';
-                    btn.onclick = null;
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Error loading like status:', error);
-        });
-}
+    // التحقق من حالة الإعجاب (مع انتظار جاهزية المعرف)
+    const checkLikeStatus = () => {
+        // إذا كان المعرف لا يزال قيد التهيئة، ننتظر قليلاً ونحاول مجدداً
+        if (deviceId === 'pending_init') {
+            setTimeout(checkLikeStatus, 300);
+            return;
+        }
 
+        console.log('🔍 Checking like status with ID:', deviceId);
+        
+        commentsDb.collection('page_likes')
+            .where('page', '==', pageName)
+            .where('deviceId', '==', deviceId)
+            .limit(1)
+            .get()
+            .then(snapshot => {
+                const iconElement = document.getElementById('page-like-icon');
+                const btn = document.getElementById('page-like-btn');
+                
+                if (!snapshot.empty) {
+                    console.log('✅ Like found! Coloring icon...');
+                    
+                    // تلوين الأيقونة وتفعيل الحالة
+                    if (iconElement) iconElement.classList.add('liked');
+                    
+                    if (btn) {
+                        btn.disabled = true;
+                        btn.style.opacity = '0.6';
+                        btn.style.cursor = 'not-allowed';
+                        // إزالة مستمع الحدث القديم لمنع التكرار
+                        btn.onclick = null; 
+                    }
+                } else {
+                    console.log('ℹ️ No like found for this device.');
+                }
+            })
+            .catch(error => {
+                console.error('❌ Error loading like status:', error);
+            });
+    };
+
+    // بدء التحقق
+    checkLikeStatus();
+}
 // ==========================================
 // دالة إضافة تعليق
 // ==========================================
