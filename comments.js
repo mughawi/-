@@ -179,91 +179,101 @@ function getDeviceId() {
 }
 
 // ==========================================
-// دالة إعجاب الصفحة (النسخة النهائية - تحقق لحظي صارم)
+// دالة إعجاب الصفحة (محدثة - مع حماية كاملة)
 // ==========================================
 function likePage() {
-    // 1. منع الضغط المتكرر أثناء المعالجة فوراً
-    if (isProcessing) return;
+    // منع الضغط المتكرر
+    if (isProcessing) {
+        alert('جاري المعالجة، انتظر لحظة...');
+        return;
+    }
     
     const pageName = window.location.pathname.split('/').pop() || 'home';
     const deviceId = getDeviceId();
-    const btn = document.getElementById('page-like-btn');
     
-    // 2. قفل الزر فوراً لمنع أي ضغط ثانٍ
+    // التحقق من الذاكرة أولاً
+    if (hasLiked[pageName]) {
+        alert('لقد أعجبت بهذه الصفحة بالفعل 🤙️');
+        return;
+    }
+    
+    // تعطيل الزر فوراً
     isProcessing = true;
+    const btn = document.getElementById('page-like-btn');
     if (btn) {
         btn.disabled = true;
-        btn.style.opacity = '0.6';
-        btn.style.cursor = 'wait';
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
     }
-
-    console.log('🔍 Verifying like status for:', pageName);
-
-    // 3. التحقق المباشر من Firebase قبل السماح بالإعجاب
+    
+    console.log('Checking like status for page:', pageName, 'deviceId:', deviceId);
+    
+    // التحقق من Firebase
     commentsDb.collection('page_likes')
         .where('page', '==', pageName)
         .where('deviceId', '==', deviceId)
-        .limit(1) // نحتاج فقط معرفة هل يوجد سجل واحد أم لا
         .get()
         .then(snapshot => {
-            // السيناريو أ: المستخدم أعجب مسبقاً -> ارفض الطلب
+            console.log('Found', snapshot.size, 'existing likes');
+            
             if (!snapshot.empty) {
-                console.log(' Like already exists in DB. Blocking.');
-                alert('لقد أعجبت بهذه الصفحة بالفعل! 🤙');
+                // أعجب مسبقاً
+                hasLiked[pageName] = true;
+                alert('لقد أعجبت بهذه الصفحة بالفعل 🤙️');
                 
-                // تحديث شكل الزر ليعكس الحالة الصحيحة
-                const iconElement = document.getElementById('page-like-icon');
-                if (iconElement) iconElement.classList.add('liked');
-                
-                resetButtonState(btn);
+                if (btn) {
+                    btn.disabled = true;
+                    btn.style.opacity = '0.5';
+                }
+                isProcessing = false;
                 return;
             }
-
-            // السيناريو ب: لم يعجب مسبقاً -> نفذ الإعجاب بأمان
-            console.log('✅ New like confirmed. Processing transaction...');
             
-            const pageRef = commentsDb.collection('pages').doc(pageName);
-            
-            // استخدام Transaction لضمان دقة العدد ومنع التكرار حتى مع الضغط المتزامن
-            commentsDb.runTransaction(async (transaction) => {
-                const doc = await transaction.get(pageRef);
-                let newLikes = 1;
+            // لم يعجب مسبقاً - أضف الإعجاب
+            commentsDb.collection('pages').doc(pageName).get().then(doc => {
                 if (doc.exists) {
-                    newLikes = (doc.data().likes || 0) + 1;
+                    const currentLikes = doc.data().likes || 0;
+                    commentsDb.collection('pages').doc(pageName).update({
+                        likes: currentLikes + 1
+                    });
+                } else {
+                    commentsDb.collection('pages').doc(pageName).set({
+                        page: pageName,
+                        likes: 1
+                    });
                 }
                 
-                // زيادة العداد داخل المعاملة
-                transaction.update(pageRef, { likes: newLikes });
-                
-                // إنشاء سجل الإعجاب داخل نفس المعاملة
-                const newLikeRef = commentsDb.collection('page_likes').doc();
-                transaction.set(newLikeRef, {
+                // حفظ الإعجاب في page_likes
+                commentsDb.collection('page_likes').add({
                     page: pageName,
                     deviceId: deviceId,
                     likedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    console.log('Like saved successfully');
+                    hasLiked[pageName] = true;
+                    
+                    const iconElement = document.getElementById('page-like-icon');
+                    if (iconElement) {
+                        iconElement.classList.add('liked');
+                    }
+                }).catch(err => {
+                    console.error('Error saving like:', err);
                 });
-            }).then(() => {
-                console.log(' Transaction successful!');
-                const iconElement = document.getElementById('page-like-icon');
-                if (iconElement) iconElement.classList.add('liked');
-                resetButtonState(btn);
-            }).catch(err => {
-                console.error('❌ Transaction failed:', err);
-                alert('حدث خطأ أثناء حفظ الإعجاب');
-                resetButtonState(btn);
             });
-
+            
+            isProcessing = false;
         })
         .catch(error => {
-            console.error('⚠️ Verification error:', error);
-            alert('تعذر التحقق من حالة الإعجاب، يرجى المحاولة لاحقاً');
-            resetButtonState(btn);
+            console.error('Error checking like status:', error);
+            isProcessing = false;
+            if (btn) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            }
         });
 }
 
-// دالة مساعدة لإعادة تفعيل الزر بعد انتهاء العملية
-function resetButtonState(btn) {
-    isProcessing
 // ==========================================
 // دالة تحميل إعجابات الصفحة
 // ==========================================
