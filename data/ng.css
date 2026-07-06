@@ -263,12 +263,12 @@ main::before {
     font-family: 'Amiri', 'Tajawal', serif;
     font-size: 1.4rem;
     color: #FFD700;
-    line-height: 2.5;
+    line-height: 2.0;
     margin: 15px 0;
     padding: 15px 20px;
     background: rgba(255, 215, 0, 0.1);
     border-radius: 10px;
-    border-right: 4px solid #FFD700;
+    border-right: 1px solid #FFD700;
     text-align: center;
 }
 
@@ -362,12 +362,12 @@ main::before {
     font-family: 'Amiri', 'Tajawal', serif;
     font-size: 1.4rem;
     color: #4CAF50;
-    line-height: 2.5;
+    line-height: 2.0;
     margin: 15px 0;
     padding: 15px 20px;
     background: rgba(76, 175, 80, 0.1);
     border-radius: 10px;
-    border-right: 4px solid #4CAF50;
+    border-right: 1px solid #4CAF50;
     display: inline-block;
     width: 100%;
 }
