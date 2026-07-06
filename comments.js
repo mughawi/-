@@ -312,12 +312,12 @@ function likePage() {
         });
 }
 // ==========================================
-// دالة تحميل إعجابات الصفحة (محدثة - تتحقق وتلون عند التحميل)
+// دالة تحميل إعجابات الصفحة (نسخة Async صحيحة)
 // ==========================================
-function loadPageLikes(pageName) {
+async function loadPageLikes(pageName) {
     const deviceId = getDeviceId();
     
-    // 1. تحميل عدد الإعجابات (يعمل فوراً)
+    // 1. تحميل عدد الإعجابات
     commentsDb.collection('pages').doc(pageName).onSnapshot(doc => {
         const countElement = document.getElementById('page-like-count');
         if (countElement) {
@@ -325,51 +325,56 @@ function loadPageLikes(pageName) {
         }
     });
     
-    // 2. التحقق من حالة الإعجاب وتلوين الأيقونة عند التحميل
-    const checkAndColorLike = () => {
-        // انتظار حتى يصبح deviceId جاهزاً (بسبب IndexedDB غير المتزامن)
-        if (deviceId === 'pending_init') {
-            setTimeout(checkAndColorLike, 200);
-            return;
-        }
-
-        console.log('🔍 Checking like status on load for:', pageName);
-        
-        commentsDb.collection('page_likes')
-            .where('page', '==', pageName)
-            .where('deviceId', '==', deviceId)
-            .limit(1)
-            .get()
-            .then(snapshot => {
-                const iconElement = document.getElementById('page-like-icon');
-                const btn = document.getElementById('page-like-btn');
+    // 2. انتظار حتى يصبح deviceId جاهزاً تماماً
+    await waitForDeviceId();
+    
+    const finalDeviceId = window.deviceIdCache;
+    console.log('🔍 Device ID ready:', finalDeviceId);
+    
+    // 3. التحقق من الإعجاب باستخدام المعرف النهائي
+    commentsDb.collection('page_likes')
+        .where('page', '==', pageName)
+        .where('deviceId', '==', finalDeviceId)
+        .limit(1)
+        .get()
+        .then(snapshot => {
+            const iconElement = document.getElementById('page-like-icon');
+            const btn = document.getElementById('page-like-btn');
+            
+            if (!snapshot.empty) {
+                console.log('✅ Like found! Coloring icon...');
                 
-                if (!snapshot.empty) {
-                    console.log('✅ Like found! Applying .liked class...');
-                    
-                    // ✅ إضافة كلاس liked لتفعيل لون الأزرق في CSS
-                    if (iconElement) {
-                        iconElement.classList.add('liked');
-                    }
-                    
-                    // تعطيل الزر ومنع النقر
-                    if (btn) {
-                        btn.disabled = true;
-                        btn.style.opacity = '0.6';
-                        btn.style.cursor = 'not-allowed';
-                        btn.onclick = null; // إزالة حدث النقر تماماً
-                    }
-                } else {
-                    console.log('ℹ️ No previous like found.');
+                if (iconElement) {
+                    iconElement.classList.add('liked');
                 }
-            })
-            .catch(error => {
-                console.error('❌ Error checking like status:', error);
-            });
-    };
+                
+                if (btn) {
+                    btn.disabled = true;
+                    btn.style.opacity = '0.6';
+                    btn.style.cursor = 'not-allowed';
+                    btn.onclick = null;
+                }
+            } else {
+                console.log('ℹ️ No previous like found.');
+            }
+        })
+        .catch(error => {
+            console.error('❌ Error checking like status:', error);
+        });
+}
 
-    // بدء التحقق بعد تأخير بسيط لضمان جاهزية DOM
-    setTimeout(checkAndColorLike, 500);
+// دالة مساعدة للانتظار حتى يصبح deviceId جاهزاً
+function waitForDeviceId() {
+    return new Promise((resolve) => {
+        const check = () => {
+            if (window.deviceIdCache && window.deviceIdCache !== 'pending_init') {
+                resolve();
+            } else {
+                setTimeout(check, 100); // تحقق كل 100ms
+            }
+        };
+        check();
+    });
 }
 // ==========================================
 // دالة إضافة تعليق
