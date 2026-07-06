@@ -119,65 +119,103 @@ function createCommentsBox() {
     loadPageLikes(pageName);
     loadComments(pageName);
 }
-
 // ==========================================
-// دالة توليد معرف فريد وثابت للجهاز
+// دالة توليد معرف جهاز دائم (باستخدام IndexedDB)
 // ==========================================
 function getDeviceId() {
-    // 1. الذاكرة المؤقتة (أسرع)
+    // 1. إذا كان لدينا معرف في الذاكرة المؤقتة للجلسة، نستخدمه فوراً
     if (window.deviceIdCache) {
         return window.deviceIdCache;
     }
-    
-    let deviceId = null;
-    
-    // 2. localStorage
-    try {
-        deviceId = localStorage.getItem('device_id');
-    } catch (e) {}
-    
-    // 3. Cookie
-    if (!deviceId) {
-        const cookies = document.cookie.split(';');
-        for (let cookie of cookies) {
-            const [name, value] = cookie.trim().split('=');
-            if (name === 'device_id') {
-                deviceId = value;
-                break;
-            }
-        }
-    }
-    
-    // 4. إنشاء جديد فقط إذا لم يوجد
-    if (!deviceId) {
-        // استخدام معلومات ثابتة عن الجهاز
-        const ua = navigator.userAgent;
-        const screenInfo = screen.width + 'x' + screen.height + 'x' + screen.colorDepth;
-        const lang = navigator.language;
-        const platform = navigator.platform;
-        
-        const raw = ua + screenInfo + lang + platform;
-        let hash = 0;
-        for (let i = 0; i < raw.length; i++) {
-            const char = raw.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash;
-        }
-        deviceId = 'device_' + Math.abs(hash).toString(36) + '_' + Date.now();
-        
-        try {
-            localStorage.setItem('device_id', deviceId);
-        } catch (e) {}
-        
-        const expiryDate = new Date();
-        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
-        document.cookie = 'device_id=' + deviceId + '; expires=' + expiryDate.toUTCString() + '; path=/';
-    }
-    
-    window.deviceIdCache = deviceId;
-    return deviceId;
-}
 
+    const DB_NAME = 'CommentsAppDB';
+    const STORE_NAME = 'device_store';
+    const KEY = 'unique_device_id';
+
+    // دالة مساعدة لإنشاء وعد (Promise) للتعامل مع IndexedDB
+    const getIdFromDB = () => {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, 1);
+            
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+                if (!db.objectStoreNames.contains(STORE_NAME)) {
+                    db.createObjectStore(STORE_NAME);
+                }
+            };
+
+            request.onsuccess = (event) => {
+                const db = event.target.result;
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const getRequest = store.get(KEY);
+
+                getRequest.onsuccess = () => {
+                    resolve(getRequest.result);
+                };
+                getRequest.onerror = () => reject('Error reading DB');
+            };
+
+            request.onerror = () => reject('Error opening DB');
+        });
+    };
+
+    const saveIdToDB = (id) => {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, 1);
+            request.onsuccess = (event) => {
+                const db = event.target.result;
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                store.put(id, KEY);
+                transaction.oncomplete = () => resolve();
+                transaction.onerror = () => reject('Error saving to DB');
+            };
+            request.onerror = () => reject('Error opening DB');
+        });
+    };
+
+    // التنفيذ الفعلي
+    getIdFromDB().then(savedId => {
+        if (savedId) {
+            // وجدنا معرفاً محفوظاً بشكل دائم
+            window.deviceIdCache = savedId;
+        } else {
+            // لا يوجد معرف، ننشئ واحداً جديداً ونحفظه للأبد
+            const ua = navigator.userAgent;
+            const screenInfo = `${screen.width}x${screen.height}x${screen.colorDepth}`;
+            const raw = ua + screenInfo + navigator.language + navigator.platform;
+            
+            let hash = 0;
+            for (let i = 0; i < raw.length; i++) {
+                const char = raw.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            
+            const newId = 'dev_' + Math.abs(hash).toString(36) + '_' + Date.now();
+            window.deviceIdCache = newId;
+            
+            // الحفظ في IndexedDB (دائم) + localStorage (احتياطي سريع)
+            saveIdToDB(newId);
+            try { localStorage.setItem('device_id', newId); } catch(e){}
+        }
+    }).catch(err => {
+        console.error('IndexedDB failed, falling back to localStorage', err);
+        //Fallback: إذا فشل IndexedDB نعود للطريقة القديمة
+        let id = localStorage.getItem('device_id');
+        if (!id) {
+            id = 'fallback_' + Date.now();
+            localStorage.setItem('device_id', id);
+        }
+        window.deviceIdCache = id;
+    });
+
+    // ملاحظة: بسبب طبيعة IndexedDB غير المتزامنة (Async)، 
+    // قد ترجع الدالة undefined في أول استدعاء لها أثناء تحميل الصفحة.
+    // لذلك نعتمد على window.deviceIdCache الذي سيتم ملؤه بمجرد انتهاء القراءة.
+    return window.deviceIdCache || 'pending_init';
+}
 // ==========================================
 // دالة إعجاب الصفحة (محدثة - مع حماية كاملة)
 // ==========================================
