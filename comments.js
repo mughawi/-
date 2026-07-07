@@ -193,7 +193,7 @@ function getDeviceId() {
                 hash = hash & hash;
             }
             
-            const newId = 'dev_' + Math.abs(hash).toString(36) + '_' + Date.now();
+            const newId = 'dev_' + Math.abs(hash).toString(36);
             window.deviceIdCache = newId;
             
             // الحفظ في IndexedDB (دائم) + localStorage (احتياطي سريع)
