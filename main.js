@@ -87,8 +87,7 @@ if (enableTracking) {
 
 // 1. قائمة بصفحاتك العلمية الحالية (رتبها بحيث تكون الصفحة الجديدة دائماً هي الأخيرة في القائمة)
 const myPublishedPages = [
-    "azkar.html",
-    "ng.html"
+    "raan.html",
     // عندما تنشر صفحة جديدة مستقبلاً (مثلاً sr.html)، أضفها هنا في النهاية فقط لتصبح: "azkar.html", "sr.html"
 ];
 
@@ -228,7 +227,8 @@ function createSidebarMenu() {
         { href: 'makah.html', title: 'محاسبة النفس' },
         { href: 'kl.html', title: 'الكلمة الطيبة' },
         { href: 'asl.html', title: 'نواقض الإسلام' },
-        { href: 'ng.html', title: 'شروط قبول العمل الصالح' }
+        { href: 'ng.html', title: 'شروط قبول العمل الصالح' },
+        { href: 'raan.html', title: 'ران القلوب' }
     ];
     
     // إنشاء القائمة
@@ -264,7 +264,7 @@ if (window.location.pathname.includes('stats.html')) {
     
     // أسماء الصفحات (فقط الصفحات الموجودة فعلياً)
     const pageNames = {
-        'azkar': 'الأذكار الشرعية',
+        'raan': 'ران القلوب',
         'ng': 'شروط قبول العمل الصالح',
         'h': 'غير نفسك',
         'h1': 'باب التوبة',
