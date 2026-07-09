@@ -256,22 +256,6 @@ main::before {
     color: #FFD700;
     font-weight: 700;
 }
-
-/* الأحاديث */
-.hadith-box {
-    display: block;
-    font-family: 'Amiri', 'Tajawal', serif;
-    font-size: 1.4rem;
-    color: #FFD700;
-    line-height: 2.0;
-    margin: 15px 0;
-    padding: 15px 20px;
-    background: rgba(255, 215, 0, 0.1);
-    border-radius: 10px;
-    border-right: 1px solid #FFD700;
-    text-align: center;
-}
-
 /* الجداول */
 /* العنوان الرئيسي h1 */
 #text-container h1,
@@ -354,22 +338,28 @@ main::before {
     background: linear-gradient(90deg, transparent, #FFD700, transparent);
     margin: 30px 0;
 }
-
-/* ========================================
-   8. تنسيق الآيات القرآنية
-   ======================================== */
-.quran-text {
+/*تنسيق القران والحديث*/
+.quran-text, 
+.hadith-box {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
     font-family: 'Amiri', 'Tajawal', serif;
     font-size: 1.4rem;
-    color: #4CAF50;
     line-height: 2.0;
-    margin: 15px 0;
-    padding: 15px 20px;
-    background: rgba(76, 175, 80, 0.1);
-    border-radius: 10px;
-    border-right: 1px solid #4CAF50;
-    display: inline-block;
-    width: 100%;
+    margin: 5px 10px;
+    padding: 0;
+    white-space: normal;
+    word-break: keep-all;
+}
+
+.quran-text {
+    color: #4CAF50;
+}
+
+.hadith-box {
+    color: #FFD700;
+    font-style: italic;
 }
 
 /* ========================================
