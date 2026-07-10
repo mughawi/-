@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://opal-two-58.vercel.app/sitemap.xml
