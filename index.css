@@ -117,10 +117,10 @@ body {
 .hero-welcome-badge {
     margin-top: 30px;
     padding: 25px;
-    background: rgba(255, 255, 255, 0.03);
+    /*background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 215, 0, 0.15);
     border-radius: 20px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);*/
 }
 
 /* ========================================
