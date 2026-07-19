@@ -23,7 +23,7 @@ fetch(`data/${pageName}.md`)
                 html = html.replace(/==([^=]+)==/g, '<mark>$1</mark>');
                 
                 // تنسيق الأحاديث (فقط النص في البطاقة)
-                html = html.replace(/\(([^)]+)\)/g, '<div class="hadith-box">$1</div>');
+                html = html.replace(/\(([^)]+)\)/g, '<div class="hadith-box">($1)</div>');
                 // ✅ 2. تنسيق الآيات القرآنية
                 html = html.replace(/(﴿[^﴾]+﴾)/g, '<span class="quran-text">$1</span>');
                 
